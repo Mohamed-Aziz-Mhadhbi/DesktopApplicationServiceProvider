@@ -1,4 +1,4 @@
-package home.controllers;
+package Java.controllers;
 
 public class Controller {
 }
