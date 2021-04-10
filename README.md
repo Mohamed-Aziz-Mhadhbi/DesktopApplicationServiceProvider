@@ -1,2 +1,2 @@
-# Java-Service-Provider
-PiDev Java
+# ServiceProvider-Service-Provider
+PiDev ServiceProvider
