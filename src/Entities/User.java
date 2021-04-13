@@ -23,6 +23,10 @@ public class User {
     public User() {
     }
 
+    public String getNom() {
+        return nom;
+    }
+
     //getter
     public int getId() {
         return id;

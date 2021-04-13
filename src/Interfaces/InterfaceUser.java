@@ -1,11 +1,13 @@
 package Interfaces;
 
 import Entities.User;
-import java.util.List;
+import javafx.collections.ObservableList;
+
+import java.sql.SQLException;
 
 
 public interface InterfaceUser {
     public void addUser(User user);
-    public List<User> displayUsers();
+    public ObservableList<User> displayUsers() throws SQLException;
 
 }
