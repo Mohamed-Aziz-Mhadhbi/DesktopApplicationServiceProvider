@@ -5,6 +5,7 @@ import Interfaces.InterfaceUser;
 import Utils.dbConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -22,20 +23,23 @@ public class ServiceUser implements InterfaceUser {
     public void addUser(User user) {
         try {
 
+            Date date = new Date(System.currentTimeMillis());
             String requete = "INSERT INTO `user`"
                     + "(`username`, `nom`,"
                     + " `prenom`, `email`, `phone`,"
-                    + " `password`, `role`) "
-                    + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+                    + " `password`, `role`,`created_at`,`is_verified`) "
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement pst = cnx.prepareStatement(requete);
             pst.setString(1, user.getUsername());
             pst.setString(2, user.getNom());
             pst.setString(3, user.getPrenom());
             pst.setString(4, user.getEmail());
             pst.setInt(5, user.getPhone());
-            //String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(13));
-            //pst.setString(6, hashedPassword);
+            String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(13));
+            pst.setString(6, hashedPassword);
             pst.setString(7, user.getRole());
+            pst.setDate(8, date);
+            pst.setBoolean(9,false);
 
             pst.executeUpdate();
 
