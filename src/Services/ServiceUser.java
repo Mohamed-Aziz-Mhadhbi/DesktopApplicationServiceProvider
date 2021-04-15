@@ -73,4 +73,111 @@ public class ServiceUser implements InterfaceUser {
 
         return users;
     }
+
+    @Override
+    public void updateUser(User user) {
+        try {
+
+            String requete = "UPDATE user SET username = ?,"
+                    + " nom = ?, prenom = ?, email = ?,"
+                    + " phone = ?, password = ?, role = ?"
+                    + " WHERE id = ?";
+            PreparedStatement pst = cnx.prepareStatement(requete);
+            pst.setString(1, user.getUsername());
+            pst.setString(2, user.getNom());
+            pst.setString(3, user.getPrenom());
+            pst.setString(4, user.getEmail());
+            pst.setInt(5, user.getPhone());
+            String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(13));
+            pst.setString(6, hashedPassword);
+            pst.setString(7, user.getRole());
+            pst.setInt(8, user.getId());
+            System.out.println(requete);
+            pst.executeUpdate();
+
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+        }
+    }
+
+    @Override
+    public void deleteUser(User user) {
+        try {
+            String requete = "DELETE FROM user WHERE id=?";
+            PreparedStatement pst = cnx.prepareStatement(requete);
+            pst.setInt(1,user.getId());
+            pst.executeUpdate();
+
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+        }
+    }
+
+    @Override
+    public ObservableList<User> displayUserById(int id) throws SQLException {
+        ObservableList<User> users = FXCollections.observableArrayList();;
+        String query = "SELECT * FROM `user` WHERE id=?";
+        PreparedStatement pst = cnx.prepareStatement(query);
+        pst.setInt(1, id);
+        ResultSet rs = pst.executeQuery();
+
+
+        while (rs.next()){
+            User user= new User();
+            user.setId(rs.getInt("id"));
+            user.setNom(rs.getString("nom"));
+            user.setPrenom(rs.getString("prenom"));
+            user.setEmail(rs.getString("email"));
+            user.setRole(rs.getString("role"));
+            user.setPhone(rs.getInt("phone"));
+            user.setEnable(rs.getBoolean("enabled"));
+            users.add(user);
+
+        }
+        return users;
+    }
+
+    @Override
+    public ObservableList<User> searchUser(String input) throws SQLException {
+        ObservableList <User> users = FXCollections.observableArrayList();
+
+        try {
+            String requete = "SELECT id, nom,"
+                    + " prenom, email"
+                    + " , phone, username, role "
+                    + "FROM user "
+                    + "WHERE `nom` like ? or `prenom` like ? or "
+                    + " `role` like ? or `email` like ? or `phone` like ? or "
+                    + " `role` like ? ";
+            PreparedStatement pst = cnx.prepareStatement(requete);
+            pst.setString(1, "%"+input+"%");
+            pst.setString(2, "%"+input+"%");
+            pst.setString(3, "%"+input+"%");
+            pst.setString(4, "%"+input+"%");
+            pst.setString(5, "%"+input+"%");
+            pst.setString(6, "%"+input+"%");
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                User user= new User();
+                user.setId(rs.getInt("id"));
+                user.setNom(rs.getString("nom"));
+                user.setPrenom(rs.getString("prenom"));
+                user.setEmail(rs.getString("email"));
+                user.setRole(rs.getString("role"));
+                user.setPhone(rs.getInt("phone"));
+                user.setEnable(rs.getBoolean("enabled"));
+                users.add(user);
+            }
+
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+        }
+        return users;
+
+    }
+
+    @Override
+    public Boolean checkEmail(String email) throws SQLException {
+        return null;
+    }
 }

@@ -11,7 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
-import java.time.LocalDateTime;
+
 import java.util.ResourceBundle;
 
 public class ControllerAddUser implements Initializable {
@@ -23,6 +23,8 @@ public class ControllerAddUser implements Initializable {
     public TextField phoneField;
     public ComboBox roleComboBox;
     private User user;
+    private boolean update;
+    int userId;
 
 
     @Override
@@ -50,7 +52,15 @@ public class ControllerAddUser implements Initializable {
             alert.setHeaderText(null);
             alert.setContentText("Please Fill All DATA");
             alert.showAndWait();
-        }else {
+        }else if (update){
+            ServiceUser serviceUser = new ServiceUser();
+            user = new User(nom,prenom,username,email,password,phone,role);
+            serviceUser.updateUser(user);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setContentText("User"+username+" update successful");
+            alert.showAndWait();
+        } else {
             ServiceUser serviceUser = new ServiceUser();
             user = new User(nom,prenom,username,email,password,phone,role);
             serviceUser.addUser(user);
@@ -77,4 +87,23 @@ public class ControllerAddUser implements Initializable {
         phoneField.setText(null);
         roleComboBox.setValue(null);
     }
+
+    void setTextField(int id, String nom, String prenom, String email, int phone, String role) {
+
+        userId = id;
+
+        nomField.setText(nom);
+        prenomField.setText(prenom);
+        emailField.setText(email);
+
+        phoneField.setText(String.valueOf(phone));
+        roleComboBox.setValue(role);
+
+    }
+
+    void setUpdate(boolean b) {
+        this.update = b;
+
+    }
+
 }
