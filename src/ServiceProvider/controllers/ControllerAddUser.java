@@ -2,13 +2,16 @@ package ServiceProvider.controllers;
 
 import Entities.User;
 import Services.ServiceUser;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
 import java.net.URL;
 
@@ -52,18 +55,23 @@ public class ControllerAddUser implements Initializable {
             alert.setHeaderText(null);
             alert.setContentText("Please Fill All DATA");
             alert.showAndWait();
+
         }else if (update){
+
             ServiceUser serviceUser = new ServiceUser();
             user = new User(nom,prenom,username,email,password,phone,role);
-            serviceUser.updateUser(user);
+            serviceUser.updateUser(user,userId);
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setHeaderText(null);
             alert.setContentText("User"+username+" update successful");
             alert.showAndWait();
+            Stage stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
+            stage.close();
+
         } else {
             ServiceUser serviceUser = new ServiceUser();
             user = new User(nom,prenom,username,email,password,phone,role);
-            serviceUser.addUser(user);
+            serviceUser.addFreelancer(user);
             usernameField.setText(null);
             nomField.setText(null);
             prenomField.setText(null);
@@ -75,6 +83,8 @@ public class ControllerAddUser implements Initializable {
             alert.setHeaderText(null);
             alert.setContentText("User"+username+" added successful");
             alert.showAndWait();
+            Stage stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
+            stage.close();
         }
     }
 

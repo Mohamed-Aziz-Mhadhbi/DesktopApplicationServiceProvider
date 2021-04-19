@@ -6,12 +6,19 @@ import Utils.dbConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.springframework.security.crypto.bcrypt.BCrypt;
-
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import java.security.SecureRandom;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Base64;
+import java.util.Properties;
+
 
 public class ServiceUser implements InterfaceUser {
+
+    private static final SecureRandom secureRandom = new SecureRandom(); //threadsafe
+    private static final Base64.Encoder base64Encoder = Base64.getUrlEncoder(); //threadsafe
 
     Connection cnx;
 
@@ -20,15 +27,16 @@ public class ServiceUser implements InterfaceUser {
     }
 
     @Override
-    public void addUser(User user) {
+    public void addFreelancer(User user) {
         try {
 
             Date date = new Date(System.currentTimeMillis());
             String requete = "INSERT INTO `user`"
                     + "(`username`, `nom`,"
                     + " `prenom`, `email`, `phone`,"
-                    + " `password`, `role`,`created_at`,`is_verified`) "
-                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    + " `password`,`bio`,`specialisation`,`montant_horaire`, "
+                    + " `role`,`created_at`, `enabled`, `token`,`is_verified`)"
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement pst = cnx.prepareStatement(requete);
             pst.setString(1, user.getUsername());
             pst.setString(2, user.getNom());
@@ -37,9 +45,14 @@ public class ServiceUser implements InterfaceUser {
             pst.setInt(5, user.getPhone());
             String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(13));
             pst.setString(6, hashedPassword);
-            pst.setString(7, user.getRole());
-            pst.setDate(8, date);
-            pst.setBoolean(9,false);
+            pst.setString(7, user.getBio());
+            pst.setString(8, user.getSpecialisation());
+            pst.setInt(9,user.getMontantHoraire());
+            pst.setString(10, user.getRole());
+            pst.setDate(11, date);
+            pst.setBoolean(12,false);
+            pst.setString(13,user.getToken());
+            pst.setBoolean(14,false);
 
             pst.executeUpdate();
 
@@ -75,7 +88,7 @@ public class ServiceUser implements InterfaceUser {
     }
 
     @Override
-    public void updateUser(User user) {
+    public void updateUser(User user,int id) {
         try {
 
             String requete = "UPDATE user SET username = ?,"
@@ -91,7 +104,7 @@ public class ServiceUser implements InterfaceUser {
             String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(13));
             pst.setString(6, hashedPassword);
             pst.setString(7, user.getRole());
-            pst.setInt(8, user.getId());
+            pst.setInt(8, id);
             System.out.println(requete);
             pst.executeUpdate();
 
@@ -178,6 +191,68 @@ public class ServiceUser implements InterfaceUser {
 
     @Override
     public Boolean checkEmail(String email) throws SQLException {
+        String requete = "SELECT email "
+                + "FROM user ";
+        PreparedStatement pst = cnx.prepareStatement(requete);
+        ResultSet rs = pst.executeQuery();
+        while (rs.next()) {
+            if(rs.getString("email").equals(email)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public Boolean checkUsername(String username) throws SQLException {
+        String requete = "SELECT username "
+                + "FROM user ";
+        PreparedStatement pst = cnx.prepareStatement(requete);
+        ResultSet rs = pst.executeQuery();
+        while (rs.next()) {
+            if(rs.getString("username").equals(username)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public String generateNewToken() {
+        byte[] randomBytes = new byte[24];
+        secureRandom.nextBytes(randomBytes);
+        return base64Encoder.encodeToString(randomBytes);
+    }
+
+    @Override
+    public void changePassword(String email, String password) {
+        try {
+
+            String requete = "UPDATE user SET password = ?"
+                    + " WHERE email = ?";
+            PreparedStatement pst = cnx.prepareStatement(requete);
+
+            String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt(13));
+            pst.setString(1, hashedPassword);
+            pst.setString(2, email);
+            pst.executeUpdate();
+
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+        }
+    }
+
+
+    private static Message prepareMessage(Session session,String myAccountEmail,String recepient) {
+        try{
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(myAccountEmail));
+            message.setRecipient(Message.RecipientType.TO,new InternetAddress(recepient));
+            message.setSubject("Thanks for signing up!");
+            message.setText("test");
+            return message;
+        }catch (Exception ex) {
+            System.out.println(ex);
+        }
         return null;
     }
 }

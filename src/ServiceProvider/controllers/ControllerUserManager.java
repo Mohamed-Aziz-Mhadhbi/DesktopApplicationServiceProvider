@@ -179,10 +179,11 @@ public class ControllerUserManager implements Initializable {
                             stage.setScene(new Scene(parent));
                             stage.initStyle(StageStyle.UTILITY);
                             stage.show();
-
-
-
-
+                            try {
+                                refreshTable();
+                            } catch (SQLException throwables) {
+                                throwables.printStackTrace();
+                            }
                         });
 
                         HBox managebtn = new HBox(editIcon, deleteIcon);
