@@ -5,9 +5,13 @@
         <group>
             <file>file:/C:/Users/Hamza_Azzabi/Documents/NetBeansProjects/ServiceProvider/src/Interfaces/InterfaceUser.java</file>
             <file>file:/C:/Users/Hamza_Azzabi/Documents/NetBeansProjects/ServiceProvider/src/Services/ServiceUser.java</file>
+            <file>file:/C:/Users/Hamza_Azzabi/Documents/NetBeansProjects/ServiceProvider/src/serviceprovider/view/userProfile.fxml</file>
             <file>file:/C:/Users/Hamza_Azzabi/Documents/NetBeansProjects/ServiceProvider/src/Utils/dbConnection.java</file>
+            <file>file:/C:/Users/Hamza_Azzabi/Documents/NetBeansProjects/ServiceProvider/src/serviceprovider/controllers/HomeController.java</file>
             <file>file:/C:/Users/Hamza_Azzabi/Documents/NetBeansProjects/ServiceProvider/src/serviceprovider/ServiceProvider.java</file>
+            <file>file:/C:/Users/Hamza_Azzabi/Documents/NetBeansProjects/ServiceProvider/src/serviceprovider/controllers/FrontDashboard.java</file>
             <file>file:/C:/Users/Hamza_Azzabi/Documents/NetBeansProjects/ServiceProvider/src/serviceprovider/controllers/ControllerMain.java</file>
+            <file>file:/C:/Users/Hamza_Azzabi/Documents/NetBeansProjects/ServiceProvider/src/serviceprovider/controllers/LoginController.java</file>
         </group>
     </open-files>
 </project-private>

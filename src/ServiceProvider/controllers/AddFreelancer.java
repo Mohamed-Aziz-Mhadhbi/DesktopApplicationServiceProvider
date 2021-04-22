@@ -18,6 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static java.lang.Integer.parseInt;
+import javafx.scene.paint.Color;
 
 public class AddFreelancer implements Initializable {
     public TextField firstNameField;
@@ -61,13 +62,25 @@ public class AddFreelancer implements Initializable {
             alert.setContentText("Please Fill All DATA");
             alert.showAndWait();
         }else if (!isValidEmail(email)) {
-
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("enter a valide email ");
+            alert.showAndWait();
         }else if (!password.equals(comfirmPassword)){
-
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("Please check your password");
+            alert.showAndWait();
         }else if (!serviceUser.checkEmail(email)){
-
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("this user existe");
+            alert.showAndWait();
         }else if (!serviceUser.checkUsername(username)){
-
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("this user existe");
+            alert.showAndWait();
         }else if (update){
 
         }else {
@@ -132,7 +145,7 @@ public class AddFreelancer implements Initializable {
                     "\n" +
                     "</div>\n" +
                     "\n" +
-                    "<a href=\"{{ url('confirm_account', {\"token\": "+token+"}) }}\">Cliquer ici pour confirmer votre compte</a>"
+                    "<a href=\"http://127.0.0.1:8000/confirmer-mon-compte/"+token+"\">Cliquer ici pour confirmer votre compte</a>"
                     ;
 
             SendMail sm= new SendMail();
@@ -172,4 +185,6 @@ public class AddFreelancer implements Initializable {
         this.update = b;
 
     }
+    
+    
 }

@@ -11,7 +11,9 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.security.SecureRandom;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
 import java.util.Properties;
 
 
@@ -51,7 +53,7 @@ public class ServiceUser implements InterfaceUser {
             pst.setString(10, user.getRole());
             pst.setDate(11, date);
             pst.setBoolean(12,false);
-            pst.setString(13,user.getToken());
+            pst.setString(13,generateNewToken());
             pst.setBoolean(14,false);
 
             pst.executeUpdate();
@@ -151,6 +153,33 @@ public class ServiceUser implements InterfaceUser {
     }
 
     @Override
+    public User UserById(int id) throws SQLException {
+        User user= new User();
+        String query = "SELECT * FROM `user` WHERE id=?";
+        PreparedStatement pst = cnx.prepareStatement(query);
+        pst.setInt(1, id);
+        ResultSet rs = pst.executeQuery();
+
+
+        while (rs.next()){
+
+            user.setId(rs.getInt("id"));
+            user.setNom(rs.getString("nom"));
+            user.setPrenom(rs.getString("prenom"));
+            user.setEmail(rs.getString("email"));
+            user.setRole(rs.getString("role"));
+            user.setPhone(rs.getInt("phone"));
+            user.setMontantHoraire(rs.getInt("montant_horaire"));
+            user.setBio(rs.getString("bio"));
+            user.setSpecialisation(rs.getString("specialisation"));
+            user.setUsername(rs.getString("username"));
+            user.setEnable(rs.getBoolean("enabled"));
+
+        }
+        return user;
+    }
+
+    @Override
     public ObservableList<User> searchUser(String input) throws SQLException {
         ObservableList <User> users = FXCollections.observableArrayList();
 
@@ -242,17 +271,82 @@ public class ServiceUser implements InterfaceUser {
     }
 
 
-    private static Message prepareMessage(Session session,String myAccountEmail,String recepient) {
-        try{
-            Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(myAccountEmail));
-            message.setRecipient(Message.RecipientType.TO,new InternetAddress(recepient));
-            message.setSubject("Thanks for signing up!");
-            message.setText("test");
-            return message;
-        }catch (Exception ex) {
-            System.out.println(ex);
+    @Override
+    public User login(String inputUsername, String inputPassword) {
+        User user = new User();
+        user.setId(-1);
+
+        String hashedPassword = "";
+        boolean isVerified = false;
+
+        try {
+            String requete = "SELECT password,is_verified FROM user where email like ? OR username like ? ";
+            PreparedStatement pst = cnx.prepareStatement(requete);
+            pst.setString(1, inputUsername);
+            pst.setString(2, inputUsername);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                hashedPassword = rs.getString("password");
+                isVerified = rs.getBoolean("is_verified");
+            }
+
+            if(BCrypt.checkpw(inputPassword, hashedPassword) && isVerified) {
+                System.out.println("It matches");
+                requete = "SELECT * FROM user where email like ? OR username like ?";
+                pst = cnx.prepareStatement(requete);
+                pst.setString(1, inputUsername);
+                pst.setString(2, inputUsername);
+                rs = pst.executeQuery();
+                while (rs.next()) {
+                    user.setId(rs.getInt("id"));
+                    user.setNom(rs.getString("nom"));
+                    user.setPrenom(rs.getString("prenom"));
+                    user.setEmail(rs.getString("email"));
+                    user.setRole(rs.getString("role"));
+                    user.setPhone(rs.getInt("phone"));
+                    user.setMontantHoraire(rs.getInt("montant_horaire"));
+                    user.setBio(rs.getString("bio"));
+                    user.setSpecialisation(rs.getString("specialisation"));
+                    user.setEnable(rs.getBoolean("enabled"));
+                    System.out.println("  user : "+user);
+                }
+            }
+            else {
+                System.out.println("user id :"+user.getId());
+            }
+
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
         }
-        return null;
+
+
+        return user;
+    }
+
+    @Override
+    public List<User> displayFreelancer() throws SQLException {
+        List<User> users = new ArrayList<>();
+        String query = "SELECT * FROM `user` WHERE role=?";
+        PreparedStatement pst = cnx.prepareStatement(query);
+        pst.setString(1, "prestataire");
+        ResultSet rs = pst.executeQuery();
+
+
+        while (rs.next()){
+            User user= new User();
+            user.setId(rs.getInt("id"));
+            user.setNom(rs.getString("nom"));
+            user.setPrenom(rs.getString("prenom"));
+            user.setEmail(rs.getString("email"));
+            user.setRole(rs.getString("role"));
+            user.setPhone(rs.getInt("phone"));
+            user.setMontantHoraire(rs.getInt("montant_horaire"));
+            user.setBio(rs.getString("bio"));
+            user.setSpecialisation(rs.getString("specialisation"));
+            user.setEnable(rs.getBoolean("enabled"));
+            users.add(user);
+
+        }
+        return users;
     }
 }
