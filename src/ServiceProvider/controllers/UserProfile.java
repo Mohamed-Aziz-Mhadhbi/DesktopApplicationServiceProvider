@@ -1,12 +1,19 @@
 package ServiceProvider.controllers;
 
 import Entities.User;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -27,19 +34,52 @@ public class UserProfile implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-
     }
 
-    public void goBack(MouseEvent mouseEvent) {
+    public void goBack(MouseEvent mouseEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader(
+                getClass().getResource(
+                        "/ServiceProvider/view/frontDashboard.fxml"
+                )
+        );
+
+        Scene scene = new Scene(loader.load());
+        FrontDashboard controller = loader.getController();
+        controller.setUser(user);
+
+        Stage stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
     }
 
-    public void editProfile(MouseEvent mouseEvent) {
+    public void editProfile(MouseEvent mouseEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader ();
+        loader.setLocation(getClass().getResource("/ServiceProvider/view/addFreelancer.fxml"));
+        loader.load();
+        AddFreelancer addFreelancer = loader.getController();
+        addFreelancer.setUpdate(true);
+        addFreelancer.setTextField(user);
+        Parent parent = loader.getRoot();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(parent));
+        stage.initStyle(StageStyle.UTILITY);
+        stage.show();
     }
 
     public void changePassword(MouseEvent mouseEvent) {
+
     }
 
     public void setUser(User u) {
         this.user = u;
+        username.setText(user.getUsername());
+        email.setText(user.getEmail());
+        String flname= user.getPrenom()+" "+user.getNom();
+        name.setText(flname);
+        aboutMe.setText(user.getBio());
+        specialisation.setText(user.getSpecialisation());
     }
+
+
+
 }

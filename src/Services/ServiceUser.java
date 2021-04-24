@@ -93,19 +93,18 @@ public class ServiceUser implements InterfaceUser {
     public void updateUser(User user,int id) {
         try {
 
-            String requete = "UPDATE user SET username = ?,"
+            String requete = "UPDATE user SET "
                     + " nom = ?, prenom = ?, email = ?,"
-                    + " phone = ?, password = ?, role = ?"
+                    + " phone = ?, bio = ?, specialisation = ?, montant_horaire = ?"
                     + " WHERE id = ?";
             PreparedStatement pst = cnx.prepareStatement(requete);
-            pst.setString(1, user.getUsername());
-            pst.setString(2, user.getNom());
-            pst.setString(3, user.getPrenom());
-            pst.setString(4, user.getEmail());
-            pst.setInt(5, user.getPhone());
-            String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(13));
-            pst.setString(6, hashedPassword);
-            pst.setString(7, user.getRole());
+            pst.setString(1, user.getNom());
+            pst.setString(2, user.getPrenom());
+            pst.setString(3, user.getEmail());
+            pst.setInt(4, user.getPhone());
+            pst.setString(5, user.getBio());
+            pst.setString(6, user.getSpecialisation());
+            pst.setInt(4, user.getMontantHoraire());
             pst.setInt(8, id);
             System.out.println(requete);
             pst.executeUpdate();

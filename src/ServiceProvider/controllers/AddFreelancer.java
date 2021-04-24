@@ -3,14 +3,18 @@ package ServiceProvider.controllers;
 import Entities.User;
 import Services.ServiceUser;
 import Utils.SendMail;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.apache.commons.validator.routines.EmailValidator;
 
 import javax.mail.MessagingException;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -18,7 +22,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static java.lang.Integer.parseInt;
-import javafx.scene.paint.Color;
 
 public class AddFreelancer implements Initializable {
     public TextField firstNameField;
@@ -62,39 +65,25 @@ public class AddFreelancer implements Initializable {
             alert.setContentText("Please Fill All DATA");
             alert.showAndWait();
         }else if (!isValidEmail(email)) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText(null);
-            alert.setContentText("enter a valide email ");
-            alert.showAndWait();
+
         }else if (!password.equals(comfirmPassword)){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText(null);
-            alert.setContentText("Please check your password");
-            alert.showAndWait();
+
         }else if (!serviceUser.checkEmail(email)){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText(null);
-            alert.setContentText("this user existe");
-            alert.showAndWait();
+
         }else if (!serviceUser.checkUsername(username)){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText(null);
-            alert.setContentText("this user existe");
-            alert.showAndWait();
+
         }else if (update){
 
         }else {
             user = new User(nom,prenom,username,email,password,phone,role);
-            String token = serviceUser.generateNewToken();
-            user.setToken(token);
             user.setBio(bio);
             user.setSpecialisation(specialisation);
             user.setMontantHoraire(salary);
             System.out.println(user);
             serviceUser.addFreelancer(user);
 
-            
-            String msg= "<div class=\"app font-sans min-w-screen min-h-screen bg-grey-lighter py-8 px-4\">\n" +
+            String token = serviceUser.generateNewToken();
+            String msg= "div class=\"app font-sans min-w-screen min-h-screen bg-grey-lighter py-8 px-4\">\n" +
                     "\n" +
                     "    <div class=\"mail__wrapper max-w-md mx-auto\">\n" +
                     "\n" +
@@ -109,7 +98,7 @@ public class AddFreelancer implements Initializable {
                     "                <p>\n" +
                     "                    Hey, <br><br>It looks like you just signed up for The App, that’s awesome! Can we ask you for email confirmation? Just click the button bellow.\n" +
                     "                </p>\n" +
-                    "                <a class=\"text-white text-sm tracking-wide bg-green rounded w-full my-8 p-4 \" href=\"http://127.0.0.1:8000/confirmer-mon-compte/"+token+"\">CONFIRM EMAIL ADRESS</a>\n" +
+                    "                <a class=\"text-white text-sm tracking-wide bg-green rounded w-full my-8 p-4 \" href=\"{{ url('confirm_account', {\"token\": token}) }}\">CONFIRM EMAIL ADRESS</a>\n" +
                     "\n" +
                     "                <p class=\"text-sm\">\n" +
                     "                    Keep Rockin'!<br> Your The App team\n" +
@@ -145,12 +134,12 @@ public class AddFreelancer implements Initializable {
                     "\n" +
                     "</div>\n" +
                     "\n" +
-                    "<a href=\"http://127.0.0.1:8000/confirmer-mon-compte/"+token+"\">Cliquer ici pour confirmer votre compte</a>"
+                    "<a href=\"{{ url('confirm_account', {\"token\": "+token+"}) }}\">Cliquer ici pour confirmer votre compte</a>"
                     ;
 
             SendMail sm= new SendMail();
             try {
-                sm.sendMail(user.getEmail(), "Thanks for signing up!", msg);
+                sm.sendMail("hamza.azzabi@esprit.tn", "Thanks for signing up!", msg);
             } catch (MessagingException ex) {
                 Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -159,8 +148,16 @@ public class AddFreelancer implements Initializable {
             alert.setHeaderText(null);
             alert.setContentText("you have been added successfully please check your email for confirmation ");
             alert.showAndWait();
+            Parent root = null;
+            try {
+                root = FXMLLoader.load(getClass().getResource("/ServiceProvider/view/login.fxml"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Scene scene = new Scene(root);
             Stage stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
-            stage.close();
+            stage.setScene(scene);
+            stage.show();
 
         }
 
@@ -183,8 +180,22 @@ public class AddFreelancer implements Initializable {
 
     void setUpdate(boolean b) {
         this.update = b;
+        usernameField.setVisible(false);
+        passwordField.setVisible(false);
+        confirmPasswordField.setVisible(false);
+    }
+
+    void setTextField(User u) {
+
+        this.user = u;
+
+        firstNameField.setText(user.getPrenom());
+        lastNameField.setText(user.getNom());
+        bioField.setText(user.getBio());
+        phoneField.setText(String.valueOf(user.getPhone()));
+        specialisationField.setText(user.getSpecialisation());
+        salaryField.setText(String.valueOf(user.getMontantHoraire()));
+        emailField.setText(user.getEmail());
 
     }
-    
-    
 }

@@ -23,8 +23,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class DashboardController implements Initializable {
 
@@ -32,19 +30,19 @@ public class DashboardController implements Initializable {
     public ScrollPane scroll;
     public GridPane grid;
 
-    private final List<User> users = new ArrayList<>();
+    private List<User> users = new ArrayList<>();
 
 
     private List<User> getData() {
-        List<User> listUsers;
-        listUsers = new ArrayList<>();
+        List<User> users = new ArrayList<>();
         ServiceUser se = new ServiceUser();
         try {
-            listUsers.addAll(se.displayFreelancer());
+            users.addAll(se.displayFreelancer());
         } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
 
-        return listUsers;
+        return users;
     }
     public void goBack(MouseEvent mouseEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/ServiceProvider/view/frontDashboard.fxml"));
@@ -56,10 +54,8 @@ public class DashboardController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        ServiceUser se = new ServiceUser();
-       
-            //users.addAll(se.displayFreelancer());
-       
+        users.addAll(getData());
+        
         int column = 0;
         int row = 1;
         try {
@@ -95,4 +91,3 @@ public class DashboardController implements Initializable {
     }
 
     }
-

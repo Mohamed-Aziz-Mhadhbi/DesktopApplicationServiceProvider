@@ -20,7 +20,7 @@ public class HomeController implements Initializable {
     }
 
     public void showProfiles(MouseEvent mouseEvent) throws IOException {
-        Parent profiles =FXMLLoader.load(getClass().getResource("/ServiceProvider/view/userProfile.fxml"));
+        Parent profiles = FXMLLoader.load(getClass().getResource("/ServiceProvider/view/userManager.fxml"));
 
         borderPane.setCenter(profiles);
     }
