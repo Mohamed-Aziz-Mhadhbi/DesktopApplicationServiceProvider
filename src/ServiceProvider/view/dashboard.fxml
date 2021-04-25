@@ -29,7 +29,7 @@
 
             </children>
         </Pane>
-        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0"/>
         <Button fx:id="btnReturn" layoutX="812.0" layoutY="563.0" mnemonicParsing="false" onMouseClicked="#goBack" prefHeight="30.0" prefWidth="95.0" style="-fx-background-color: #38a700;" text="return">
             <font>
                 <Font name="System Bold" size="12.0" />
@@ -37,7 +37,7 @@
         </Button>
           <ScrollPane fx:id="scroll" layoutX="65.0" layoutY="185.0" prefHeight="365.0" prefWidth="803.0" styleClass="transparent" stylesheets="@style.css">
               <content>
-                  <GridPane fx:id="grid" prefHeight="0.0" prefWidth="0.0">
+                  <GridPane fx:id="grid" prefHeight="132.0" prefWidth="143.0">
                       <rowConstraints>
                           <RowConstraints minHeight="10.0" prefHeight="30.0" />
                       </rowConstraints>

@@ -36,9 +36,9 @@ public class ServiceUser implements InterfaceUser {
             String requete = "INSERT INTO `user`"
                     + "(`username`, `nom`,"
                     + " `prenom`, `email`, `phone`,"
-                    + " `password`,`bio`,`specialisation`,`montant_horaire`, "
+                    + " `password`,`bio`,`specialisation`,`montant_horaire`,`photo`, "
                     + " `role`,`created_at`, `enabled`, `token`,`is_verified`)"
-                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement pst = cnx.prepareStatement(requete);
             pst.setString(1, user.getUsername());
             pst.setString(2, user.getNom());
@@ -50,11 +50,12 @@ public class ServiceUser implements InterfaceUser {
             pst.setString(7, user.getBio());
             pst.setString(8, user.getSpecialisation());
             pst.setInt(9,user.getMontantHoraire());
-            pst.setString(10, user.getRole());
-            pst.setDate(11, date);
-            pst.setBoolean(12,false);
-            pst.setString(13,generateNewToken());
-            pst.setBoolean(14,false);
+            pst.setString(10, user.getPhoto());
+            pst.setString(11, user.getRole());
+            pst.setDate(12, date);
+            pst.setBoolean(13,false);
+            pst.setString(14,generateNewToken());
+            pst.setBoolean(15,false);
 
             pst.executeUpdate();
 
@@ -95,7 +96,7 @@ public class ServiceUser implements InterfaceUser {
 
             String requete = "UPDATE user SET "
                     + " nom = ?, prenom = ?, email = ?,"
-                    + " phone = ?, bio = ?, specialisation = ?, montant_horaire = ?"
+                    + " phone = ?, bio = ?, specialisation = ?, montant_horaire = ?, photo = ?"
                     + " WHERE id = ?";
             PreparedStatement pst = cnx.prepareStatement(requete);
             pst.setString(1, user.getNom());
@@ -104,8 +105,9 @@ public class ServiceUser implements InterfaceUser {
             pst.setInt(4, user.getPhone());
             pst.setString(5, user.getBio());
             pst.setString(6, user.getSpecialisation());
-            pst.setInt(4, user.getMontantHoraire());
+            pst.setInt(7, user.getMontantHoraire());
             pst.setInt(8, id);
+            pst.setString(9, user.getPhoto());
             System.out.println(requete);
             pst.executeUpdate();
 
@@ -289,7 +291,7 @@ public class ServiceUser implements InterfaceUser {
                 isVerified = rs.getBoolean("is_verified");
             }
 
-            if(BCrypt.checkpw(inputPassword, hashedPassword) && isVerified) {
+            if(BCrypt.checkpw(inputPassword, hashedPassword)) {
                 System.out.println("It matches");
                 requete = "SELECT * FROM user where email like ? OR username like ?";
                 pst = cnx.prepareStatement(requete);

@@ -3,17 +3,24 @@ package ServiceProvider.controllers;
 import Entities.User;
 import Services.ServiceUser;
 import Utils.SendMail;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.apache.commons.validator.routines.EmailValidator;
 
+import javax.imageio.ImageIO;
 import javax.mail.MessagingException;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -36,8 +43,10 @@ public class AddFreelancer implements Initializable {
     public PasswordField confirmPasswordField;
     public Button registration;
     public Button clear;
+    public ImageView imageView;
     private User user;
     private boolean update;
+    public String pathPhoto;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -51,14 +60,14 @@ public class AddFreelancer implements Initializable {
         String prenom = firstNameField.getText();
         String email = emailField.getText();
         String password = passwordField.getText();
-        String comfirmPassword = confirmPasswordField.getText();
-        int phone = 55648235;
+        String confirmPassword = confirmPasswordField.getText();
+        int phone = Integer.parseInt(phoneField.getText());
         String bio = bioField.getText();
         String specialisation = specialisationField.getText();
-        int salary = 25;
+        int salary = Integer.parseInt(salaryField.getText());
         String role = "prestataire";
 
-        if (username.isEmpty() || nom.isEmpty() || prenom.isEmpty() || email.isEmpty() || password.isEmpty() || comfirmPassword.isEmpty() || bio.isEmpty() || specialisation.isEmpty()  )
+        if (nom.isEmpty() || prenom.isEmpty() || email.isEmpty() || bio.isEmpty() || specialisation.isEmpty())
         {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
@@ -66,7 +75,7 @@ public class AddFreelancer implements Initializable {
             alert.showAndWait();
         }else if (!isValidEmail(email)) {
 
-        }else if (!password.equals(comfirmPassword)){
+        }else if (!password.equals(confirmPassword)){
 
         }else if (!serviceUser.checkEmail(email)){
 
@@ -74,11 +83,14 @@ public class AddFreelancer implements Initializable {
 
         }else if (update){
 
+
         }else {
+
             user = new User(nom,prenom,username,email,password,phone,role);
             user.setBio(bio);
             user.setSpecialisation(specialisation);
             user.setMontantHoraire(salary);
+            user.setPhoto(pathPhoto);
             System.out.println(user);
             serviceUser.addFreelancer(user);
 
@@ -98,7 +110,7 @@ public class AddFreelancer implements Initializable {
                     "                <p>\n" +
                     "                    Hey, <br><br>It looks like you just signed up for The App, that’s awesome! Can we ask you for email confirmation? Just click the button bellow.\n" +
                     "                </p>\n" +
-                    "                <a class=\"text-white text-sm tracking-wide bg-green rounded w-full my-8 p-4 \" href=\"{{ url('confirm_account', {\"token\": token}) }}\">CONFIRM EMAIL ADRESS</a>\n" +
+                    "                <a class=\"text-white text-sm tracking-wide bg-green rounded w-full my-8 p-4 \" href=\"http://127.0.0.1:8000/confirmer-mon-compte/"+token+"\">CONFIRM EMAIL ADRESS</a>\n" +
                     "\n" +
                     "                <p class=\"text-sm\">\n" +
                     "                    Keep Rockin'!<br> Your The App team\n" +
@@ -134,12 +146,12 @@ public class AddFreelancer implements Initializable {
                     "\n" +
                     "</div>\n" +
                     "\n" +
-                    "<a href=\"{{ url('confirm_account', {\"token\": "+token+"}) }}\">Cliquer ici pour confirmer votre compte</a>"
+                    "<a href=\"http://127.0.0.1:8000/confirmer-mon-compte/"+token+"\">Cliquer ici pour confirmer votre compte</a>"
                     ;
 
             SendMail sm= new SendMail();
             try {
-                sm.sendMail("hamza.azzabi@esprit.tn", "Thanks for signing up!", msg);
+                sm.sendMail(user.getEmail(), "Thanks for signing up!", msg);
             } catch (MessagingException ex) {
                 Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -185,17 +197,19 @@ public class AddFreelancer implements Initializable {
         confirmPasswordField.setVisible(false);
     }
 
-    void setTextField(User u) {
 
-        this.user = u;
-
-        firstNameField.setText(user.getPrenom());
-        lastNameField.setText(user.getNom());
-        bioField.setText(user.getBio());
-        phoneField.setText(String.valueOf(user.getPhone()));
-        specialisationField.setText(user.getSpecialisation());
-        salaryField.setText(String.valueOf(user.getMontantHoraire()));
-        emailField.setText(user.getEmail());
-
+    public void openCam(MouseEvent mouseEvent) throws IOException {
+        FileChooser fc = new FileChooser();
+        FileChooser.ExtensionFilter ext1 = new FileChooser.ExtensionFilter("JPG files(*.jpg)","*.JPG");
+        FileChooser.ExtensionFilter ext2 = new FileChooser.ExtensionFilter("PNG files(*.png)","*.PNG");
+        fc.getExtensionFilters().addAll(ext1,ext2);
+        Stage stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
+        File file = fc.showOpenDialog(stage);
+        this.pathPhoto = file.getPath();
+        BufferedImage bf;
+        bf = ImageIO.read(file);
+        Image image = SwingFXUtils.toFXImage(bf, null);
+        imageView.setImage(image);
+        System.out.println(file);
     }
 }

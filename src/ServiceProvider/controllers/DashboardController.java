@@ -23,6 +23,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DashboardController implements Initializable {
 
@@ -54,39 +56,36 @@ public class DashboardController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        affichage();
+
+    }
+
+    private void affichage()
+    {
+        int ligne =0;
+        int colone = 0;
         users.addAll(getData());
-        
-        int column = 0;
-        int row = 1;
-        try {
-            for (int i = 0; i < users.size(); i++) {
-                FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation(getClass().getResource("/ServiceProvider/view/profileCard.fxml"));
-                AnchorPane anchorPane = fxmlLoader.load();
+        for(int i=0;i<users.size();i++){
+            try {
 
-                ProfileCard profileCard = fxmlLoader.getController();
-                profileCard.setData(users.get(i));
 
-                if (column == 3) {
-                    column = 0;
-                    row++;
-                }
+                FXMLLoader fxmlLoader= new FXMLLoader();
 
-                grid.add(anchorPane, column++, row); //(child,column,row)
-                //set grid width
-                grid.setMinWidth(Region.USE_COMPUTED_SIZE);
-                grid.setPrefWidth(Region.USE_COMPUTED_SIZE);
-                grid.setMaxWidth(Region.USE_PREF_SIZE);
+                fxmlLoader.setLocation(getClass().getResource("/ServiceProvider/view/profileCard.fxml"));//recuperer le fichier fxml
+                AnchorPane    col;
 
-                //set grid height
-                grid.setMinHeight(Region.USE_COMPUTED_SIZE);
-                grid.setPrefHeight(Region.USE_COMPUTED_SIZE);
-                grid.setMaxHeight(Region.USE_PREF_SIZE);
+                col = fxmlLoader.load(); //recuperer le block du produit
 
-                GridPane.setMargin(anchorPane, new Insets(10));
+
+                ProfileCard CardController = fxmlLoader.getController();//recuperer le controller du ficher fxml
+                CardController.setData(users.get(i));//faire le block pour chaque produit de la liste
+                
+                grid.add(col, 0, ligne++);//ajouter le block dans le grid
+                GridPane.setMargin(col, new Insets(100));
+            } catch (IOException ex) {
+                Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 

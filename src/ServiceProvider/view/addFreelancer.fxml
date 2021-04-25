@@ -55,7 +55,7 @@
                            <children>
                               <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                                  <children>
-                                    <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@image/avatar.png" />
                                        </image>
@@ -63,7 +63,7 @@
                                           <Insets bottom="10.0" />
                                        </VBox.margin>
                                     </ImageView>
-                                    <Button mnemonicParsing="false" text="Upload Photo" />
+                                    <Button fx:id="webcam" mnemonicParsing="false" onMouseClicked="#openCam" text="Upload Photo" />
                                  </children>
                               </VBox>
                            </children>

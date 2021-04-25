@@ -22,13 +22,11 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class UserProfile implements Initializable {
+public class ProfileController implements Initializable {
     public Button btnReturn;
     public ImageView profilePhoto;
     public Text username;
     public Text email;
-    public Button btnEdit;
-    public Button btnChangePwd;
     public Text name;
     public Text aboutMe;
     public Text specialisation;
@@ -57,22 +55,6 @@ public class UserProfile implements Initializable {
         stage.show();
     }
 
-    public void editProfile(MouseEvent mouseEvent) throws IOException {
-        FXMLLoader loader = new FXMLLoader ();
-        loader.setLocation(getClass().getResource("/ServiceProvider/view/updateFreelancer.fxml"));
-        loader.load();
-        UpdateFreelancer updateFreelancer = loader.getController();
-        updateFreelancer.setTextField(user);
-        Parent parent = loader.getRoot();
-        Stage stage = new Stage();
-        stage.setScene(new Scene(parent));
-        stage.initStyle(StageStyle.UTILITY);
-        stage.show();
-    }
-
-    public void changePassword(MouseEvent mouseEvent) {
-
-    }
 
     public void setUser(User u) throws IOException {
         this.user = u;
@@ -91,7 +73,5 @@ public class UserProfile implements Initializable {
             profilePhoto.setImage(image);
         }
     }
-
-
 
 }
