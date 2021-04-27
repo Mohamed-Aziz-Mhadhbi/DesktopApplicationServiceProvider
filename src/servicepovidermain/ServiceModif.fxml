@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="1270.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ServiceModifController">
+    <stylesheets>
+        <URL value="@stylesheet.css" />
+    </stylesheets>
+    <children>
+      <Button fx:id="btn0" layoutX="1166.0" layoutY="45.0" mnemonicParsing="false" onAction="#Back" text="Back" />
+      <Label layoutX="262.0" layoutY="153.0" text="Title" />
+      <Label layoutX="262.0" layoutY="237.0" text="Description" />
+      <Label layoutX="272.0" layoutY="413.0" text="Price" />
+      <TextField fx:id="tftitle" layoutX="505.0" layoutY="149.0" />
+      <TextField fx:id="tfdec" layoutX="505.0" layoutY="233.0" prefHeight="96.0" prefWidth="543.0" />
+      <TextField fx:id="tfpricee" layoutX="505.0" layoutY="401.0" />
+      <Button fx:id="btn1" layoutX="544.0" layoutY="484.0" mnemonicParsing="false" onAction="#modfierService" text="Modfier" />
+      <Label fx:id="idup" layoutX="309.0" layoutY="62.0" />
+   </children>
+</AnchorPane>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="1270.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ServiceUserShowController">
+    <stylesheets>
+        <URL value="@stylesheet.css" />
+        </stylesheets>
+        <children>
+      <TableView fx:id="tableau" layoutX="87.0" layoutY="73.0" prefHeight="558.0" prefWidth="1001.0">
+        <columns>
+          <TableColumn fx:id="idcol" prefWidth="40.0" text="ID" />
+          <TableColumn fx:id="titlecol" prefWidth="96.0" text="TITLE" />
+            <TableColumn fx:id="decrcol" prefWidth="576.0" text="DESCRIPTION" />
+            <TableColumn fx:id="pricecol" prefWidth="109.0" text="PRICE" />
+            <TableColumn fx:id="datecol" prefWidth="130.0" text="DATE" />
+        </columns>
+      </TableView>
+      <TextField fx:id="tfrecher" layoutX="152.0" layoutY="36.0" />
+      <Button fx:id="brecherche" layoutX="343.0" layoutY="36.0" mnemonicParsing="false" onAction="#rechercheserviceruser" text="Recherche" />
+      <Button fx:id="btnback" layoutX="1168.0" layoutY="36.0" mnemonicParsing="false" onAction="#backuser" text="back" />
+      <Button fx:id="btnorder" layoutX="1163.0" layoutY="599.0" mnemonicParsing="false" onAction="#oerderService" text="Order" />
+   </children>
+    
+</AnchorPane>
