@@ -81,6 +81,7 @@ public class ServiceOrderController implements Initializable {
             
             
             
+            
             pst.executeUpdate();//méthodes appropriées à l'exécution d'une instruction menant à la modification de la BD (INSERT, UPDATE, DELETE, CREATE, etc.)
            
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -105,7 +106,7 @@ public class ServiceOrderController implements Initializable {
                     = new FXMLLoader(getClass().getResource("/servicepovidermain/ServiceUserShow.fxml"));
             Parent root = loader.load();
             //ServiceUserShowController irc = loader.getController();
-            btn1.getScene().setRoot(root);
+            tn8.getScene().setRoot(root);
         } catch (IOException ex) {
             Logger.getLogger(ServiceUserShowController.class.getName()).log(Level.SEVERE, null, ex);
         }
