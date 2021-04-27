@@ -30,6 +30,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javax.swing.JOptionPane;
 
 /**
  * FXML Controller class
@@ -94,8 +95,15 @@ public class ServiceUserShowController implements Initializable {
             FXMLLoader loader
                     = new FXMLLoader(getClass().getResource("/servicepovidermain/ServiceOrder.fxml"));
             Parent root = loader.load();
-            //ServiceShowController irc = loader.getController();
+            ServiceOrderController irc = loader.getController();
+            Service Selected= tableau.getSelectionModel().getSelectedItem();
+           if (Selected == null) {
+            JOptionPane.showMessageDialog(null, "There is nothing selected !");
+        } else { 
+            irc.setIdOrder(String.valueOf(Selected.getId()));
+            irc.setTitre(Selected.getTitle());
             btnorder.getScene().setRoot(root);
+            }
         } catch (IOException ex) {
             Logger.getLogger(ServiceShowController.class.getName()).log(Level.SEVERE, null, ex);
         }

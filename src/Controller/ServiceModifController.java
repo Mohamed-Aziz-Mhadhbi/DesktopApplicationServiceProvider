@@ -66,6 +66,7 @@ public class ServiceModifController implements Initializable {
     @FXML
     private void modfierService(ActionEvent event) {
         
+        
     }
     public void setTitleUp(String tftitle) {
         this.tftitle.setText(tftitle);
