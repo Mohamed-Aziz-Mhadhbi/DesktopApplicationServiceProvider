@@ -75,7 +75,7 @@ public class ServiceBackController implements Initializable {
     private void back(ActionEvent event) {
         try {
             FXMLLoader loader
-                    = new FXMLLoader(getClass().getResource("/servicepovidermain/FXMLDocument.fxml"));
+                    = new FXMLLoader(getClass().getResource("/servicepovidermain/ServiceMain.fxml"));
             Parent root = loader.load();
             //Controller irc = loader.getController();
             btn1.getScene().setRoot(root);
