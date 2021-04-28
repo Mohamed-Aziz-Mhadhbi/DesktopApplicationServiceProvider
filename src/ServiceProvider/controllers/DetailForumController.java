@@ -52,44 +52,69 @@ import javafx.scene.control.TextArea;
  */
 public class DetailForumController implements Initializable {
 
-    @FXML private Label restTitleForum;
-    @FXML private Label restDescriptionFourm;
-    @FXML public TableView<Post> tablePost;
-    @FXML private TableColumn<Post, String> col_title;
-    @FXML private TableColumn<Post, String> col_description;
-    @FXML private TableColumn<Post, Integer> col_views;
-    @FXML private TableColumn<Post, Integer> col_noc;
+    @FXML
+    private Label restTitleForum;
+    @FXML
+    private Label restDescriptionFourm;
+    @FXML
+    public TableView<Post> tablePost;
+    @FXML
+    private TableColumn<Post, String> col_title;
+    @FXML
+    private TableColumn<Post, String> col_description;
+    @FXML
+    private TableColumn<Post, Integer> col_views;
+    @FXML
+    private TableColumn<Post, Integer> col_noc;
 
     ObservableList<Post> oblistpost = FXCollections.observableArrayList();
     ForumCRUD pf = new ForumCRUD();
     PostCRUD pc = new PostCRUD();
     CommentCRUD cc = new CommentCRUD();
-    @FXML private Label idF;
+    @FXML
+    private Label idF;
 
-    @FXML private TextField tfTitlePost;
-    @FXML private TextArea tfDescriptionPost;
-    @FXML private Button btnAdd;
-    @FXML private Button btnDelete;
-    @FXML private Button btnmodif;
-    @FXML private Button btnDetailsPost;
-    @FXML private Label idP;
+    @FXML
+    private TextField tfTitlePost;
+    @FXML
+    private TextArea tfDescriptionPost;
+    @FXML
+    private Button btnAdd;
+    @FXML
+    private Button btnDelete;
+    @FXML
+    private Button btnmodif;
+    @FXML
+    private Button btnDetailsPost;
+    @FXML
+    private Label idP;
     Stage stage;
 
     Forum forumTest;
-    @FXML private Button profile;
-    @FXML private ImageView btnprofile;
-    @FXML private Label userlabel;
-    @FXML private ImageView logout;
+    @FXML
+    private Button profile;
+    @FXML
+    private ImageView btnprofile;
+    @FXML
+    private Label userlabel;
+    @FXML
+    private ImageView logout;
     private Label entetForum;
-    @FXML private Label Tforum;
-    @FXML private Label tPost;
+    @FXML
+    private Label Tforum;
+    @FXML
+    private Label tPost;
     private PieChart statPost;
     ObservableList<PieChart.Data> statPostdata;
     private Connection con;
-    @FXML private Button btnClear;
+    @FXML
+    private Button btnClear;
     User user = null;
-    @FXML private ImageView returnBack;
-    @FXML private Label UserNameSession;
+    @FXML
+    private ImageView returnBack;
+    @FXML
+    private Label UserNameSession;
+
     /**
      * Initializes the controller class.
      */
@@ -99,11 +124,11 @@ public class DetailForumController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+
         idF.setVisible(false);
         idP.setVisible(false);
     }
-    
+
     public void setUser(User u) throws SQLException {
         this.user = u;
         UserNameSession.setText(cc.userName(user.getId()));
@@ -175,30 +200,32 @@ public class DetailForumController implements Initializable {
 
     @FXML
     private void ajouter(ActionEvent event) {
+        if (tfTitlePost.getText().isEmpty() || tfDescriptionPost.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "please fill all the textfields");
+        } else {
+            PostCRUD pc = new PostCRUD();
+            Post p = new Post();
+            String tTitle = CurseFilterService.cleanText(tfTitlePost.getText());
+            String tDescription = CurseFilterService.cleanText(tfDescriptionPost.getText());
+            p.setTitle(tTitle);
+            p.setDescription(tDescription);
+            Integer i = Integer.valueOf(idF.getText());
+            p.setIdF(i);
+            pc.addPost(p, i);
 
-        PostCRUD pc = new PostCRUD();
-        Post p = new Post();
-        String tTitle = CurseFilterService.cleanText(tfTitlePost.getText());
-        String tDescription = CurseFilterService.cleanText(tfDescriptionPost.getText());
-        p.setTitle(tTitle);
-        p.setDescription(tDescription);
-        Integer i = Integer.valueOf(idF.getText());
-        p.setIdF(i);
-        pc.addPost(p, i);
+            clearAll();
+            initTable(i);
+            System.out.println(p.getDate());
 
-        clearAll();
-        initTable(i);
-        System.out.println(p.getDate());
-
-        Image img = new Image("/ServiceProvider/view/image/ok.png");
-        Notifications notifAdd = Notifications.create()
-                .title("add complet")
-                .text("saved avec sucees")
-                .graphic(new ImageView(img))
-                .hideAfter(Duration.seconds(5))
-                .position(Pos.TOP_RIGHT);
-        notifAdd.show();
-
+            Image img = new Image("/ServiceProvider/view/image/ok.png");
+            Notifications notifAdd = Notifications.create()
+                    .title("add complet")
+                    .text("saved avec sucees")
+                    .graphic(new ImageView(img))
+                    .hideAfter(Duration.seconds(5))
+                    .position(Pos.TOP_RIGHT);
+            notifAdd.show();
+        }
     }
 
     @FXML
@@ -230,12 +257,12 @@ public class DetailForumController implements Initializable {
         Post P = tablePost.getSelectionModel().getSelectedItem();
         if (P == null) {
             JOptionPane.showMessageDialog(null, "There is nothing selected !");
+        } else if (tfTitlePost.getText().isEmpty() || tfDescriptionPost.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "please fill all the textfields");
         } else {
-
             pc.update(P.getId(), CurseFilterService.cleanText(tfTitlePost.getText()), CurseFilterService.cleanText(tfDescriptionPost.getText()));
             initTable(i);
             clearAll();
-
         }
 
     }
@@ -261,7 +288,7 @@ public class DetailForumController implements Initializable {
             initTable(idPclicked);
             try {
                 dp.initTable((ObservableList<Comment>) cc.readAllcomment2(Integer.parseInt(idP.getText())));
-              
+
             } catch (SQLException ex) {
                 Logger.getLogger(ForumController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -270,7 +297,6 @@ public class DetailForumController implements Initializable {
             Logger.getLogger(DetailPostController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
 
     @FXML
     private void exit(MouseEvent event) {

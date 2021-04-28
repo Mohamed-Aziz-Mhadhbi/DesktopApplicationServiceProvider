@@ -49,11 +49,16 @@ import org.controlsfx.control.Rating;
  */
 public class DetailPostController implements Initializable {
 
-    @FXML private Label TitleP;
-    @FXML private Label DescriptionP;
-    @FXML private TableView<Comment> tableComment;
-    @FXML private TableColumn<Comment, String> col_content;
-    @FXML private TableColumn<Comment, Integer> col_rating;
+    @FXML
+    private Label TitleP;
+    @FXML
+    private Label DescriptionP;
+    @FXML
+    private TableView<Comment> tableComment;
+    @FXML
+    private TableColumn<Comment, String> col_content;
+    @FXML
+    private TableColumn<Comment, Integer> col_rating;
     private ComboBox<Post> ComboP;
     PostCRUD pc = new PostCRUD();
     CommentCRUD cc = new CommentCRUD();
@@ -62,29 +67,50 @@ public class DetailPostController implements Initializable {
     private Label idtestp;
     private Label testtitlep;
     private Label testdescriptionp;
-    @FXML private TextArea contentC;
-    @FXML private TextField rating;
-    @FXML private Button btnajouter;
-    @FXML private Button btnupdate;
-    @FXML private Button btnDelete;
-    @FXML private Label idC;
+    @FXML
+    private TextArea contentC;
+    @FXML
+    private TextField rating;
+    @FXML
+    private Button btnajouter;
+    @FXML
+    private Button btnupdate;
+    @FXML
+    private Button btnDelete;
+    @FXML
+    private Label idC;
     Stage stage;
-    @FXML private Label idPc;
-    @FXML private Label idForum;
-    @FXML private Label titleForum;
-    @FXML private Label descriptionFourm;
-    @FXML private Button profile;
-    @FXML private ImageView btnprofile;
-    @FXML private Label userlabel;
-    @FXML private ImageView logout;
-    @FXML private Label TF;
-    @FXML private Label TP;
-    @FXML private Button btnClear;
-    @FXML private Rating RatingPost;
-    @FXML private Rating RatingCommet;
+    @FXML
+    private Label idPc;
+    @FXML
+    private Label idForum;
+    @FXML
+    private Label titleForum;
+    @FXML
+    private Label descriptionFourm;
+    @FXML
+    private Button profile;
+    @FXML
+    private ImageView btnprofile;
+    @FXML
+    private Label userlabel;
+    @FXML
+    private ImageView logout;
+    @FXML
+    private Label TF;
+    @FXML
+    private Label TP;
+    @FXML
+    private Button btnClear;
+    @FXML
+    private Rating RatingPost;
+    @FXML
+    private Rating RatingCommet;
     User user = null;
-    @FXML private ImageView returnBack;
-    @FXML private Label UserNameSession;
+    @FXML
+    private ImageView returnBack;
+    @FXML
+    private Label UserNameSession;
 
     /**
      * Initializes the controller class.
@@ -174,28 +200,32 @@ public class DetailPostController implements Initializable {
 
     @FXML
     private void ajouter(ActionEvent event) throws SQLException {
-        CommentCRUD cc = new CommentCRUD();
-        Comment c = new Comment();
-        String content = CurseFilterService.cleanText(contentC.getText());
-        c.setContent(content);
-        c.setRating((int) RatingCommet.getRating());
-        Integer i = Integer.valueOf(idPc.getText());
-        c.setIdP(i);
-        cc.updatePost(i);
-        cc.addComment(c, i);
-        System.out.println(RatingCommet.getRating());
-        clearAll();
-        initTable(i);
-        rating();
+        if (contentC.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "please fill all the textfields");
+        } else {
+            CommentCRUD cc = new CommentCRUD();
+            Comment c = new Comment();
+            String content = CurseFilterService.cleanText(contentC.getText());
+            c.setContent(content);
+            c.setRating((int) RatingCommet.getRating());
+            Integer i = Integer.valueOf(idPc.getText());
+            c.setIdP(i);
+            cc.updatePost(i);
+            cc.addComment(c, i);
+            System.out.println(RatingCommet.getRating());
+            clearAll();
+            initTable(i);
+            rating();
 
-        Image img = new Image("/ServiceProvider/view/image/ok.png");
-        Notifications notifAdd = Notifications.create()
-                .title("add complet")
-                .text("saved avec sucees")
-                .graphic(new ImageView(img))
-                .hideAfter(Duration.seconds(5))
-                .position(Pos.TOP_RIGHT);
-        notifAdd.show();
+            Image img = new Image("/ServiceProvider/view/image/ok.png");
+            Notifications notifAdd = Notifications.create()
+                    .title("add complet")
+                    .text("saved avec sucees")
+                    .graphic(new ImageView(img))
+                    .hideAfter(Duration.seconds(5))
+                    .position(Pos.TOP_RIGHT);
+            notifAdd.show();
+        }
     }
 
     @FXML
@@ -214,6 +244,8 @@ public class DetailPostController implements Initializable {
         Comment C = tableComment.getSelectionModel().getSelectedItem();
         if (C == null) {
             JOptionPane.showMessageDialog(null, "There is nothing selected !");
+        } else if (contentC.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "please fill all the textfields");
         } else {
             Integer i = Integer.valueOf(idPc.getText());
             cc.update(C.getId(), CurseFilterService.cleanText(contentC.getText()), (int) RatingCommet.getRating());
