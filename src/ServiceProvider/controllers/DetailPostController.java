@@ -7,6 +7,7 @@ package ServiceProvider.controllers;
 
 import Entities.Comment;
 import Entities.Post;
+import Entities.User;
 import Services.CommentCRUD;
 import Services.CurseFilterService;
 import Services.PostCRUD;
@@ -80,8 +81,6 @@ public class DetailPostController implements Initializable {
     private Label idC;
     Stage stage;
     @FXML
-    private Button btnR;
-    @FXML
     private Label idPc;
     @FXML
     private Label idForum;
@@ -107,14 +106,16 @@ public class DetailPostController implements Initializable {
     private Rating RatingPost;
     @FXML
     private Rating RatingCommet;
-
+    User user = null;
+    @FXML
+    private ImageView returnBack;
+    @FXML
+    private Label UserNameSession;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-      
-       
         check(rating.getText());
         idC.setVisible(false);
         idPc.setVisible(false);
@@ -122,6 +123,10 @@ public class DetailPostController implements Initializable {
         // initTable();
     }
 
+    public void setUser(User u) throws SQLException {
+        this.user = u;
+        UserNameSession.setText(pc.userName(user.getId()));
+    }
     private void clearAll() {
         idC.setText("");
         //contentC.setHtmlText("");
@@ -263,36 +268,7 @@ public class DetailPostController implements Initializable {
         }
     }
 
-    @FXML
-    private void Return(ActionEvent event) {
-
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ServiceProvider/view/DetailForum.fxml"));
-            Parent root = loader.load();
-
-            DetailForumController dc = loader.getController();
-            //ForumController fc = loader.getController();
-            dc.setTfDescriptionPost(DescriptionP.getText());
-            dc.setTfTitlePost(TitleP.getText());
-            dc.setIdP(idPc.getText());
-            dc.setRestIdFourm(idForum.getText());
-            dc.setRestTitleForum(titleForum.getText());
-            dc.setRestDescriptionFourm(descriptionFourm.getText());
-            dc.setTforum(titleForum.getText());
-            dc.settPost(">" + TitleP.getText());
-            try {
-                dc.initTable((ObservableList<Post>) pc.readAllpost2(Integer.parseInt(idForum.getText())));
-                // dc.initTable((ObservableList<Post>) pc.readAllpost2(Integer.parseInt(idPc.getText())));
-            } catch (SQLException ex) {
-                Logger.getLogger(ForumController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            TitleP.getScene().setRoot(root);
-
-        } catch (IOException ex) {
-            Logger.getLogger(ForumController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
+    
 
     @FXML
     private void exit(MouseEvent event) {
@@ -313,6 +289,36 @@ public class DetailPostController implements Initializable {
             return true;
         } else{
             return false;
+        }
+    }
+
+    @FXML
+    private void ReturnBack(MouseEvent event) throws SQLException {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ServiceProvider/view/DetailForum.fxml"));
+            Parent root = loader.load();
+
+            DetailForumController dc = loader.getController();
+            //ForumController fc = loader.getController();
+            dc.setTfDescriptionPost(DescriptionP.getText());
+            dc.setTfTitlePost(TitleP.getText());
+            dc.setIdP(idPc.getText());
+            dc.setRestIdFourm(idForum.getText());
+            dc.setRestTitleForum(titleForum.getText());
+            dc.setRestDescriptionFourm(descriptionFourm.getText());
+            dc.setTforum(titleForum.getText());
+            dc.settPost(">" + TitleP.getText());
+            dc.setUser(this.user);
+            try {
+                dc.initTable((ObservableList<Post>) pc.readAllpost2(Integer.parseInt(idForum.getText())));
+                // dc.initTable((ObservableList<Post>) pc.readAllpost2(Integer.parseInt(idPc.getText())));
+            } catch (SQLException ex) {
+                Logger.getLogger(ForumController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            TitleP.getScene().setRoot(root);
+
+        } catch (IOException ex) {
+            Logger.getLogger(ForumController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

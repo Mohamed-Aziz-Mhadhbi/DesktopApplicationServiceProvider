@@ -78,3 +78,11 @@
     -fx-border-color: derive(-fx-pie-color, 1%);
     -fx-border-width: 0px;
 }
+
+.rating > .container .button {
+            -fx-background-color : transparent ;
+            -fx-pref-width: 20 ;
+            -fx-pref-height: 20 ;
+            -fx-background-size: cover;
+            -fx-padding: 0; 
+        }

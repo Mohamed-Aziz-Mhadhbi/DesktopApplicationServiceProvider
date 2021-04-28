@@ -8,6 +8,7 @@ package ServiceProvider.controllers;
 import Entities.Comment;
 import Entities.Forum;
 import Entities.Post;
+import Entities.User;
 import Services.CommentCRUD;
 import Services.CurseFilterService;
 import Services.ForumCRUD;
@@ -39,10 +40,10 @@ import java.sql.Connection;
 import javafx.geometry.Pos;
 import javafx.scene.chart.PieChart;
 import javafx.scene.image.ImageView;
-import javafx.scene.web.HTMLEditor;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
 import Utils.dbConnection;
+import javafx.scene.control.TextArea;
 
 /**
  * FXML Controller class
@@ -76,7 +77,7 @@ public class DetailForumController implements Initializable {
     @FXML
     private TextField tfTitlePost;
     @FXML
-    private HTMLEditor tfDescriptionPost;
+    private TextArea tfDescriptionPost;
     @FXML
     private Button btnAdd;
     @FXML
@@ -88,8 +89,6 @@ public class DetailForumController implements Initializable {
     @FXML
     private Label idP;
     Stage stage;
-    @FXML
-    private Button btnR;
 
     Forum forumTest;
     @FXML
@@ -110,7 +109,11 @@ public class DetailForumController implements Initializable {
     private Connection con;
     @FXML
     private Button btnClear;
-
+    User user = null;
+    @FXML
+    private ImageView returnBack;
+    @FXML
+    private Label UserNameSession;
     /**
      * Initializes the controller class.
      */
@@ -120,14 +123,20 @@ public class DetailForumController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
         idF.setVisible(false);
         idP.setVisible(false);
+    }
+    
+    public void setUser(User u) throws SQLException {
+        this.user = u;
+        UserNameSession.setText(cc.userName(user.getId()));
     }
 
     private void clearAll() {
         idP.setText("");
         tfTitlePost.setText("");
-        tfDescriptionPost.setHtmlText("");
+        tfDescriptionPost.setText("");
 
     }
 
@@ -136,7 +145,7 @@ public class DetailForumController implements Initializable {
     }
 
     public void setTfDescriptionPost(String tfDescriptionPost) {
-        this.tfDescriptionPost.setHtmlText(tfDescriptionPost);
+        this.tfDescriptionPost.setText(tfDescriptionPost);
     }
 
     public void setIdP(String idP) {
@@ -200,7 +209,7 @@ public class DetailForumController implements Initializable {
         PostCRUD pc = new PostCRUD();
         Post p = new Post();
         String tTitle = CurseFilterService.cleanText(tfTitlePost.getText());
-        String tDescription = CurseFilterService.cleanText(tfDescriptionPost.getHtmlText());
+        String tDescription = CurseFilterService.cleanText(tfDescriptionPost.getText());
         p.setTitle(tTitle);
         p.setDescription(tDescription);
         Integer i = Integer.valueOf(idF.getText());
@@ -226,7 +235,7 @@ public class DetailForumController implements Initializable {
     private void select(MouseEvent event) {
         Post P = tablePost.getSelectionModel().getSelectedItem();
         tfTitlePost.setText(P.getTitle());
-        tfDescriptionPost.setHtmlText(P.getDescription());
+        tfDescriptionPost.setText(P.getDescription());
         Integer idPost = P.getId();
         idP.setText(idPost.toString());
         String id = Integer.toString(P.getId());
@@ -253,7 +262,7 @@ public class DetailForumController implements Initializable {
             JOptionPane.showMessageDialog(null, "There is nothing selected !");
         } else {
 
-            pc.update(P.getId(), CurseFilterService.cleanText(tfTitlePost.getText()), CurseFilterService.cleanText(tfDescriptionPost.getHtmlText()));
+            pc.update(P.getId(), CurseFilterService.cleanText(tfTitlePost.getText()), CurseFilterService.cleanText(tfDescriptionPost.getText()));
             initTable(i);
             clearAll();
 
@@ -269,7 +278,7 @@ public class DetailForumController implements Initializable {
             String v = idP.getText();
             int idPclicked = Integer.valueOf(v);
             DetailPostController dp = loader.getController();
-            dp.setDescriptionP(tfDescriptionPost.getHtmlText());
+            dp.setDescriptionP(tfDescriptionPost.getText());
             dp.setTitleP(tfTitlePost.getText());
             dp.setIdPc(idP.getText());
             dp.setIdForum(idF.getText());
@@ -277,6 +286,7 @@ public class DetailForumController implements Initializable {
             dp.setDescriptionFourm(restDescriptionFourm.getText());
             dp.setTF(restTitleForum.getText());
             dp.setTP(">" + tfTitlePost.getText());
+            dp.setUser(this.user);
             pc.updatePostview(idPclicked);
             initTable(idPclicked);
             try {
@@ -292,24 +302,6 @@ public class DetailForumController implements Initializable {
         }
     }
 
-    @FXML
-    private void Return(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ServiceProvider/view/Forum.fxml"));
-            Parent root = loader.load();
-
-            ForumController df = loader.getController();
-            df.setTfDescriptionForum(restDescriptionFourm.getText());
-            df.setTfTitleForum(restTitleForum.getText());
-            df.setTfIdForum(idF.getText());
-            df.setTitleF(restTitleForum.getText());
-            tfTitlePost.getScene().setRoot(root);
-
-        } catch (IOException ex) {
-            Logger.getLogger(ForumController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
 
     @FXML
     private void exit(MouseEvent event) {
@@ -321,7 +313,26 @@ public class DetailForumController implements Initializable {
     private void Clear(ActionEvent event) {
         idP.setText("");
         tfTitlePost.setText("");
-        tfDescriptionPost.setHtmlText("");
+        tfDescriptionPost.setText("");
+    }
+
+    @FXML
+    private void ReturnBack(MouseEvent event) throws SQLException {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ServiceProvider/view/Forum.fxml"));
+            Parent root = loader.load();
+
+            ForumController df = loader.getController();
+            df.setTfDescriptionForum(restDescriptionFourm.getText());
+            df.setTfTitleForum(restTitleForum.getText());
+            df.setTfIdForum(idF.getText());
+            df.setTitleF(restTitleForum.getText());
+            df.setUser(this.user);
+            tfTitlePost.getScene().setRoot(root);
+
+        } catch (IOException ex) {
+            Logger.getLogger(ForumController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

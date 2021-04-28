@@ -1,4 +1,4 @@
-/*.dashboard
+.dashboard
 {
     -fx-background-color : #34669a;
     -fx-background-radius :  20;
@@ -214,11 +214,19 @@
 .linear-grad
 {
     -fx-background-color: linear-gradient(to bottom left, #11A852, #11A89E);
-}*/
+}
+
+.rating > .container .button {
+            -fx-background-color : transparent ;
+            -fx-pref-width: 20 ;
+            -fx-pref-height: 20 ;
+            -fx-background-size: cover;
+            -fx-padding: 0; 
+        }
 
 
 
-.button1
+/*.button1
 {
 -fx-background-color : #393351;
 -fx-background-radius :  30 0 0 30;
@@ -324,16 +332,13 @@
         -fx-fill : white ;
 
  }
-/* scroll bar starts here */
 
-/* The increment and decrement button CSS class of scrollbar */
 .table-view .increment-button ,.table-view .decrement-button {
     -fx-background-color:transparent;
 	-fx-background-radius: 2em;
 
 }
 
-/* The main scrollbar **track** CSS class  */
 .table-view .scroll-bar:horizontal .track,
 .table-view .scroll-bar:vertical .track{
 	-fx-background-color: transparent;
@@ -342,7 +347,6 @@
 	-fx-border-radius:2em;
 }
 
-/* The main scrollbar **thumb** CSS class which we drag every time (movable) */
 .table-view .scroll-bar:horizontal .thumb,
 .table-view .scroll-bar:vertical .thumb {
     -fx-background-color:derive( #2D75E8,90%);
@@ -351,7 +355,6 @@
 
 }
 
-/* chart properties */
 
 .chart {
     -fx-padding: 10px;
@@ -377,4 +380,4 @@
             -fx-pref-height: 20 ;
             -fx-background-size: cover;
             -fx-padding: 0; 
-        }
+        }*/

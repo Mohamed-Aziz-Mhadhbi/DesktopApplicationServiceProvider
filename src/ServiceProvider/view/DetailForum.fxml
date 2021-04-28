@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -14,7 +15,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.web.HTMLEditor?>
 
 <AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="1270.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ServiceProvider.controllers.DetailForumController">
    <children>
@@ -40,7 +40,6 @@
       <Button fx:id="btnDelete" layoutX="1165.0" layoutY="470.0" mnemonicParsing="false" onAction="#delete" prefHeight="30.0" prefWidth="74.0" styleClass="buttonCRUD" stylesheets="@stylesheet.css" text="Delete" textFill="WHITE" />
       <Button fx:id="btnDetailsPost" layoutX="844.0" layoutY="532.0" mnemonicParsing="false" onAction="#DetailsPost" prefHeight="34.0" prefWidth="67.0" styleClass="buttonCRUD" stylesheets="@stylesheet.css" text="Details" textFill="WHITE" />
       <Label fx:id="idP" layoutX="513.0" layoutY="33.0" prefHeight="41.0" prefWidth="128.0" />
-      <Button fx:id="btnR" layoutX="545.0" layoutY="29.0" mnemonicParsing="false" onAction="#Return" stylesheets="@stylesheet.css" text="R" />
       <VBox layoutY="-4.0" prefHeight="708.0" prefWidth="74.0" style="-fx-background-radius: 15 0 0 15;" styleClass="dashboard" stylesheets="@stylesheet.css">
          <children>
             <Pane prefHeight="79.0" prefWidth="74.0" style="-fx-background-radius: 15 0 15 15;">
@@ -53,7 +52,7 @@
                   </Button>
                   <ImageView fitHeight="30.0" fitWidth="34.0" layoutX="23.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../img/notification-01.png" />
+                        <Image url="@image/notification-01.png" />
                      </image>
                   </ImageView>
                   <Label layoutX="41.0" layoutY="31.0" prefHeight="17.0" prefWidth="11.0" text="1">
@@ -67,7 +66,7 @@
                <graphic>
                   <ImageView fx:id="btnprofile" fitHeight="25.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../img/user-01.png" />
+                        <Image url="@image/user-01.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -82,7 +81,7 @@
                <graphic>
                   <ImageView fitHeight="25.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../img/home-01.png" />
+                        <Image url="@image/home-01.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -91,7 +90,7 @@
                <graphic>
                   <ImageView fitHeight="25.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../img/event-01.png" />
+                        <Image url="@image/event-01.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -100,7 +99,7 @@
                <graphic>
                   <ImageView fitHeight="25.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../img/blog-01.png" />
+                        <Image url="@image/blog-01.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -124,12 +123,27 @@
             </Label>
             <ImageView fx:id="logout" fitHeight="56.0" fitWidth="56.0" layoutX="468.0" layoutY="11.0" onMousePressed="#exit" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../img/logout.png" />
+                  <Image url="@image/exit.png" />
                </image>
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
             </ImageView>
+            <ImageView fx:id="returnBack" fitHeight="45.0" fitWidth="92.0" layoutX="34.0" layoutY="16.0" onMousePressed="#ReturnBack" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@image/return.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="UserNameSession" layoutX="288.0" layoutY="23.0" prefHeight="31.0" prefWidth="164.0" text="u" textFill="WHITE">
+               <font>
+                  <Font name="Corbel" size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="94.0" layoutY="26.0" text="You are connected as :" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
       <Line endX="100.0" layoutX="615.0" layoutY="132.0" startX="100.0" startY="515.0" stroke="#b9b1b1" strokeDashOffset="2.0" />
@@ -149,6 +163,6 @@
          </font>
       </Label>
       <Button fx:id="btnClear" layoutX="1072.0" layoutY="532.0" mnemonicParsing="false" onAction="#Clear" prefHeight="34.0" prefWidth="74.0" styleClass="buttonCRUD" stylesheets="@stylesheet.css" text="Clear All" textFill="WHITE" />
-      <HTMLEditor fx:id="tfDescriptionPost" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" layoutX="733.0" layoutY="240.0" prefHeight="185.0" prefWidth="506.0" />
+      <TextArea fx:id="tfDescriptionPost" layoutX="801.0" layoutY="227.0" prefHeight="200.0" prefWidth="437.0" />
    </children>
 </AnchorPane>

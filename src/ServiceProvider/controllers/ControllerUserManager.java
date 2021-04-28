@@ -63,6 +63,8 @@ public class ControllerUserManager implements Initializable {
     User user =null;
 
     ObservableList<User> userList = FXCollections.observableArrayList();
+    @FXML
+    private Button returnButton;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -73,6 +75,7 @@ public class ControllerUserManager implements Initializable {
         }
     }
 
+    @FXML
     public void getAddView(MouseEvent mouseEvent) {
         try {
             URL url = new File("src/ServiceProvider/view/addUser.fxml").toURI().toURL();
@@ -89,6 +92,7 @@ public class ControllerUserManager implements Initializable {
 
     }
 
+    @FXML
     public void refreshTable() throws SQLException {
         ServiceUser serviceUser = new ServiceUser();
         userList.clear();
@@ -96,6 +100,7 @@ public class ControllerUserManager implements Initializable {
         usersTable.setItems(userList);
     }
 
+    @FXML
     public void print(MouseEvent mouseEvent) {
     }
 
@@ -250,6 +255,7 @@ public class ControllerUserManager implements Initializable {
         usersTable.setItems(sortedData);
     }
 
+    @FXML
     public void goBack(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/ServiceProvider/view/main.fxml"));
         Scene scene = new Scene(root);

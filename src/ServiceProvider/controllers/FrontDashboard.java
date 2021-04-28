@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -54,7 +55,7 @@ public class FrontDashboard implements Initializable {
     }
 
     public void setUser(User userlogin) {
-        this.user=userlogin;
+        this.user = userlogin;
     }
 
     @FXML
@@ -86,16 +87,13 @@ public class FrontDashboard implements Initializable {
     }
 
     @FXML
-    private void showForum(ActionEvent event) {
+    private void showForum(ActionEvent event) throws IOException, SQLException {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-         try {
-              Parent root = FXMLLoader.load(getClass().getResource("/ServiceProvider/view/Forum.fxml"));
-            Scene scene = new Scene(root);
-            stage.setTitle("Service Provider");
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException ex) {
-            Logger.getLogger(FrontDashboard.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ServiceProvider/view/Forum.fxml"));
+        stage.setScene(new Scene(loader.load()));
+        ForumController fc = loader.getController();
+        fc.setUser(this.user);
+
+        stage.show();
     }
 }

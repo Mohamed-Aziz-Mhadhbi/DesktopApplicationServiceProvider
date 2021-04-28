@@ -38,7 +38,6 @@
       <Button fx:id="btnDelete" layoutX="1125.0" layoutY="482.0" mnemonicParsing="false" onAction="#delete" prefHeight="30.0" prefWidth="74.0" styleClass="buttonCRUD" stylesheets="@stylesheet.css" text="Delete" textFill="WHITE" />
       <TextField fx:id="rating" layoutX="798.0" layoutY="414.0" prefHeight="25.0" prefWidth="177.0" />
       <Label fx:id="idC" layoutX="493.0" layoutY="135.0" prefHeight="25.0" prefWidth="31.0" />
-      <Button fx:id="btnR" layoutX="701.0" layoutY="160.0" mnemonicParsing="false" onAction="#Return" text="R" />
       <Label fx:id="idForum" layoutX="469.0" layoutY="426.0" prefHeight="30.0" prefWidth="110.0" text="  " />
       <Label fx:id="titleForum" layoutX="132.0" layoutY="49.0" prefHeight="45.0" prefWidth="286.0" underline="true">
          <font>
@@ -57,7 +56,7 @@
                   </Button>
                   <ImageView fitHeight="30.0" fitWidth="34.0" layoutX="23.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../img/notification-01.png" />
+                        <Image url="@image/notification-01.png" />
                      </image>
                   </ImageView>
                   <Label layoutX="41.0" layoutY="31.0" prefHeight="17.0" prefWidth="11.0" text="1">
@@ -71,7 +70,7 @@
                <graphic>
                   <ImageView fx:id="btnprofile" fitHeight="25.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../img/user-01.png" />
+                        <Image url="@image/user-01.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -86,7 +85,7 @@
                <graphic>
                   <ImageView fitHeight="25.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../img/home-01.png" />
+                        <Image url="@image/home-01.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -95,7 +94,7 @@
                <graphic>
                   <ImageView fitHeight="25.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../img/event-01.png" />
+                        <Image url="@image/event-01.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -104,7 +103,7 @@
                <graphic>
                   <ImageView fitHeight="25.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../img/blog-01.png" />
+                        <Image url="@image/blog-01.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -128,12 +127,27 @@
             </Label>
             <ImageView fx:id="logout" fitHeight="56.0" fitWidth="56.0" layoutX="445.0" layoutY="11.0" onMousePressed="#exit" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../img/logout.png" />
+                  <Image url="@image/exit.png" />
                </image>
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
             </ImageView>
+            <ImageView fx:id="returnBack" fitHeight="45.0" fitWidth="92.0" layoutX="34.0" layoutY="16.0" onMousePressed="#ReturnBack" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@image/return.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="UserNameSession" layoutX="273.0" layoutY="23.0" prefHeight="31.0" prefWidth="164.0" text="u" textFill="WHITE">
+               <font>
+                  <Font name="Corbel" size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="79.0" layoutY="26.0" text="You are connected as :" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
       <Line endX="100.0" layoutX="639.0" layoutY="136.0" startX="100.0" startY="515.0" stroke="#b9b1b1" strokeDashOffset="2.0" />
@@ -156,5 +170,6 @@
       <TextArea fx:id="contentC" layoutX="796.0" layoutY="185.0" prefHeight="200.0" prefWidth="391.0" />
       <Rating fx:id="RatingPost" disable="true" layoutX="275.0" layoutY="481.0" partialRating="true" rating="0.0" stylesheets="@stylesheet.css" />
       <Rating fx:id="RatingCommet" layoutX="992.0" layoutY="410.0" rating="0.0" stylesheets="@stylesheet.css" />
+      <Label text="Label" />
    </children>
 </AnchorPane>

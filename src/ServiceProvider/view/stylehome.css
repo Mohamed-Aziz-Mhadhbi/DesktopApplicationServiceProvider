@@ -66,3 +66,11 @@
 .fill-light-green{
     -fx-background-color: #9bdc90;
 }
+
+.rating > .container .button {
+            -fx-background-color : transparent ;
+            -fx-pref-width: 20 ;
+            -fx-pref-height: 20 ;
+            -fx-background-size: cover;
+            -fx-padding: 0; 
+        }

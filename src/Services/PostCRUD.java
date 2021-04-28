@@ -19,18 +19,18 @@ import javax.swing.JOptionPane;
 import Utils.dbConnection;
 import java.sql.Connection;
 
-
 /**
  *
  * @author ASUS
  */
 public class PostCRUD {
-  Connection cnx;
-       
+
+    Connection cnx;
+
     public PostCRUD() {
-         cnx = dbConnection.getInstance().getConnection();
+        cnx = dbConnection.getInstance().getConnection();
     }
- 
+
     public List<Post> getPosts() {
         List<Post> myList = new ArrayList();
         try {
@@ -99,7 +99,7 @@ public class PostCRUD {
     }
 
     public void addPost(Post p, int i) {
-       
+
         try {
             String requete = "INSERT INTO post (usr_id,frm_id,title,description,views,noc,creat_at)"
                     + "VALUES (1,?,?,?,?,?,sysdate())";
@@ -110,7 +110,7 @@ public class PostCRUD {
             pst.setString(3, p.getDescription());
             pst.setInt(4, 0);
             pst.setInt(5, 0);
-            
+
             pst.executeUpdate();
             System.out.println("Post added!");
         } catch (SQLException ex) {
@@ -126,12 +126,14 @@ public class PostCRUD {
         JOptionPane.showMessageDialog(null, "post supprimé avec succées");
         return true;
     }
-public boolean updatePostview(int id) throws SQLException {
+
+    public boolean updatePostview(int id) throws SQLException {
         PreparedStatement pre = cnx.prepareStatement("UPDATE post SET views= views+1   WHERE id='" + id + "' ;");
-       // JOptionPane.showMessageDialog(null, "Post update avec succées");
+        // JOptionPane.showMessageDialog(null, "Post update avec succées");
         pre.executeUpdate();
         return true;
     }
+
     public boolean update(int id, String title, String description) throws SQLException {
         PreparedStatement pre = cnx.prepareStatement("UPDATE post SET title= '" + title + "' , description='" + description + "' WHERE id='" + id + "' ;");
         JOptionPane.showMessageDialog(null, "Post update avec succées");
@@ -152,22 +154,22 @@ public boolean updatePostview(int id) throws SQLException {
             int noc = rs.getInt("noc");
             int views = rs.getInt("views");
 
-            Post d = new Post(id, title, description,noc,views);
+            Post d = new Post(id, title, description, noc, views);
             oblistdisc.add(d);
 
         }
         return oblistdisc;
     }
-    
-    public Post findById(int id){
+
+    public Post findById(int id) {
 
         try {
-            String request = "SELECT * FROM post where id = "+ id;
+            String request = "SELECT * FROM post where id = " + id;
             PreparedStatement pst = cnx.prepareStatement(request);
             ResultSet rs = pst.executeQuery(request);
             Post post = new Post();
             while (rs.next()) {
-             
+
                 post.setId(rs.getInt("id"));
                 post.setTitle(rs.getString("title"));
                 post.setDescription(rs.getString("description"));
@@ -176,8 +178,6 @@ public boolean updatePostview(int id) throws SQLException {
                 post.setDate(rs.getString("date"));
                 post.setIdF(rs.getInt("idF"));
 
-                    
-                
             }
             return post;
 
@@ -186,18 +186,29 @@ public boolean updatePostview(int id) throws SQLException {
         }
         return null;
     }
-    
-      public Double getAvgRating(int value) throws SQLException 
-    {
+
+    public Double getAvgRating(int value) throws SQLException {
         int count = 0;
         Double total = 0.0;
-        ResultSet rs = cnx.createStatement().executeQuery("select * from  comment where pst_id = '" +value+"';");
-            while (rs.next()) {
-        total = total + rs.getDouble("rating");
-        count ++;
-                }
-        if(count>0)return total/count;
+        ResultSet rs = cnx.createStatement().executeQuery("select * from  comment where pst_id = '" + value + "';");
+        while (rs.next()) {
+            total = total + rs.getDouble("rating");
+            count++;
+        }
+        if (count > 0) {
+            return total / count;
+        }
         return 0.0;
+    }
+
+    public String userName(int id) throws SQLException {
+        String name = "";
+        ResultSet rs = cnx.createStatement().executeQuery("select * from  user where id='" + id + "';");
+        while (rs.next()) {
+            name = rs.getString("username");
+            return name;
+        }
+        return name;
     }
 
 }

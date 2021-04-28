@@ -7,9 +7,13 @@ package ServiceProvider.controllers;
 
 import Entities.Forum;
 import Entities.Post;
+import Entities.User;
 import Services.CurseFilterService;
 import Services.ForumCRUD;
 import Services.PostCRUD;
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.type.PhoneNumber;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
@@ -42,6 +46,9 @@ import java.util.HashSet;
 import java.util.Set;
 import javafx.collections.transformation.SortedList;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -62,7 +69,7 @@ public class ForumController implements Initializable {
     @FXML
     private TextField tfTitleForum;
     @FXML
-    private HTMLEditor tfDescriptionForum;
+    private TextArea tfDescriptionForum;
     @FXML
     private TableView<Forum> tableFourm;
     @FXML
@@ -77,13 +84,13 @@ public class ForumController implements Initializable {
     private Button btnDetails;
     @FXML
     private Label tfIdForum;
-    
+
     private static int idf;
-    
+
     ObservableList<Forum> oblistdisc = FXCollections.observableArrayList();
     ForumCRUD fc = new ForumCRUD();
     PostCRUD pc = new PostCRUD();
-   
+
     @FXML
     private TextField cherche;
     Stage stage;
@@ -111,13 +118,23 @@ public class ForumController implements Initializable {
 
     String[] words;
 
+    User user = null;
+    @FXML
+    private Label User_name_creater;
+    @FXML
+    private Button home;
+    @FXML
+    private ImageView returnBack;
+    @FXML
+    private Label UserNameSession;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO  
-        
+       send("cv ya gatous el sms yekhdem");
         loadwebview();
         initTable();
         tfIdForum.setVisible(false);
@@ -140,12 +157,16 @@ public class ForumController implements Initializable {
         });
     }
 
-    private void loadwebview()
-    {
+    public void setUser(User u) throws SQLException {
+        this.user = u;
+        UserNameSession.setText(fc.userName(user.getId()));
+    }
+
+    private void loadwebview() {
         engine = webviewforum.getEngine();
         engine.loadContent("<p>dfqdsfqsdffff</p>");
     }
-    
+
     private void learnWord(String text) {
         possibleWordSet.add(text);
         if (autoCompletionBinding != null) {
@@ -159,7 +180,7 @@ public class ForumController implements Initializable {
     }
 
     public void setTfDescriptionForum(String tfDescriptionForum) {
-        this.tfDescriptionForum.setHtmlText(tfDescriptionForum);
+        this.tfDescriptionForum.setText(tfDescriptionForum);
     }
 
     public void setTfIdForum(String tfIdForum) {
@@ -176,7 +197,7 @@ public class ForumController implements Initializable {
 
     private void clearAll() {
         tfTitleForum.setText("");
-        tfDescriptionForum.setHtmlText("");
+        tfDescriptionForum.setText("");
         tfIdForum.setText("");
 
     }
@@ -187,7 +208,7 @@ public class ForumController implements Initializable {
             oblistdisc = (ObservableList<Forum>) fc.readAlldiscc();
             col_title.setCellValueFactory(new PropertyValueFactory<>("title"));
             tableFourm.setItems(oblistdisc);
-            
+
             FilteredList<Forum> filteredData = new FilteredList<>(oblistdisc, b -> true);
 
             cherche.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -227,7 +248,7 @@ public class ForumController implements Initializable {
 
     @FXML
     private void ajouter(ActionEvent event) throws FileNotFoundException {
-        if (tfTitleForum.getText().isEmpty() || tfDescriptionForum.getHtmlText().isEmpty()) {
+        if (tfTitleForum.getText().isEmpty() || tfDescriptionForum.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "please fill all the textfields");
         } else {
 
@@ -239,13 +260,14 @@ public class ForumController implements Initializable {
             Forum f = new Forum();
             //Forum f = new Forum(CurseFilterService.cleanText(txftitre.getText()), CurseFilterService.cleanText(txfcontenu.getText()), txftheme.getValue());
             String tTitle = CurseFilterService.cleanText(tfTitleForum.getText());
-            String tDescription = CurseFilterService.cleanText(tfDescriptionForum.getHtmlText());
+            String tDescription = CurseFilterService.cleanText(tfDescriptionForum.getText());
+            f.setId_user(user.getId());
             f.setTitle(tTitle);
             f.setDescription(tDescription);
             pc.addForum(f);
             clearAll();
             initTable();
-            
+
             Image img = new Image("/ServiceProvider/view/image/ok.png");
             Notifications notifAdd = Notifications.create()
                     .title("add complet")
@@ -257,7 +279,6 @@ public class ForumController implements Initializable {
         }
     }
 
-   
     @FXML
     private void delete(ActionEvent event) throws SQLException {
 
@@ -275,44 +296,43 @@ public class ForumController implements Initializable {
         Forum F = tableFourm.getSelectionModel().getSelectedItem();
         if (F == null) {
             JOptionPane.showMessageDialog(null, "There is nothing selected !");
+        } else if (tfTitleForum.getText().isEmpty() || tfDescriptionForum.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "please fill all the textfields ");
         } else {
-            if (tfTitleForum.getText().isEmpty() || tfDescriptionForum.getHtmlText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "please fill all the textfields ");
-            } else {
-                controleDescription.setText("");
-                controleTitle.setText("");
-                fc.update(F.getId(), CurseFilterService.cleanText(tfTitleForum.getText()), CurseFilterService.cleanText(tfDescriptionForum.getHtmlText()));
-                initTable();
-                clearAll();
-            }
+            controleDescription.setText("");
+            controleTitle.setText("");
+            fc.update(F.getId(), CurseFilterService.cleanText(tfTitleForum.getText()), CurseFilterService.cleanText(tfDescriptionForum.getText()));
+            initTable();
+            clearAll();
         }
     }
 
     @FXML
-    private void handleAction(MouseEvent event
-    ) {
+    private void handleAction(MouseEvent event) throws SQLException {
         Forum F = tableFourm.getSelectionModel().getSelectedItem();
         tfTitleForum.setText(F.getTitle());
-        tfDescriptionForum.setHtmlText(F.getDescription());
+        tfDescriptionForum.setText(F.getDescription());
         String id = Integer.toString(F.getId());
         titleF.setText(F.getTitle());
         tfIdForum.setText(id);
         engine = webviewforum.getEngine();
         engine.loadContent(F.getDescription());
+        User_name_creater.setText(fc.userName(F.getId_user()));
     }
 
     @FXML
-    private void detailsForum(ActionEvent event) {
+    private void detailsForum(ActionEvent event) throws SQLException {
         try {
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ServiceProvider/view/DetailForum.fxml"));
             Parent root = loader.load();
 
             DetailForumController dc = loader.getController();
-            dc.setRestDescriptionFourm(tfDescriptionForum.getHtmlText());
+            dc.setRestDescriptionFourm(tfDescriptionForum.getText());
             dc.setRestTitleForum(tfTitleForum.getText());
             dc.setRestIdFourm(tfIdForum.getText());
             dc.setTforum(tfTitleForum.getText());
+            dc.setUser(this.user);
             try {
 
                 dc.initTable((ObservableList<Post>) pc.readAllpost2(Integer.parseInt(tfIdForum.getText())));
@@ -333,13 +353,13 @@ public class ForumController implements Initializable {
         stage.close();
     }
 
-    public void addForum(int id, String title, String description) {
+    public void addForum(int us_id, int id, String title, String description) {
 
         VBox v = new VBox();
 
         Label titreF = new Label(title);
         Label descriptionF = new Label(description);
-        Forum f = new Forum(id, title, description);
+        Forum f = new Forum(us_id, id, title, description);
 
         titreF.setStyle("-fx-font-weight: bold; -fx-underline: true;-fx-text-fill: black;");
         titreF.setFont(Font.font("Calibri", 35));
@@ -353,16 +373,16 @@ public class ForumController implements Initializable {
                 Parent root = loader.load();
 
                 DetailForumController dc = loader.getController();
-                dc.setRestDescriptionFourm(tfDescriptionForum.getHtmlText());
+                dc.setRestDescriptionFourm(tfDescriptionForum.getText());
                 dc.setRestTitleForum(tfTitleForum.getText());
                 dc.setRestIdFourm(tfIdForum.getText());
                 dc.setTforum(tfTitleForum.getText());
                 System.out.println(tfIdForum.getText());
-                
+
                 try {
 
                     dc.initTable((ObservableList<Post>) pc.readAllpost2(Integer.parseInt(tfIdForum.getText())));
-                
+                    
                 } catch (SQLException ex) {
                     Logger.getLogger(ForumController.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -372,15 +392,14 @@ public class ForumController implements Initializable {
                 Logger.getLogger(ForumController.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
-        
-       
+
     }
 
     public void affForm() {
         ForumCRUD fc = new ForumCRUD();
         fc.getForums().forEach(l
                 -> {
-            addForum(l.getId(), l.getTitle(), l.getDescription());
+            addForum(l.getId_user(), l.getId(), l.getTitle(), l.getDescription());
         });
     }
 
@@ -393,7 +412,7 @@ public class ForumController implements Initializable {
             Parent root = loader.load();
 
             BackForumController dc = loader.getController();
-
+            dc.setUser(this.user);
             tfTitleForum.getScene().setRoot(root);
 
         } catch (IOException ex) {
@@ -404,9 +423,47 @@ public class ForumController implements Initializable {
     @FXML
     private void Clear(ActionEvent event) {
         tfTitleForum.setText("");
-        tfDescriptionForum.setHtmlText("");
+        tfDescriptionForum.setText("");
         tfIdForum.setText("");
     }
-     
 
+    @FXML
+    private void goBack(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ServiceProvider/view/frontDashboard.fxml"));
+
+        Scene scene = new Scene(loader.load());
+        FrontDashboard controller = loader.getController();
+        controller.setUser(user);
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
+
+    }
+
+    @FXML
+    private void ReturnBack(MouseEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ServiceProvider/view/frontDashboard.fxml"));
+
+        Scene scene = new Scene(loader.load());
+        FrontDashboard controller = loader.getController();
+        controller.setUser(user);
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    
+    public void send(String s){
+          String ACCOUNT_SID =
+            "ACeae56ad9a208156cf50516b60c09a996";
+     String AUTH_TOKEN =
+            "c54c96cef7b9cb9f0936f2b4859237f8";
+          Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+      
+       Message message = Message.creator(new PhoneNumber("+21690521296"),
+        new PhoneNumber("+19724417768"),s).create();
+    
+    }
 }

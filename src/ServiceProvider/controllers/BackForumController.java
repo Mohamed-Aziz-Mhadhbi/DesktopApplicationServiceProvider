@@ -8,6 +8,7 @@ package ServiceProvider.controllers;
 import Entities.Comment;
 import Entities.Forum;
 import Entities.Post;
+import Entities.User;
 import Services.CommentCRUD;
 import Services.ForumCRUD;
 import Services.PostCRUD;
@@ -110,6 +111,8 @@ public class BackForumController implements Initializable {
     private Label Forum;
     @FXML
     private Button PDF;
+    User user = null;
+    
    public BackForumController()
     {
     con = dbConnection.getInstance().getConnection();
@@ -121,6 +124,10 @@ public class BackForumController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         initTableF();
+    }
+    public void setUser(User u) {
+        this.user = u;
+        System.out.println(user.getNom());
     }
 
     public void loadData2(int idd) {

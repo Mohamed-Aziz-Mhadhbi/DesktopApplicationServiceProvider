@@ -30,23 +30,6 @@ public class CommentCRUD {
         cnx = dbConnection.getInstance().getConnection();
     }
 
-    public ObservableList<Comment> readAlldiscc() throws SQLException {
-        ObservableList oblistdisc = FXCollections.observableArrayList();
-
-        Statement st = cnx.createStatement();
-        ResultSet rs = st.executeQuery("select * from  comment;");
-        while (rs.next()) {
-            int id = rs.getInt("id");
-            String title = rs.getString("title");
-            String description = rs.getString("description");
-
-            Forum d = new Forum(id, title, description);
-            oblistdisc.add(d);
-
-        }
-        return oblistdisc;
-    }
-
     public ObservableList<Comment> readAllcomment2(int idd) throws SQLException {
 
         ObservableList oblistpost = FXCollections.observableArrayList();
@@ -113,6 +96,16 @@ public class CommentCRUD {
         System.out.println("Comment updated successfully");
         pre.executeUpdate();
         return true;
+    }
+
+    public String userName(int id) throws SQLException {
+        String name = "";
+        ResultSet rs = cnx.createStatement().executeQuery("select * from  user where id='" + id + "';");
+        while (rs.next()) {
+            name = rs.getString("username");
+            return name;
+        }
+        return name;
     }
 
 }

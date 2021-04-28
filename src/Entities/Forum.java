@@ -13,29 +13,38 @@ import java.util.List;
  * @author ASUS
  */
 public class Forum {
-   private int id ;
-   private String title;
-   private String description ; 
-   
-   private List<Post> posts;
+
+    private int id;
+    private String title, description;
+    private int id_user;
+
+    private List<Post> posts;
 
     public Forum() {
         posts = new ArrayList<>();
     }
 
-    public Forum(int id, String title, String description) {
-         posts = new ArrayList<>();
+    public Forum(int id_user,int id, String title, String description) {
+        posts = new ArrayList<>();
         this.id = id;
+        this.title = title;
+        this.description = description;
+        this.id_user = id_user;
+    }
+
+    public Forum(String title, String description) {
+        posts = new ArrayList<>();
         this.title = title;
         this.description = description;
     }
 
-    public Forum(String title, String description) {
-         posts = new ArrayList<>();
-        this.title = title;
-        this.description = description;
+    public int getId_user() {
+        return id_user;
     }
-    
+
+    public void setId_user(int id_user) {
+        this.id_user = id_user;
+    }
 
     public int getId() {
         return id;
@@ -63,10 +72,8 @@ public class Forum {
 
     @Override
     public String toString() {
-        return "Forum{" + "id=" + id + ", title=" + title + ", description=" + description + ", posts=" + posts + '}';
+        return "Forum{" + "id=" + id + ", title=" + title + ", description=" + description + ", id_user=" + id_user + '}';
     }
 
-   
-   
    
 }

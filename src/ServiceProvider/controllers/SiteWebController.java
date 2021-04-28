@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package esprit.controller;
+package ServiceProvider.controllers;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -15,7 +15,7 @@ import javafx.scene.web.WebView;
 /**
  * FXML Controller class
  *
- * @author Mohamed Aziz Mhadhbi
+ * @author Asus
  */
 public class SiteWebController implements Initializable {
 
@@ -30,7 +30,7 @@ public class SiteWebController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         engine = SiteWeb.getEngine();
-        engine.load("https://www.google.com/");
+        engine.load("http://127.0.0.1:8000");
     }    
     
 }

@@ -34,11 +34,12 @@ public class ForumCRUD {
     public void addForum(Forum f) {
         try {
             String requete = "INSERT INTO forum (us_id,title,description,creat_at)"
-                    + "VALUES (1,?,?,sysdate())";
+                    + "VALUES (?,?,?,sysdate())";
             PreparedStatement pst = cnx.prepareStatement(requete);
+            pst.setInt(1, f.getId_user());
+            pst.setString(2, f.getTitle());
+            pst.setString(3, f.getDescription());
 
-            pst.setString(1, f.getTitle());
-            pst.setString(2, f.getDescription());
             pst.executeUpdate();
             System.out.println("Forum added!");
         } catch (SQLException ex) {
@@ -53,11 +54,12 @@ public class ForumCRUD {
         Statement st = cnx.createStatement();
         ResultSet rs = st.executeQuery("select * from forum ;");
         while (rs.next()) {
+            int us_id = rs.getInt("us_id");
             int id = rs.getInt("id");
             String title = rs.getString("title");
             String description = rs.getString("description");
 
-            Forum d = new Forum(id, title, description);
+            Forum d = new Forum(us_id, id, title, description);
             oblistdisc.add(d);
 
         }
@@ -72,7 +74,8 @@ public class ForumCRUD {
             ResultSet rs = st.executeQuery(requete);
             while (rs.next()) {
                 Forum f = new Forum();
-                f.setId(rs.getInt(1));
+                f.setId(rs.getInt("id"));
+                f.setId_user(rs.getInt("us_id"));
                 f.setTitle(rs.getString("title"));
                 f.setDescription(rs.getString("description"));
                 myList.add(f);
@@ -108,12 +111,12 @@ public class ForumCRUD {
         Statement st = cnx.createStatement();
         ResultSet rs = st.executeQuery("select * from forum where title='" + titlee + "';");
         while (rs.next()) {
-            int id = rs.getInt(1);
-
+            int id = rs.getInt("id");
+            int us_id = rs.getInt("us_id");
             String title = rs.getString("title");
             String description = rs.getString("description");
 
-            Forum f = new Forum(id, title, description);
+            Forum f = new Forum(us_id, id, title, description);
             arr.add(f);
 
         }
@@ -129,7 +132,7 @@ public class ForumCRUD {
             ResultSet rs = pst.executeQuery(request);
             Forum forum = new Forum();
             while (rs.next()) {
-
+                forum.setId_user(rs.getInt("us_id"));
                 forum.setId(rs.getInt("id"));
                 forum.setTitle(rs.getString("title"));
                 forum.setDescription(rs.getString("description"));
@@ -156,5 +159,15 @@ public class ForumCRUD {
             System.out.println(ex.getMessage());
         }
         return myList;
+    }
+
+    public String userName(int id) throws SQLException {
+        String name = "";
+        ResultSet rs = cnx.createStatement().executeQuery("select * from  user where id='" + id + "';");
+        while (rs.next()) {
+            name = rs.getString("username");
+            return name;
+        }
+        return name;
     }
 }

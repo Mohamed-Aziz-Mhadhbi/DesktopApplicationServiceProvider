@@ -23,6 +23,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class UserProfile implements Initializable {
+
     public Button btnReturn;
     public ImageView profilePhoto;
     public Text username;
@@ -58,7 +59,7 @@ public class UserProfile implements Initializable {
     }
 
     public void editProfile(MouseEvent mouseEvent) throws IOException {
-        FXMLLoader loader = new FXMLLoader ();
+        FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/ServiceProvider/view/updateFreelancer.fxml"));
         loader.load();
         UpdateFreelancer updateFreelancer = loader.getController();
@@ -68,6 +69,8 @@ public class UserProfile implements Initializable {
         stage.setScene(new Scene(parent));
         stage.initStyle(StageStyle.UTILITY);
         stage.show();
+        refresh();
+
     }
 
     public void changePassword(MouseEvent mouseEvent) {
@@ -78,15 +81,15 @@ public class UserProfile implements Initializable {
         this.user = u;
         username.setText(user.getUsername());
         email.setText(user.getEmail());
-        String flname= user.getPrenom()+" "+user.getNom();
+        String flname = user.getPrenom() + " " + user.getNom();
         name.setText(flname);
         aboutMe.setText(user.getBio());
-        specialisation.setText(user.getSpecialisation()); 
+        specialisation.setText(user.getSpecialisation());
         salary.setText(String.valueOf(user.getMontantHoraire()));
         phone.setText(String.valueOf(user.getPhone()));
-        if(!user.getPhoto().isEmpty()){
-            String path=user.getPhoto();
-            File file= new File(path);
+        if (!user.getPhoto().isEmpty()) {
+            String path = user.getPhoto();
+            File file = new File(path);
             BufferedImage bf;
             bf = ImageIO.read(file);
             Image image = SwingFXUtils.toFXImage(bf, null);
@@ -94,6 +97,15 @@ public class UserProfile implements Initializable {
         }
     }
 
-
+    public void refresh() throws IOException {
+        username.setText(user.getUsername());
+        email.setText(user.getEmail());
+        String flname = user.getPrenom() + " " + user.getNom();
+        name.setText(flname);
+        aboutMe.setText(user.getBio());
+        specialisation.setText(user.getSpecialisation());
+       
+        
+    }
 
 }
