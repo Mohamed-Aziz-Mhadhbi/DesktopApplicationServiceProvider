@@ -134,7 +134,7 @@ public class ForumController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO  
-       send("cv ya gatous el sms yekhdem");
+        //send("Ahla aamti ena aziz romdanek mabrouk o kol aam o enty haya b khir");
         loadwebview();
         initTable();
         tfIdForum.setVisible(false);
@@ -382,7 +382,7 @@ public class ForumController implements Initializable {
                 try {
 
                     dc.initTable((ObservableList<Post>) pc.readAllpost2(Integer.parseInt(tfIdForum.getText())));
-                    
+
                 } catch (SQLException ex) {
                     Logger.getLogger(ForumController.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -454,16 +454,16 @@ public class ForumController implements Initializable {
         stage.show();
     }
 
-    
-    public void send(String s){
-          String ACCOUNT_SID =
-            "ACeae56ad9a208156cf50516b60c09a996";
-     String AUTH_TOKEN =
-            "c54c96cef7b9cb9f0936f2b4859237f8";
-          Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
-      
-       Message message = Message.creator(new PhoneNumber("+21690521296"),
-        new PhoneNumber("+19724417768"),s).create();
-    
+    public void send(String s) {
+        String ACCOUNT_SID
+                = "ACeae56ad9a208156cf50516b60c09a996";
+        String AUTH_TOKEN
+                = "1b707de90e9eedaafd54b905904e5c5d";
+        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+
+        Message message = Message.creator(new PhoneNumber("+21690521296"),
+                new PhoneNumber("+19724417768"), s).create();
+
     }
+
 }

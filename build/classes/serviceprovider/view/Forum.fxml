@@ -19,21 +19,21 @@
 
 <AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="1270.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ServiceProvider.controllers.ForumController">
    <children>
-      <Label layoutX="741.0" layoutY="130.0" text="Title :" />
-      <Label layoutX="741.0" layoutY="190.0" text="Description :" />
-      <TextField fx:id="tfTitleForum" layoutX="888.0" layoutY="127.0" prefHeight="25.0" prefWidth="189.0" />
-      <Button layoutX="872.0" layoutY="484.0" mnemonicParsing="false" onAction="#ajouter" prefHeight="34.0" prefWidth="85.0" styleClass="buttonCRUD" stylesheets="@stylesheet.css" text="Add" textFill="WHITE" />
+      <Label layoutX="737.0" layoutY="191.0" text="Title :" />
+      <Label layoutX="737.0" layoutY="299.0" text="Description :" />
+      <TextField fx:id="tfTitleForum" layoutX="829.0" layoutY="187.0" prefHeight="25.0" prefWidth="189.0" />
+      <Button layoutX="765.0" layoutY="453.0" mnemonicParsing="false" onAction="#ajouter" prefHeight="34.0" prefWidth="85.0" styleClass="buttonCRUD" stylesheets="@stylesheet.css" text="Add" textFill="WHITE" />
       <TableView fx:id="tableFourm" layoutX="90.0" layoutY="162.0" onMouseClicked="#handleAction" prefHeight="537.0" prefWidth="207.0" stylesheets="@stylesheet.css" AnchorPane.bottomAnchor="0.0">
         <columns>
           <TableColumn fx:id="col_title" prefWidth="272.0" text="Title" />
         </columns>
       </TableView>
-      <Button fx:id="btnDeleteForum" layoutX="1140.0" layoutY="482.0" mnemonicParsing="false" onAction="#delete" prefHeight="34.0" prefWidth="85.0" styleClass="buttonCRUD" stylesheets="@stylesheet.css" text="Delete" textFill="WHITE" />
-      <Button layoutX="1003.0" layoutY="484.0" mnemonicParsing="false" onAction="#update" prefHeight="34.0" prefWidth="85.0" styleClass="buttonCRUD" stylesheets="@stylesheet.css" text="Update" textFill="WHITE" />
+      <Button fx:id="btnDeleteForum" layoutX="952.0" layoutY="453.0" mnemonicParsing="false" onAction="#delete" prefHeight="34.0" prefWidth="85.0" styleClass="buttonCRUD" stylesheets="@stylesheet.css" text="Delete" textFill="WHITE" />
+      <Button layoutX="860.0" layoutY="453.0" mnemonicParsing="false" onAction="#update" prefHeight="34.0" prefWidth="85.0" styleClass="buttonCRUD" stylesheets="@stylesheet.css" text="Update" textFill="WHITE" />
       <TextField fx:id="cherche" layoutX="452.0" layoutY="64.0" />
       <Label fx:id="controleTitle" layoutX="888.0" layoutY="165.0" prefHeight="34.0" prefWidth="268.0" textFill="RED" />
       <Label fx:id="controleDescription" layoutX="957.0" layoutY="408.0" prefHeight="34.0" prefWidth="278.0" textFill="RED" />
-      <Button fx:id="btnDetails" layoutX="931.0" layoutY="568.0" minWidth="33.0" mnemonicParsing="false" onAction="#detailsForum" prefHeight="34.0" prefWidth="85.0" styleClass="buttonCRUD" stylesheets="@stylesheet.css" text="Details" textFill="WHITE" />
+      <Button fx:id="btnDetails" layoutX="1129.0" layoutY="453.0" minWidth="33.0" mnemonicParsing="false" onAction="#detailsForum" prefHeight="34.0" prefWidth="85.0" styleClass="buttonCRUD" stylesheets="@stylesheet.css" text="Details" textFill="WHITE" />
       <Label fx:id="tfIdForum" layoutX="90.0" layoutY="39.0" prefHeight="27.0" prefWidth="38.0" />
       <VBox layoutY="-2.0" prefHeight="700.0" prefWidth="74.0" style="-fx-background-radius: 15 0 0 15;" styleClass="dashboard" stylesheets="@stylesheet.css">
          <children>
@@ -151,7 +151,7 @@
             <Font size="15.0" />
          </font>
       </Label>
-      <Button fx:id="btnClear" layoutX="1088.0" layoutY="568.0" mnemonicParsing="false" onAction="#Clear" prefHeight="34.0" prefWidth="74.0" styleClass="buttonCRUD" stylesheets="@stylesheet.css" text="Clear All" textFill="WHITE" />
+      <Button fx:id="btnClear" layoutX="1045.0" layoutY="453.0" mnemonicParsing="false" onAction="#Clear" prefHeight="34.0" prefWidth="74.0" styleClass="buttonCRUD" stylesheets="@stylesheet.css" text="Clear All" textFill="WHITE" />
       <WebView fx:id="webviewforum" layoutX="305.0" layoutY="162.0" prefHeight="308.0" prefWidth="369.0" />
       <TextArea fx:id="tfDescriptionForum" layoutX="829.0" layoutY="216.0" prefHeight="200.0" prefWidth="335.0" />
       <Label fx:id="User_name_creater" layoutX="90.0" layoutY="125.0" prefHeight="17.0" prefWidth="207.0">

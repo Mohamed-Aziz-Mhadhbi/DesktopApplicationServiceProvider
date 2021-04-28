@@ -48,6 +48,7 @@ import javafx.scene.input.MouseEvent;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import Utils.dbConnection;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -96,7 +97,7 @@ public class BackForumController implements Initializable {
     @FXML
     private PieChart statPostviews;
     ObservableList<PieChart.Data> statPostdata;
-   private Connection con;
+    private Connection con;
     @FXML
     private PieChart statPostnoc;
     @FXML
@@ -112,11 +113,14 @@ public class BackForumController implements Initializable {
     @FXML
     private Button PDF;
     User user = null;
-    
-   public BackForumController()
-    {
-    con = dbConnection.getInstance().getConnection();
+    @FXML
+    private ImageView exit;
+    Stage stage;
+
+    public BackForumController() {
+        con = dbConnection.getInstance().getConnection();
     }
+
     /**
      * Initializes the controller class.
      */
@@ -125,9 +129,9 @@ public class BackForumController implements Initializable {
         // TODO
         initTableF();
     }
+
     public void setUser(User u) {
         this.user = u;
-        System.out.println(user.getNom());
     }
 
     public void loadData2(int idd) {
@@ -162,7 +166,8 @@ public class BackForumController implements Initializable {
         }
 
     }
- public void loadData1(int idd) {
+
+    public void loadData1(int idd) {
         ObservableList<PieChart.Data> pieChartData2 = FXCollections.observableArrayList();
         String query2 = "SELECT noc FROM post WHERE frm_id ='" + idd + "';";
         Statement st;
@@ -194,6 +199,7 @@ public class BackForumController implements Initializable {
         }
 
     }
+
     private void initTableF() {
 
         try {
@@ -258,23 +264,23 @@ public class BackForumController implements Initializable {
     }
 
     @FXML
-    private void ForumFront(ActionEvent event) {
+    private void ForumFront(ActionEvent event) throws SQLException {
         try {
 
             FXMLLoader loader
                     = new FXMLLoader(getClass().getResource("/ServiceProvider/view/Forum.fxml"));
             Parent root = loader.load();
 
-        ForumController dc = loader.getController();
-            
-          
+            ForumController dc = loader.getController();
+            dc.setUser(this.user);
             Forum.getScene().setRoot(root);
 
         } catch (IOException ex) {
             Logger.getLogger(ForumController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-@FXML
+
+    @FXML
     private void PDF(ActionEvent event) {
 
         try {
@@ -302,10 +308,10 @@ public class BackForumController implements Initializable {
             //Paragraph par = new Paragraph("     La liste des Forum ");
             //Paragraph parr = new Paragraph("    _______________");
             //par.setAlignment(Element.ALIGN_CENTER);
-           // parr.setAlignment(Element.ALIGN_CENTER);
+            // parr.setAlignment(Element.ALIGN_CENTER);
 
             //document.add(par);
-           // document.add(parr);
+            // document.add(parr);
             document.add(p);
             document.add(p);
             document.add(p);
@@ -345,10 +351,10 @@ public class BackForumController implements Initializable {
                     Paragraph p2P = new Paragraph("          Post n°" + j);
                     document.add(p2P);
 
-                    Paragraph paraP = new Paragraph("          Title Post : " + rsP.getString("title") + "\n          Description   :" + rsP.getString("description")+"\n          Views : "+rsP.getInt("views")+"\n          Number of comments : "+rsP.getInt("noc")+"\n          Date : "+rsP.getDate("creat_at"));
+                    Paragraph paraP = new Paragraph("          Title Post : " + rsP.getString("title") + "\n          Description   :" + rsP.getString("description") + "\n          Views : " + rsP.getInt("views") + "\n          Number of comments : " + rsP.getInt("noc") + "\n          Date : " + rsP.getDate("creat_at"));
                     document.add(paraP);
                     j++;
-                    
+
                     document.add(new Paragraph("  "));
                     int idPost = rsP.getInt("id");
                     String queryC = "select * from comment where pst_id = '" + idPost + "';";
@@ -358,9 +364,9 @@ public class BackForumController implements Initializable {
                         Paragraph p2C = new Paragraph("                    Comment n°" + k);
                         document.add(p2C);
 
-                        Paragraph paraC = new Paragraph("                    Content Comment : " + rsC.getString("content")+"\n                    Date :"+rsC.getDate("creat_at")+"\n                    Rating for the Post :"+rsC.getInt("rating"));
+                        Paragraph paraC = new Paragraph("                    Content Comment : " + rsC.getString("content") + "\n                    Date :" + rsC.getDate("creat_at") + "\n                    Rating for the Post :" + rsC.getInt("rating"));
                         document.add(paraC);
-                        
+
                         document.add(new Paragraph("  "));
                         k++;
 
@@ -384,12 +390,18 @@ public class BackForumController implements Initializable {
 //                document.add(p1);
             document.close();
             System.out.println("finished");
-            
+
             Desktop.getDesktop().open(new File(file_name));
         } catch (Exception e) {
             System.err.println(e);
         }
 
     }
-    
+
+    @FXML
+    private void exit(MouseEvent event) {
+        stage = (Stage) ((ImageView) event.getSource()).getScene().getWindow();
+        stage.close();
+    }
+
 }
