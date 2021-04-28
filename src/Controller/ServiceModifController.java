@@ -8,6 +8,10 @@ package Controller;
 import Utils.dbConnection;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -65,7 +69,21 @@ public class ServiceModifController implements Initializable {
 
     @FXML
     private void modfierService(ActionEvent event) {
-        
+        try{
+            Connection conn =dc.getConnection();
+    String requete="update service set title = ?,descrption = ?,price = ? where id="+idup.getText()+"' ";
+            PreparedStatement pst;
+            pst = conn.prepareStatement(requete);
+             pst.setString(1, tftitle.getText());
+            pst.setString(2, tfdec.getText());
+            pst.setInt(3, Integer.valueOf(tfpricee.getText()));
+            
+            
+            pst.executeUpdate();
+   
+        } catch (SQLException ex) {
+            Logger.getLogger(ServiceModifController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }
     public void setTitleUp(String tftitle) {

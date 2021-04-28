@@ -1,4 +1,4 @@
-/*.dashboard
+.dashboard
 {
     -fx-background-color : #34669a;
     -fx-background-radius :  20;
@@ -214,7 +214,7 @@
 .linear-grad
 {
     -fx-background-color: linear-gradient(to bottom left, #11A852, #11A89E);
-}*/
+}
 
 
 
