@@ -69,7 +69,7 @@
 
                     </graphic>
                 </Button>
-                <Button fx:id="btnClasses" contentDisplay="TOP" mnemonicParsing="false" prefHeight="181.0" prefWidth="242.0" stylesheets="@frontStyle.css" text="Offers" GridPane.rowIndex="1">
+                <Button fx:id="btnClasses" contentDisplay="TOP" mnemonicParsing="false" onAction="#goToOffre" prefHeight="181.0" prefWidth="242.0" stylesheets="@frontStyle.css" text="Offers" GridPane.rowIndex="1">
                     <graphic>
 
                     </graphic>
