@@ -42,6 +42,7 @@ import javafx.scene.web.HTMLEditor;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
 import org.controlsfx.control.Rating;
+
 /**
  * FXML Controller class
  *
@@ -49,16 +50,11 @@ import org.controlsfx.control.Rating;
  */
 public class DetailPostController implements Initializable {
 
-    @FXML
-    private Label TitleP;
-    @FXML
-    private Label DescriptionP;
-    @FXML
-    private TableView<Comment> tableComment;
-    @FXML
-    private TableColumn<Comment, String> col_content;
-    @FXML
-    private TableColumn<Comment, Integer> col_rating;
+    @FXML private Label TitleP;
+    @FXML private Label DescriptionP;
+    @FXML private TableView<Comment> tableComment;
+    @FXML private TableColumn<Comment, String> col_content;
+    @FXML private TableColumn<Comment, Integer> col_rating;
     private ComboBox<Post> ComboP;
     PostCRUD pc = new PostCRUD();
     CommentCRUD cc = new CommentCRUD();
@@ -67,50 +63,30 @@ public class DetailPostController implements Initializable {
     private Label idtestp;
     private Label testtitlep;
     private Label testdescriptionp;
-    @FXML
-    private TextArea contentC;
-    @FXML
-    private TextField rating;
-    @FXML
-    private Button btnajouter;
-    @FXML
-    private Button btnupdate;
-    @FXML
-    private Button btnDelete;
-    @FXML
-    private Label idC;
+    @FXML private TextArea contentC;
+    @FXML private TextField rating;
+    @FXML private Button btnajouter;
+    @FXML private Button btnupdate;
+    @FXML private Button btnDelete;
+    @FXML private Label idC;
     Stage stage;
-    @FXML
-    private Label idPc;
-    @FXML
-    private Label idForum;
-    @FXML
-    private Label titleForum;
-    @FXML
-    private Label descriptionFourm;
-    @FXML
-    private Button profile;
-    @FXML
-    private ImageView btnprofile;
-    @FXML
-    private Label userlabel;
-    @FXML
-    private ImageView logout;
-    @FXML
-    private Label TF;
-    @FXML
-    private Label TP;
-    @FXML
-    private Button btnClear;
-    @FXML
-    private Rating RatingPost;
-    @FXML
-    private Rating RatingCommet;
+    @FXML private Label idPc;
+    @FXML private Label idForum;
+    @FXML private Label titleForum;
+    @FXML private Label descriptionFourm;
+    @FXML private Button profile;
+    @FXML private ImageView btnprofile;
+    @FXML private Label userlabel;
+    @FXML private ImageView logout;
+    @FXML private Label TF;
+    @FXML private Label TP;
+    @FXML private Button btnClear;
+    @FXML private Rating RatingPost;
+    @FXML private Rating RatingCommet;
     User user = null;
-    @FXML
-    private ImageView returnBack;
-    @FXML
-    private Label UserNameSession;
+    @FXML private ImageView returnBack;
+    @FXML private Label UserNameSession;
+
     /**
      * Initializes the controller class.
      */
@@ -127,17 +103,16 @@ public class DetailPostController implements Initializable {
         this.user = u;
         UserNameSession.setText(pc.userName(user.getId()));
     }
+
     private void clearAll() {
         idC.setText("");
-        //contentC.setHtmlText("");
         contentC.setText("");
         rating.setText("");
         RatingCommet.setRating(0);
     }
-    
-    private void rating() throws SQLException
-    {
-         RatingPost.setRating(pc.getAvgRating(Integer.parseInt(idPc.getText())));
+
+    private void rating() throws SQLException {
+        RatingPost.setRating(pc.getAvgRating(Integer.parseInt(idPc.getText())));
     }
 
     /**
@@ -183,7 +158,6 @@ public class DetailPostController implements Initializable {
         col_rating.setCellValueFactory(new PropertyValueFactory<>("rating"));
 
         tableComment.setItems(comments);
-
     }
 
     public void initTable(int i) {
@@ -198,7 +172,7 @@ public class DetailPostController implements Initializable {
         }
 
     }
-    
+
     @FXML
     private void ajouter(ActionEvent event) throws SQLException {
         CommentCRUD cc = new CommentCRUD();
@@ -214,18 +188,16 @@ public class DetailPostController implements Initializable {
         clearAll();
         initTable(i);
         rating();
-        
-        Image img = new Image("/ServiceProvider/view/image/ok.png");
-            Notifications notifAdd = Notifications.create()
-                    .title("add complet")
-                    .text("saved avec sucees")
-                    .graphic(new ImageView(img))
-                    .hideAfter(Duration.seconds(5))
-                    .position(Pos.TOP_RIGHT);
-            notifAdd.show();
-      
-    }
 
+        Image img = new Image("/ServiceProvider/view/image/ok.png");
+        Notifications notifAdd = Notifications.create()
+                .title("add complet")
+                .text("saved avec sucees")
+                .graphic(new ImageView(img))
+                .hideAfter(Duration.seconds(5))
+                .position(Pos.TOP_RIGHT);
+        notifAdd.show();
+    }
 
     @FXML
     private void select(MouseEvent event) {
@@ -236,22 +208,19 @@ public class DetailPostController implements Initializable {
         rating.setText(r.toString());
         Integer id = C.getId();
         idC.setText(id.toString());
-        
     }
 
-@FXML
+    @FXML
     private void update(ActionEvent event) throws SQLException {
         Comment C = tableComment.getSelectionModel().getSelectedItem();
         if (C == null) {
             JOptionPane.showMessageDialog(null, "There is nothing selected !");
         } else {
             Integer i = Integer.valueOf(idPc.getText());
-
             cc.update(C.getId(), CurseFilterService.cleanText(contentC.getText()), (int) RatingCommet.getRating());
             initTable(i);
             clearAll();
             rating();
-
         }
     }
 
@@ -268,8 +237,6 @@ public class DetailPostController implements Initializable {
         }
     }
 
-    
-
     @FXML
     private void exit(MouseEvent event) {
         stage = (Stage) ((ImageView) event.getSource()).getScene().getWindow();
@@ -279,15 +246,14 @@ public class DetailPostController implements Initializable {
     @FXML
     private void Clear(ActionEvent event) {
         idC.setText("");
-        //contentC.setHtmlText("");
         contentC.setText("");
         rating.setText("");
     }
-    
-     private boolean check(String text){
-        if(text.matches("^[0-9]{0,5}$")){
+
+    private boolean check(String text) {
+        if (text.matches("^[0-9]{0,5}$")) {
             return true;
-        } else{
+        } else {
             return false;
         }
     }
@@ -299,7 +265,6 @@ public class DetailPostController implements Initializable {
             Parent root = loader.load();
 
             DetailForumController dc = loader.getController();
-            //ForumController fc = loader.getController();
             dc.setTfDescriptionPost(DescriptionP.getText());
             dc.setTfTitlePost(TitleP.getText());
             dc.setIdP(idPc.getText());
@@ -311,7 +276,6 @@ public class DetailPostController implements Initializable {
             dc.setUser(this.user);
             try {
                 dc.initTable((ObservableList<Post>) pc.readAllpost2(Integer.parseInt(idForum.getText())));
-                // dc.initTable((ObservableList<Post>) pc.readAllpost2(Integer.parseInt(idPc.getText())));
             } catch (SQLException ex) {
                 Logger.getLogger(ForumController.class.getName()).log(Level.SEVERE, null, ex);
             }
