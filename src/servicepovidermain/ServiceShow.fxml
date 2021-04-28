@@ -27,6 +27,7 @@
       <Button fx:id="bsupp" layoutX="1153.0" layoutY="594.0" mnemonicParsing="false" onAction="#intesupprime" prefHeight="25.0" prefWidth="97.0" text="Supprimer" />
       <Button fx:id="breche" layoutX="366.0" layoutY="36.0" mnemonicParsing="false" onAction="#servrecherche" prefHeight="25.0" prefWidth="119.0" text="recherche" />
       <Button fx:id="bback" layoutX="1153.0" layoutY="36.0" mnemonicParsing="false" onAction="#backint" text="Back" />
+      <Button fx:id="btn11" layoutX="1153.0" layoutY="231.0" mnemonicParsing="false" onAction="#Ordera" prefHeight="27.0" prefWidth="97.0" text="Order" />
    </children>
     
 </AnchorPane>

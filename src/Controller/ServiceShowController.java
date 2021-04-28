@@ -65,6 +65,8 @@ public class ServiceShowController implements Initializable {
     private Button bback;
     private dbConnection dc;
     private ObservableList<Service>data;
+    @FXML
+    private Button btn11;
 
     /**
      * Initializes the controller class.
@@ -204,6 +206,19 @@ public class ServiceShowController implements Initializable {
 		
 		// 5. Add sorted (and filtered) data to the table.
 		tableau.setItems(sortedData);
+    }
+
+    @FXML
+    private void Ordera(ActionEvent event) {
+        try {
+            FXMLLoader loader
+                    = new FXMLLoader(getClass().getResource("/servicepovidermain/ServicesDetail.fxml"));
+            Parent root = loader.load();
+            //Controller irc = loader.getController();
+            btn11.getScene().setRoot(root);
+        } catch (IOException ex) {
+            Logger.getLogger(ServicesDetailBackController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
 }

@@ -13,12 +13,14 @@ import java.util.Date;
 public class Order {
     private int id,idU,idS;
     private String message;
+    private Date D;
 
-    public Order(int id, int idU, int idS, String message) {
+    public Order(int id, int idU, int idS, String message, Date D) {
         this.id = id;
         this.idU = idU;
         this.idS = idS;
         this.message = message;
+        this.D = D;
     }
 
     public int getId() {

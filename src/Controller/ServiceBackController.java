@@ -30,6 +30,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javax.swing.JOptionPane;
 
 /**
  * FXML Controller class
@@ -60,6 +61,8 @@ public class ServiceBackController implements Initializable {
     private TextField tfrecher;
     private dbConnection dc;
     private ObservableList<Service>data;
+    @FXML
+    private Button btn01;
 
     /**
      * Initializes the controller class.
@@ -148,6 +151,8 @@ public class ServiceBackController implements Initializable {
                                 else if (Service.getDescription().toLowerCase().indexOf(lowerCaseFilter) != -1) {
 					return true; 
 				}
+                                else if (String.valueOf(Service.getPrix()).indexOf(lowerCaseFilter)!=-1)
+				     return true;
                                 else if (String.valueOf(Service.getCreat_at()).indexOf(lowerCaseFilter)!=-1)
 				     return true;
 				     else  
@@ -164,6 +169,26 @@ public class ServiceBackController implements Initializable {
 		
 		// 5. Add sorted (and filtered) data to the table.
 		tableau.setItems(sortedData);
+    }
+
+    @FXML
+    private void Order(ActionEvent event) {
+        try {
+            FXMLLoader loader
+                    = new FXMLLoader(getClass().getResource("/servicepovidermain/ServicesDetailBack.fxml"));
+            Parent root = loader.load();
+            ServicesDetailBackController irc = loader.getController();
+            Service Selected= tableau.getSelectionModel().getSelectedItem();
+           if (Selected == null) {
+            JOptionPane.showMessageDialog(null, "There is nothing selected !");
+        } else { 
+            irc.setIdService(String.valueOf(Selected.getId()));
+            irc.setTitreServ(Selected.getTitle());
+            btn01.getScene().setRoot(root);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(ServiceShowController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
 }
