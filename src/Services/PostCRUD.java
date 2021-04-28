@@ -31,57 +31,12 @@ public class PostCRUD {
         cnx = dbConnection.getInstance().getConnection();
     }
 
-    public List<Post> getPosts() {
-        List<Post> myList = new ArrayList();
-        try {
-            String requete = "SELECT * FROM post";
-            Statement st = cnx.createStatement();
-            ResultSet rs = st.executeQuery(requete);
-            while (rs.next()) {
-                Post f = new Post();
-                f.setId(rs.getInt("usr_id"));
-                f.setTitle(rs.getString("title"));
-                f.setDescription(rs.getString("description"));
-                f.setNoc(rs.getInt("noc"));
-                f.setViews(rs.getInt("views"));
-                myList.add(f);
-            }
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
-        return myList;
-    }
-
-    public ObservableList<Post> readAllpost(String idd) throws SQLException {
-
-        ObservableList oblistpost = FXCollections.observableArrayList();
-        Statement st = cnx.createStatement();
-        ResultSet rs = st.executeQuery("SELECT * FROM `post` WHERE frm_id = '" + idd + "';");
-
-        //System.out.println(idd);
-        while (rs.next()) {
-
-            int id = rs.getInt("id");
-            String title = rs.getString("title");
-            String description = rs.getString("description");
-            int views = rs.getInt("views");
-            int noc = rs.getInt("noc");
-            String creat_at = rs.getString("creat_at");
-
-            Post d = new Post(id, title, description, views, noc, creat_at);
-            oblistpost.add(d);
-
-        }
-        return oblistpost;
-    }
-
     public ObservableList<Post> readAllpost2(int idd) throws SQLException {
 
         ObservableList oblistpost = FXCollections.observableArrayList();
         Statement st = cnx.createStatement();
         ResultSet rs = st.executeQuery("SELECT * FROM `post` WHERE frm_id = '" + idd + "';");
 
-        //System.out.println(idd);
         while (rs.next()) {
 
             int id = rs.getInt("id");
@@ -130,7 +85,7 @@ public class PostCRUD {
 
     public boolean updatePostview(int id) throws SQLException {
         PreparedStatement pre = cnx.prepareStatement("UPDATE post SET views= views+1   WHERE id='" + id + "' ;");
-        // JOptionPane.showMessageDialog(null, "Post update avec succées");
+        
         pre.executeUpdate();
         return true;
     }
@@ -140,26 +95,6 @@ public class PostCRUD {
         JOptionPane.showMessageDialog(null, "Post update avec succées");
         pre.executeUpdate();
         return true;
-    }
-
-    public ObservableList<Post> readAlldiscc() throws SQLException {
-
-        ObservableList oblistdisc = FXCollections.observableArrayList();
-
-        Statement st = cnx.createStatement();
-        ResultSet rs = st.executeQuery("select * from  post ;");
-        while (rs.next()) {
-            int id = rs.getInt("id");
-            String title = rs.getString("title");
-            String description = rs.getString("description");
-            int noc = rs.getInt("noc");
-            int views = rs.getInt("views");
-
-            Post d = new Post(id, title, description, noc, views);
-            oblistdisc.add(d);
-
-        }
-        return oblistdisc;
     }
 
     public Post findById(int id) {

@@ -117,6 +117,11 @@ public class DetailPostController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        try {
+            rating();
+        } catch (SQLException ex) {
+            Logger.getLogger(DetailPostController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         check(rating.getText());
         idC.setVisible(false);
         idPc.setVisible(false);
@@ -220,7 +225,7 @@ public class DetailPostController implements Initializable {
             Image img = new Image("/ServiceProvider/view/image/ok.png");
             Notifications notifAdd = Notifications.create()
                     .title("add complet")
-                    .text("saved avec sucees")
+                    .text("Comment added by :"+ UserNameSession.getText())
                     .graphic(new ImageView(img))
                     .hideAfter(Duration.seconds(5))
                     .position(Pos.TOP_RIGHT);
@@ -252,6 +257,14 @@ public class DetailPostController implements Initializable {
             initTable(i);
             clearAll();
             rating();
+            Image img = new Image("/ServiceProvider/view/image/update.png");
+            Notifications notifAdd = Notifications.create()
+                    .title("add complet")
+                    .text("Comment updated by :"+ UserNameSession.getText())
+                    .graphic(new ImageView(img))
+                    .hideAfter(Duration.seconds(5))
+                    .position(Pos.TOP_RIGHT);
+            notifAdd.show();
         }
     }
 
@@ -265,6 +278,15 @@ public class DetailPostController implements Initializable {
             initTable(i);
             clearAll();
             rating();
+            Image img = new Image("/ServiceProvider/view/image/annuler.png");
+            Notifications notifAdd = Notifications.create()
+                    .title("add complet")
+                    .text("Comment deleted by :"+ UserNameSession.getText())
+                    .graphic(new ImageView(img))
+                    .hideAfter(Duration.seconds(5))
+                    .position(Pos.TOP_RIGHT);
+            notifAdd.show();
+        
         }
     }
 

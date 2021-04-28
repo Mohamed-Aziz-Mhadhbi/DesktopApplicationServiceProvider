@@ -29,7 +29,7 @@ public class CurseFilterService {
         try {
             BufferedReader reader =
                     new BufferedReader(new InputStreamReader(
-                            new URL("https://docs.google.com/spreadsheets/d/16OGd9c5j_ousUksKhXdhJZpERPYG-hBKebnHb5xErrY/export?format=csv").openConnection().getInputStream()));
+                            new URL("https://docs.google.com/spreadsheets/d/1N71Pd5DHqTNvT-EWzrIkudrg5ejKkdNhYLeEKzZPDD4/edit#gid=0").openConnection().getInputStream()));
 
             String line = "";
             int counter = 0;

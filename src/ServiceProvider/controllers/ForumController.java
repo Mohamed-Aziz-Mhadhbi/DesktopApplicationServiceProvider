@@ -244,7 +244,7 @@ public class ForumController implements Initializable {
             Image img = new Image("/ServiceProvider/view/image/ok.png");
             Notifications notifAdd = Notifications.create()
                     .title("add complet")
-                    .text("saved avec sucees")
+                    .text("Forum added by :"+ UserNameSession.getText())
                     .graphic(new ImageView(img))
                     .hideAfter(Duration.seconds(5))
                     .position(Pos.TOP_RIGHT);
@@ -260,6 +260,14 @@ public class ForumController implements Initializable {
             fc.delete(dis.getId());
             initTable();
             clearAll();
+            Image img = new Image("/ServiceProvider/view/image/annuler.png");
+            Notifications notifAdd = Notifications.create()
+                    .title("add complet")
+                    .text("Forum deleted by :"+ UserNameSession.getText())
+                    .graphic(new ImageView(img))
+                    .hideAfter(Duration.seconds(5))
+                    .position(Pos.TOP_RIGHT);
+            notifAdd.show();
         }
     }
 
@@ -277,6 +285,14 @@ public class ForumController implements Initializable {
             fc.update(F.getId(), CurseFilterService.cleanText(tfTitleForum.getText()), CurseFilterService.cleanText(tfDescriptionForum.getText()));
             initTable();
             clearAll();
+            Image img = new Image("/ServiceProvider/view/image/update.png");
+            Notifications notifAdd = Notifications.create()
+                    .title("add complet")
+                    .text("Forum updated by :"+ UserNameSession.getText())
+                    .graphic(new ImageView(img))
+                    .hideAfter(Duration.seconds(5))
+                    .position(Pos.TOP_RIGHT);
+            notifAdd.show();
         }
     }
 

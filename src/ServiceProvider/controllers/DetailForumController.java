@@ -214,12 +214,11 @@ public class DetailForumController implements Initializable {
 
             clearAll();
             initTable(Integer.valueOf(idF.getText()));
-            System.out.println(p.getDate());
 
             Image img = new Image("/ServiceProvider/view/image/ok.png");
             Notifications notifAdd = Notifications.create()
                     .title("add complet")
-                    .text("saved avec sucees")
+                    .text("Post added by :"+ UserNameSession.getText())
                     .graphic(new ImageView(img))
                     .hideAfter(Duration.seconds(5))
                     .position(Pos.TOP_RIGHT);
@@ -247,6 +246,15 @@ public class DetailForumController implements Initializable {
             pc.delete(dis.getId());
             initTable(i);
             clearAll();
+            
+             Image img = new Image("/ServiceProvider/view/image/annuler.png");
+            Notifications notifAdd = Notifications.create()
+                    .title("add complet")
+                    .text("Post deleted by :"+ UserNameSession.getText())
+                    .graphic(new ImageView(img))
+                    .hideAfter(Duration.seconds(5))
+                    .position(Pos.TOP_RIGHT);
+            notifAdd.show();
         }
     }
 
@@ -262,6 +270,14 @@ public class DetailForumController implements Initializable {
             pc.update(P.getId(), CurseFilterService.cleanText(tfTitlePost.getText()), CurseFilterService.cleanText(tfDescriptionPost.getText()));
             initTable(i);
             clearAll();
+            Image img = new Image("/ServiceProvider/view/image/update.png");
+            Notifications notifAdd = Notifications.create()
+                    .title("add complet")
+                    .text("Post updated by :"+ UserNameSession.getText())
+                    .graphic(new ImageView(img))
+                    .hideAfter(Duration.seconds(5))
+                    .position(Pos.TOP_RIGHT);
+            notifAdd.show();
         }
 
     }
