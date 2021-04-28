@@ -38,7 +38,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.web.HTMLEditor;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 import java.util.Collections;
@@ -66,24 +65,15 @@ import org.controlsfx.control.textfield.TextFields;
  */
 public class ForumController implements Initializable {
 
-    @FXML
-    private TextField tfTitleForum;
-    @FXML
-    private TextArea tfDescriptionForum;
-    @FXML
-    private TableView<Forum> tableFourm;
-    @FXML
-    private TableColumn<Forum, String> col_title;
-    @FXML
-    private Button btnDeleteForum;
-    @FXML
-    private Label controleTitle;
-    @FXML
-    private Label controleDescription;
-    @FXML
-    private Button btnDetails;
-    @FXML
-    private Label tfIdForum;
+    @FXML private TextField tfTitleForum;
+    @FXML private TextArea tfDescriptionForum;
+    @FXML private TableView<Forum> tableFourm;
+    @FXML private TableColumn<Forum, String> col_title;
+    @FXML private Button btnDeleteForum;
+    @FXML private Label controleTitle;
+    @FXML private Label controleDescription;
+    @FXML private Button btnDetails;
+    @FXML private Label tfIdForum;
 
     private static int idf;
 
@@ -91,25 +81,16 @@ public class ForumController implements Initializable {
     ForumCRUD fc = new ForumCRUD();
     PostCRUD pc = new PostCRUD();
 
-    @FXML
-    private TextField cherche;
+    @FXML private TextField cherche;
     Stage stage;
-    @FXML
-    private Button profile;
-    @FXML
-    private ImageView btnprofile;
-    @FXML
-    private Label userlabel;
-    @FXML
-    private ImageView logout;
-    @FXML
-    private Label titleF;
-    @FXML
-    private Button btnDashboard;
-    @FXML
-    private Button btnClear;
-    @FXML
-    private WebView webviewforum;
+    @FXML private Button profile;
+    @FXML private ImageView btnprofile;
+    @FXML private Label userlabel;
+    @FXML private ImageView logout;
+    @FXML private Label titleF;
+    @FXML private Button btnDashboard;
+    @FXML private Button btnClear;
+    @FXML private WebView webviewforum;
     private WebEngine engine;
 
     Set<String> possibleWordSet = new HashSet<>();
@@ -119,27 +100,21 @@ public class ForumController implements Initializable {
     String[] words;
 
     User user = null;
-    @FXML
-    private Label User_name_creater;
-    @FXML
-    private Button home;
-    @FXML
-    private ImageView returnBack;
-    @FXML
-    private Label UserNameSession;
+    @FXML private Label User_name_creater;
+    @FXML private Button home;
+    @FXML private ImageView returnBack;
+    @FXML private Label UserNameSession;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO  
-        //send("Ahla aamti ena aziz romdanek mabrouk o kol aam o enty haya b khir");
+        
         loadwebview();
         initTable();
         tfIdForum.setVisible(false);
         affForm();
-        //search_formation();
         words = fc.getForumsTitle().toArray(new String[0]);
 
         Collections.addAll(possibleWordSet, words);
@@ -255,11 +230,9 @@ public class ForumController implements Initializable {
             controleDescription.setText("");
             controleTitle.setText("");
 
-            // System.out.println(test("test ass"));
             ForumCRUD pc = new ForumCRUD();
             Forum f = new Forum();
-            //Forum f = new Forum(CurseFilterService.cleanText(txftitre.getText()), CurseFilterService.cleanText(txfcontenu.getText()), txftheme.getValue());
-            String tTitle = CurseFilterService.cleanText(tfTitleForum.getText());
+             String tTitle = CurseFilterService.cleanText(tfTitleForum.getText());
             String tDescription = CurseFilterService.cleanText(tfDescriptionForum.getText());
             f.setId_user(user.getId());
             f.setTitle(tTitle);
@@ -363,7 +336,6 @@ public class ForumController implements Initializable {
 
         titreF.setStyle("-fx-font-weight: bold; -fx-underline: true;-fx-text-fill: black;");
         titreF.setFont(Font.font("Calibri", 35));
-        // titreF.setStyle("-fx-font-weight: bold; -fx-underline: true;-fx-text-fill: black;");
         titreF.applyCss();
         titreF.setOnMousePressed((mouseEvent) -> {
 

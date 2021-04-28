@@ -38,7 +38,6 @@ import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 import javafx.geometry.Pos;
 import javafx.scene.control.TextArea;
-import javafx.scene.web.HTMLEditor;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
 import org.controlsfx.control.Rating;

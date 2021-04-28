@@ -57,14 +57,10 @@ import javafx.stage.Stage;
  */
 public class BackForumController implements Initializable {
 
-    @FXML
-    private TableView<Forum> tableFourm;
-    @FXML
-    private TableColumn<Forum, String> col_title;
-    @FXML
-    private TableColumn<Forum, String> col_dec;
-    @FXML
-    private TableColumn<Forum, Integer> col_id;
+    @FXML private TableView<Forum> tableFourm;
+    @FXML private TableColumn<Forum, String> col_title;
+    @FXML private TableColumn<Forum, String> col_dec;
+    @FXML private TableColumn<Forum, Integer> col_id;
 
     ObservableList<Forum> oblistdisc = FXCollections.observableArrayList();
     ObservableList<Post> oblistpost = FXCollections.observableArrayList();
@@ -73,48 +69,29 @@ public class BackForumController implements Initializable {
     PostCRUD pc = new PostCRUD();
     CommentCRUD cc = new CommentCRUD();
     ForumCRUD fc = new ForumCRUD();
-    @FXML
-    private TableView<Post> tablePost;
-    @FXML
-    private TableColumn<Post, Integer> col_idP;
-    @FXML
-    private TableColumn<Post, String> col_titleP;
-    @FXML
-    private TableColumn<Post, String> col_description;
-    @FXML
-    private TableColumn<Post, Integer> col_views;
-    @FXML
-    private TableColumn<Post, Integer> col_noc;
+    @FXML private TableView<Post> tablePost;
+    @FXML private TableColumn<Post, Integer> col_idP;
+    @FXML private TableColumn<Post, String> col_titleP;
+    @FXML private TableColumn<Post, String> col_description;
+    @FXML private TableColumn<Post, Integer> col_views;
+    @FXML private TableColumn<Post, Integer> col_noc;
 
-    @FXML
-    private TableView<Comment> tableComment;
-    @FXML
-    private TableColumn<Comment, Integer> col_idC;
-    @FXML
-    private TableColumn<Comment, String> col_content;
-    @FXML
-    private TableColumn<Comment, Integer> col_rating;
-    @FXML
-    private PieChart statPostviews;
+    @FXML private TableView<Comment> tableComment;
+    @FXML private TableColumn<Comment, Integer> col_idC;
+    @FXML private TableColumn<Comment, String> col_content;
+    @FXML private TableColumn<Comment, Integer> col_rating;
+    @FXML private PieChart statPostviews;
     ObservableList<PieChart.Data> statPostdata;
     private Connection con;
-    @FXML
-    private PieChart statPostnoc;
-    @FXML
-    private Button profile;
-    @FXML
-    private ImageView btnprofile;
-    @FXML
-    private Button btnforum;
-    @FXML
-    private Button btnDashboard;
-    @FXML
-    private Label Forum;
-    @FXML
-    private Button PDF;
+    @FXML private PieChart statPostnoc;
+    @FXML private Button profile;
+    @FXML private ImageView btnprofile;
+    @FXML private Button btnforum;
+    @FXML private Button btnDashboard;
+    @FXML private Label Forum;
+    @FXML private Button PDF;
     User user = null;
-    @FXML
-    private ImageView exit;
+    @FXML private ImageView exit;
     Stage stage;
 
     public BackForumController() {
@@ -126,7 +103,6 @@ public class BackForumController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
         initTableF();
     }
 
@@ -159,8 +135,7 @@ public class BackForumController implements Initializable {
             data.getNode().addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    //   JOptionPane.showMessageDialog((int)data.getPieValue()+"post"+data.getName(),"information");
-                }
+                 }
             });
 
         }
@@ -192,7 +167,6 @@ public class BackForumController implements Initializable {
             data.getNode().addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    //   JOptionPane.showMessageDialog((int)data.getPieValue()+"post"+data.getName(),"information");
                 }
             });
 
@@ -225,9 +199,6 @@ public class BackForumController implements Initializable {
 
     private void initTableP(int id) {
         try {
-            /*String idfs = idtest.getText();
-            Integer idf = Integer.valueOf(idfs);*/
-
             oblistpost = (ObservableList<Post>) pc.readAllpost2(id);
             col_idP.setCellValueFactory(new PropertyValueFactory<>("id"));
             col_titleP.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -286,8 +257,6 @@ public class BackForumController implements Initializable {
         try {
             ForumCRUD es = new ForumCRUD();
             Forum panier = new Forum();
-            //PanierService panierService = new PanierService();
-            // panier = panierService.getCurrentPanierByUserID(Main.user_id);
 
             String file_name = "C:\\Users\\Mohamed Aziz Mhadhbi\\Desktop\\ForumPostCommentList.pdf";
             Document document = new Document();
@@ -305,13 +274,6 @@ public class BackForumController implements Initializable {
             document.add(p);
             document.add(p);
             document.add(p);
-            //Paragraph par = new Paragraph("     La liste des Forum ");
-            //Paragraph parr = new Paragraph("    _______________");
-            //par.setAlignment(Element.ALIGN_CENTER);
-            // parr.setAlignment(Element.ALIGN_CENTER);
-
-            //document.add(par);
-            // document.add(parr);
             document.add(p);
             document.add(p);
             document.add(p);
@@ -381,13 +343,6 @@ public class BackForumController implements Initializable {
             Paragraph parrr = new Paragraph("________________________________");
             parrr.setAlignment(Element.ALIGN_CENTER);
             document.add(parrr);
-
-//            double a= ser.calcul_total(panier.getId());
-//               Paragraph p1 = new Paragraph("Prix Total :  "+a + "  DT" ,redF);
-//               
-//               p1.setAlignment(Element.ALIGN_CENTER);
-//               
-//                document.add(p1);
             document.close();
             System.out.println("finished");
 

@@ -52,68 +52,44 @@ import javafx.scene.control.TextArea;
  */
 public class DetailForumController implements Initializable {
 
-    @FXML
-    private Label restTitleForum;
-    @FXML
-    private Label restDescriptionFourm;
-    @FXML
-    public TableView<Post> tablePost;
-    @FXML
-    private TableColumn<Post, String> col_title;
-    @FXML
-    private TableColumn<Post, String> col_description;
-    @FXML
-    private TableColumn<Post, Integer> col_views;
-    @FXML
-    private TableColumn<Post, Integer> col_noc;
+    @FXML private Label restTitleForum;
+    @FXML private Label restDescriptionFourm;
+    @FXML public TableView<Post> tablePost;
+    @FXML private TableColumn<Post, String> col_title;
+    @FXML private TableColumn<Post, String> col_description;
+    @FXML private TableColumn<Post, Integer> col_views;
+    @FXML private TableColumn<Post, Integer> col_noc;
 
     ObservableList<Post> oblistpost = FXCollections.observableArrayList();
     ForumCRUD pf = new ForumCRUD();
     PostCRUD pc = new PostCRUD();
     CommentCRUD cc = new CommentCRUD();
-    @FXML
-    private Label idF;
+    @FXML private Label idF;
 
-    @FXML
-    private TextField tfTitlePost;
-    @FXML
-    private TextArea tfDescriptionPost;
-    @FXML
-    private Button btnAdd;
-    @FXML
-    private Button btnDelete;
-    @FXML
-    private Button btnmodif;
-    @FXML
-    private Button btnDetailsPost;
-    @FXML
-    private Label idP;
+    @FXML private TextField tfTitlePost;
+    @FXML private TextArea tfDescriptionPost;
+    @FXML private Button btnAdd;
+    @FXML private Button btnDelete;
+    @FXML private Button btnmodif;
+    @FXML private Button btnDetailsPost;
+    @FXML private Label idP;
     Stage stage;
 
     Forum forumTest;
-    @FXML
-    private Button profile;
-    @FXML
-    private ImageView btnprofile;
-    @FXML
-    private Label userlabel;
-    @FXML
-    private ImageView logout;
+    @FXML private Button profile;
+    @FXML private ImageView btnprofile;
+    @FXML private Label userlabel;
+    @FXML private ImageView logout;
     private Label entetForum;
-    @FXML
-    private Label Tforum;
-    @FXML
-    private Label tPost;
+    @FXML private Label Tforum;
+    @FXML private Label tPost;
     private PieChart statPost;
     ObservableList<PieChart.Data> statPostdata;
     private Connection con;
-    @FXML
-    private Button btnClear;
+    @FXML private Button btnClear;
     User user = null;
-    @FXML
-    private ImageView returnBack;
-    @FXML
-    private Label UserNameSession;
+    @FXML private ImageView returnBack;
+    @FXML private Label UserNameSession;
     /**
      * Initializes the controller class.
      */
@@ -174,9 +150,6 @@ public class DetailForumController implements Initializable {
 
     private void initTable(int id) {
         try {
-            /*String idfs = idtest.getText();
-            Integer idf = Integer.valueOf(idfs);*/
-
             oblistpost = (ObservableList<Post>) pc.readAllpost2(id);
             col_title.setCellValueFactory(new PropertyValueFactory<>("title"));
             col_description.setCellValueFactory(new PropertyValueFactory<>("description"));
@@ -191,9 +164,6 @@ public class DetailForumController implements Initializable {
     }
 
     public void initTable(ObservableList<Post> posts) {
-        // String idfs = idtest.getText();
-        // Integer idf = Integer.valueOf(idfs);
-        //oblistpost = (ObservableList<Post>) pc.readAllpost2(idf);
         col_title.setCellValueFactory(new PropertyValueFactory<>("title"));
         col_description.setCellValueFactory(new PropertyValueFactory<>("description"));
         col_noc.setCellValueFactory(new PropertyValueFactory<>("noc"));
@@ -291,8 +261,7 @@ public class DetailForumController implements Initializable {
             initTable(idPclicked);
             try {
                 dp.initTable((ObservableList<Comment>) cc.readAllcomment2(Integer.parseInt(idP.getText())));
-                // image(dp);
-
+              
             } catch (SQLException ex) {
                 Logger.getLogger(ForumController.class.getName()).log(Level.SEVERE, null, ex);
             }
