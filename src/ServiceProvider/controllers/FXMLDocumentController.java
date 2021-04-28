@@ -41,6 +41,8 @@ import javafx.scene.layout.AnchorPane;
 import Services.ServiceOffre;
 import Services.ServicePostulation;
 import static Utils.print.printNode;
+import com.sun.speech.freetts.Voice;
+import com.sun.speech.freetts.VoiceManager;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import javafx.collections.transformation.FilteredList;
@@ -122,6 +124,9 @@ public class FXMLDocumentController implements Initializable {
     private ImageView returnBack;
     @FXML
     private Label UserNameSession;
+    @FXML
+    private Button tfEcouter;
+    private static final String VOICENAME="kevin16";
 
     /**
      * Initializes the controller class.
@@ -421,6 +426,27 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void ReturnBack(MouseEvent event) {
+    }
+
+    @FXML
+    private void jButtonSpeak(ActionEvent event) {
+                Voice voice;
+        VoiceManager vm=VoiceManager.getInstance();
+        voice =vm.getVoice(VOICENAME);
+        
+        voice.allocate();
+        try{
+           
+            //voice.speak(tf_name.getText());
+              // voice.speak(tf_nombre.getText());
+     
+             //voice.speak(tf_lieu.getText());
+             voice.speak(tfTitle.getText());
+             voice.speak(tfDescription.getText());
+           
+        }catch(Exception e){ 
+            
+        }
     }
 
 }

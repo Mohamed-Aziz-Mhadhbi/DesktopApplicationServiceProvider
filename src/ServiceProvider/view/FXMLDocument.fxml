@@ -166,6 +166,7 @@
             </Label>
          </children>
       </Pane>
+      <Button fx:id="tfEcouter" layoutX="1108.0" layoutY="543.0" mnemonicParsing="false" onAction="#jButtonSpeak" text="ECOUTER" />
    </children>
    <styleClass>
       <String fx:value="chart" />
