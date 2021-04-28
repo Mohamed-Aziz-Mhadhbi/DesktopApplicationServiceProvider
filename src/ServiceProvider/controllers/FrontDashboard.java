@@ -102,7 +102,7 @@ public class FrontDashboard implements Initializable {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/ServiceProvider/view/FXMLDocument.fxml"));
         stage.setScene(new Scene(loader.load()));
-        ForumController fc = loader.getController();
+        FXMLDocumentController fc = loader.getController();
         fc.setUser(this.user);
 
         stage.show();

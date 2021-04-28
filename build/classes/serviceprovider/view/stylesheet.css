@@ -100,8 +100,14 @@
 }
 .button5
 {
-    -fx-background-color :linear-gradient(to top left, #0571ba, #3dd8f3);
-    -fx-background-radius :  0 0 0 0;
+    -fx-background-color :linear-gradient(to top left, #35ACF1, #F6B46F);
+    -fx-background-radius :  12;
+    -fx-border-style: solid;
+    -fx-border-radius: 12;
+    -fx-border-insets: -5;    
+    -fx-border-color: linear-gradient(to top left, #35ACF1, #F6B46F);
+    -fx-text-fill: white;
+    
 }
 .button6
 {

@@ -48,6 +48,8 @@ import javafx.collections.transformation.SortedList;
 import javafx.scene.Parent;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -104,6 +106,23 @@ public class FXMLDocumentController implements Initializable {
     private static int id;
     @FXML
     private TextField tduser_id;
+    @FXML
+    private Button profile;
+    @FXML
+    private ImageView btnprofile;
+    @FXML
+    private Button home;
+    @FXML
+    private Button btnDashboard;
+    @FXML
+    private Label userlabel;
+    @FXML
+    private ImageView logout;
+    @FXML
+    private ImageView returnBack;
+    @FXML
+    private Label UserNameSession;
+    Stage stage;
 
     /**
      * Initializes the controller class.
@@ -113,16 +132,11 @@ public class FXMLDocumentController implements Initializable {
         loadTable();
         stat();
         tduser_id.setVisible(false);
-
-        //tfId.setVisible(false);
-        //affForm();
-        //search_formation();
-        // TODO
     }
 
     public void setUser(User u) throws SQLException {
         this.user = u;
-        //UserNameSession.setText(cc.userName(user.getId()));
+        UserNameSession.setText(fc.userName(user.getId()));
     }
 
     @FXML
@@ -280,80 +294,12 @@ public class FXMLDocumentController implements Initializable {
 
     }
 
-    /*   private void initTable() {
-
-        try {
-            oblistdisc = (ObservableList<Offre>) fc.readAlldiscc();
-            cl_Title.setCellValueFactory(new PropertyValueFactory<>("title"));
-            tv_offre.setItems(oblistdisc);
-            
-            FilteredList<Offre> filteredData = new FilteredList<>(oblistdisc, b -> true);
-
-            search.textProperty().addListener((observable, oldValue, newValue) -> {
-                filteredData.setPredicate(Offre -> {
-                    // If filter text is empty, display all persons.
-
-                    if (newValue == null || newValue.isEmpty()) {
-                        return true;
-                    }
-
-                    // Compare first name and last name of every person with filter text.
-                    String lowerCaseFilter;
-                    lowerCaseFilter = newValue.toLowerCase();
-
-                    if (Offre.getTitle().toLowerCase().indexOf(lowerCaseFilter) != -1) {
-                        return true; // Filter matches first name.
-                    } else if (Offre.getDescription().toLowerCase().indexOf(lowerCaseFilter) != -1) {
-                        return true; // Filter matches last name.
-                    } else {
-                        return false; // Does not match.
-                    }
-                });
-            });
-            // 3. Wrap the FilteredList in a SortedList. 
-            SortedList<Offre> sortedData = new SortedList<>(filteredData);
-
-            // 4. Bind the SortedList comparator to the TableView comparator.
-            // 	  Otherwise, sorting the TableView would have no effect.
-            sortedData.comparatorProperty().bind(tv_offre.comparatorProperty());
-
-            // 5. Add sorted (and filtered) data to the table.
-            tv_offre.setItems(sortedData);
-
-        } catch (SQLException ex) {
-            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }*/
-
     @FXML
-    private void Postuler(ActionEvent event) {
-
-        /* try {
-            FXMLLoader loader
-                    = new FXMLLoader(getClass().getResource("/views/FXMLDocument.fxml"));
-            Parent root = loader.load();
-
-           /* PostulationFXMLController dc = loader.getController();
-            dc.setRestDescriptionFourm(tfDescriptionForum.getText());
-            dc.setRestTitleForum(tfTitleForum.getText());
-            dc.setRestIdFourm(tfIdForum.getText());
-            String test = tfIdForum.getText();
-            try {
-               // pc.readAllpost(test);
-                // System.out.println(idF.getText());
-
-            } catch (SQLException ex) {
-                Logger.getLogger(PostulationFXMLController.class.getName()).log(Level.SEVERE, null, ex);
-            }*/
- /*tfTitleOffre.getScene().setRoot(root);
-
-        } catch (IOException ex) {
-            Logger.getLogger(PostulationFXMLController.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
+    private void Postuler(ActionEvent event) throws SQLException {
+        
         try {
 
-            FXMLLoader loader
-                    = new FXMLLoader(getClass().getResource("/views/postulationFXML.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ServiceProvider/view/postulationFXML.fxml"));
             Parent root = loader.load();
 
             PostulationFXMLController dc = loader.getController();
@@ -361,6 +307,7 @@ public class FXMLDocumentController implements Initializable {
             dc.setTitle(tfTitle.getText());
             dc.setDomainOffre(tfDomaine.getText());
             dc.setid(tfId.getText());
+            dc.setUser(this.user);
 
             try {
                 dc.initTable((ObservableList<postulation>) pc.readAllpost2(Integer.valueOf(tfId.getText())));
@@ -387,6 +334,42 @@ public class FXMLDocumentController implements Initializable {
         } catch (InvocationTargetException ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    @FXML
+    private void goBack(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ServiceProvider/view/frontDashboard.fxml"));
+
+        Scene scene = new Scene(loader.load());
+        FrontDashboard controller = loader.getController();
+        controller.setUser(user);
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @FXML
+    private void Dashboard(ActionEvent event) {
+    }
+
+    @FXML
+    private void exit(MouseEvent event) {
+        stage = (Stage) ((ImageView) event.getSource()).getScene().getWindow();
+        stage.close();
+    }
+
+    @FXML
+    private void ReturnBack(MouseEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ServiceProvider/view/frontDashboard.fxml"));
+
+        Scene scene = new Scene(loader.load());
+        FrontDashboard controller = loader.getController();
+        controller.setUser(user);
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
     }
 
 }

@@ -61,7 +61,7 @@ import org.controlsfx.control.textfield.TextFields;
 /**
  * FXML Controller class
  *
- * @author ASUS
+ * @author Mohamed Aziz Mhadhbi
  */
 public class ForumController implements Initializable {
 

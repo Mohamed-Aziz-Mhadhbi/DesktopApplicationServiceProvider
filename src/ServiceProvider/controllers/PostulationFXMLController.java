@@ -24,11 +24,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 
 /**
@@ -72,7 +75,23 @@ public class PostulationFXMLController implements Initializable {
     ObservableList<postulation> oblistpost = FXCollections.observableArrayList();
     ServiceOffre pf = new ServiceOffre();
     ServicePostulation pc = new ServicePostulation();
-
+    @FXML
+    private Label userlabel;
+    @FXML
+    private ImageView logout;
+    @FXML
+    private ImageView returnBack;
+    @FXML
+    private Label UserNameSession;
+    @FXML
+    private Button profile;
+    @FXML
+    private ImageView btnprofile;
+    @FXML
+    private Button home;
+    @FXML
+    private Button btnDashboard;
+    Stage stage;
     /**
      * Initializes the controller class.
      *
@@ -86,7 +105,7 @@ public class PostulationFXMLController implements Initializable {
 
     public void setUser(User u) throws SQLException {
         this.user = u;
-        //UserNameSession.setText(cc.userName(user.getId()));
+        UserNameSession.setText(pc.userName(user.getId()));
     }
 
     @FXML
@@ -138,7 +157,6 @@ public class PostulationFXMLController implements Initializable {
             Logger.getLogger(PostulationFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        //cloffre_id.setCellValueFactory(new PropertyValueFactory<>("offre_id"));
         clmotivation.setCellValueFactory(new PropertyValueFactory<>("motivation"));
         clprice.setCellValueFactory(new PropertyValueFactory<>("price"));
         clduration.setCellValueFactory(new PropertyValueFactory<>("duration"));
@@ -165,7 +183,6 @@ public class PostulationFXMLController implements Initializable {
 
         ServicePostulation sc = new ServicePostulation();
         postulation p = new postulation(id, motivation, price, duration);
-        //Cours cc = new Cours(id, instru , niveau, vid);
         sc.modifierPostulation(p);
 
         loadTable();
@@ -180,7 +197,6 @@ public class PostulationFXMLController implements Initializable {
         tfmotivation.setText(p.getMotivation());
         tfprice.setText(p.getPrice() + "");
         tfduration.setText(p.getDuration() + "");
-        //tfCreateAt.setDate(O.getCreatAt());
 
     }
 
@@ -204,9 +220,6 @@ public class PostulationFXMLController implements Initializable {
         this.tfTitle.setText(Tforum);
     }
 
-    /* public void settPost(String tPost) {
-        this.tPost.setText(tPost);
-    }*/
     public void setDomainOffre(String restTitleForum) {
         this.tfDomaine.setText(restTitleForum);
     }
@@ -217,8 +230,6 @@ public class PostulationFXMLController implements Initializable {
 
     private void initTable(int id) {
         try {
-            /*String idfs = idtest.getText();
-            Integer idf = Integer.valueOf(idfs);*/
 
             oblistpost = (ObservableList<postulation>) pc.readAllpost2(id);
             clmotivation.setCellValueFactory(new PropertyValueFactory<>("motivation"));
@@ -233,15 +244,30 @@ public class PostulationFXMLController implements Initializable {
     }
 
     public void initTable(ObservableList<postulation> posts) {
-        // String idfs = idtest.getText();
-        // Integer idf = Integer.valueOf(idfs);
-        //oblistpost = (ObservableList<Post>) pc.readAllpost2(idf);
         clmotivation.setCellValueFactory(new PropertyValueFactory<>("motivation"));
         clprice.setCellValueFactory(new PropertyValueFactory<>("price"));
         clduration.setCellValueFactory(new PropertyValueFactory<>("duration"));
 
         tv_postulation.setItems(posts);
 
+    }
+
+    @FXML
+    private void exit(MouseEvent event) {
+        stage = (Stage) ((ImageView) event.getSource()).getScene().getWindow();
+        stage.close();
+    }
+
+    @FXML
+    private void ReturnBack(MouseEvent event) {
+    }
+
+    @FXML
+    private void goBack(ActionEvent event) {
+    }
+
+    @FXML
+    private void Dashboard(ActionEvent event) {
     }
 
 }

@@ -9,7 +9,7 @@ import java.util.Date;
 
 /**
  *
- * @author ASUS
+ * @author Mohamed Aziz Mhadhbi
  */
 public class Comment {
     private int id ; 

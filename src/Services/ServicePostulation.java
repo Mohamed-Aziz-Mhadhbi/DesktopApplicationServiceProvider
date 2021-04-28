@@ -104,14 +104,22 @@ public class ServicePostulation implements IservicesPostulation {
             int postulation_user_id = rs.getInt("postulation_user_id");
             int price = rs.getInt("price");
             int duration = rs.getInt("duration");
-            
 
-            postulation d = new postulation(id, offre_id, postulation_user_id,  motivation,  price, duration) ;
-             
-        
+            postulation d = new postulation(id, offre_id, postulation_user_id, motivation, price, duration);
+
             oblistpost.add(d);
 
         }
         return oblistpost;
+    }
+
+    public String userName(int id) throws SQLException {
+        String name = "";
+        ResultSet rs = cnx.createStatement().executeQuery("select * from  user where id='" + id + "';");
+        while (rs.next()) {
+            name = rs.getString("username");
+            return name;
+        }
+        return name;
     }
 }

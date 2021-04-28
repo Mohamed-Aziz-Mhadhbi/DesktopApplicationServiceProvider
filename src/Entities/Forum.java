@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  *
- * @author ASUS
+ * @author Mohamed Aziz Mhadhbi
  */
 public class Forum {
 

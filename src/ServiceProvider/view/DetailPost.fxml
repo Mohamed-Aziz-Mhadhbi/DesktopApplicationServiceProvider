@@ -17,7 +17,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.controlsfx.control.Rating?>
 
-<AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="1270.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ServiceProvider.controllers.DetailPostController">
+<AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="1270.0" style="-fx-background-color: linear-gradient(to bottom left, #A868A0, #2D75E8);" stylesheets="@frontStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ServiceProvider.controllers.DetailPostController">
    <children>
       <Label fx:id="TitleP" layoutX="184.0" layoutY="145.0" prefHeight="45.0" prefWidth="295.0" underline="true">
          <font>
@@ -33,9 +33,9 @@
       </TableView>
       <Label layoutX="747.0" layoutY="164.0" text="Content :" />
       <Label layoutX="751.0" layoutY="359.0" text="Rating :" />
-      <Button fx:id="btnajouter" layoutX="823.0" layoutY="426.0" mnemonicParsing="false" onAction="#ajouter" prefHeight="30.0" prefWidth="64.0" styleClass="buttonCRUD" stylesheets="@stylesheet.css" text="Add" textFill="WHITE" />
-      <Button fx:id="btnupdate" layoutX="904.0" layoutY="426.0" mnemonicParsing="false" onAction="#update" prefHeight="30.0" prefWidth="75.0" styleClass="buttonCRUD" stylesheets="@stylesheet.css" text="Update" textFill="WHITE" />
-      <Button fx:id="btnDelete" layoutX="1000.0" layoutY="426.0" mnemonicParsing="false" onAction="#delete" prefHeight="30.0" prefWidth="74.0" styleClass="buttonCRUD" stylesheets="@stylesheet.css" text="Delete" textFill="WHITE" />
+      <Button fx:id="btnajouter" layoutX="823.0" layoutY="426.0" mnemonicParsing="false" onAction="#ajouter" prefHeight="30.0" prefWidth="64.0" styleClass="button5" stylesheets="@stylesheet.css" text="Add" textFill="WHITE" />
+      <Button fx:id="btnupdate" layoutX="904.0" layoutY="426.0" mnemonicParsing="false" onAction="#update" prefHeight="30.0" prefWidth="75.0" styleClass="button5" stylesheets="@stylesheet.css" text="Update" textFill="WHITE" />
+      <Button fx:id="btnDelete" layoutX="1000.0" layoutY="426.0" mnemonicParsing="false" onAction="#delete" prefHeight="30.0" prefWidth="74.0" styleClass="button5" stylesheets="@stylesheet.css" text="Delete" textFill="WHITE" />
       <Label fx:id="idC" layoutX="493.0" layoutY="135.0" prefHeight="25.0" prefWidth="31.0" />
       <Label fx:id="idForum" layoutX="469.0" layoutY="426.0" prefHeight="30.0" prefWidth="110.0" text="  " />
       <Label fx:id="titleForum" layoutX="132.0" layoutY="49.0" prefHeight="45.0" prefWidth="286.0" underline="true">
@@ -165,7 +165,7 @@
             <Font size="15.0" />
          </font>
       </Label>
-      <Button fx:id="btnClear" layoutX="1095.0" layoutY="424.0" mnemonicParsing="false" onAction="#Clear" prefHeight="34.0" prefWidth="74.0" styleClass="buttonCRUD" stylesheets="@stylesheet.css" text="Clear All" textFill="WHITE" />
+      <Button fx:id="btnClear" layoutX="1095.0" layoutY="424.0" mnemonicParsing="false" onAction="#Clear" prefHeight="34.0" prefWidth="74.0" styleClass="button5" stylesheets="@stylesheet.css" text="Clear All" textFill="WHITE" />
       <TextArea fx:id="contentC" layoutX="804.0" layoutY="148.0" prefHeight="200.0" prefWidth="391.0" />
       <Rating fx:id="RatingPost" disable="true" layoutX="275.0" layoutY="481.0" partialRating="true" rating="0.0" stylesheets="@stylesheet.css" />
       <Rating fx:id="RatingCommet" layoutX="928.0" layoutY="357.0" rating="0.0" stylesheets="@stylesheet.css" />

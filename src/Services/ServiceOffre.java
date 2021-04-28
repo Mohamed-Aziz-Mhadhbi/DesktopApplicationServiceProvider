@@ -118,6 +118,16 @@ String req ="UPDATE Offre SET title='"+o.getTitle()+"',description='"+o.getDescr
         }
         return oblistdisc;
     }
+     
+     public String userName(int id) throws SQLException {
+        String name = "";
+        ResultSet rs = cnx.createStatement().executeQuery("select * from  user where id='" + id + "';");
+        while (rs.next()) {
+            name = rs.getString("username");
+            return name;
+        }
+        return name;
+    }
   }
    
 

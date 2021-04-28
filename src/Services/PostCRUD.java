@@ -39,11 +39,11 @@ public class PostCRUD {
             ResultSet rs = st.executeQuery(requete);
             while (rs.next()) {
                 Post f = new Post();
-                f.setId(rs.getInt(1));
+                f.setId(rs.getInt("usr_id"));
                 f.setTitle(rs.getString("title"));
                 f.setDescription(rs.getString("description"));
-                f.setNoc(0);
-                f.setViews(0);
+                f.setNoc(rs.getInt("noc"));
+                f.setViews(rs.getInt("views"));
                 myList.add(f);
             }
         } catch (SQLException ex) {
@@ -98,18 +98,19 @@ public class PostCRUD {
         return oblistpost;
     }
 
-    public void addPost(Post p, int i) {
+    public void addPost(Post p) {
 
         try {
             String requete = "INSERT INTO post (usr_id,frm_id,title,description,views,noc,creat_at)"
-                    + "VALUES (1,?,?,?,?,?,sysdate())";
+                    + "VALUES (?,?,?,?,?,?,sysdate())";
             PreparedStatement pst = cnx.prepareStatement(requete);
 
-            pst.setInt(1, i);
-            pst.setString(2, p.getTitle());
-            pst.setString(3, p.getDescription());
-            pst.setInt(4, 0);
+            pst.setInt(1, p.getUsr_id());
+            pst.setInt(2, p.getIdF());
+            pst.setString(3, p.getTitle());
+            pst.setString(4, p.getDescription());
             pst.setInt(5, 0);
+            pst.setInt(6, 0);
 
             pst.executeUpdate();
             System.out.println("Post added!");
@@ -119,9 +120,9 @@ public class PostCRUD {
 
     }
 
-    public boolean delete(int dd) throws SQLException {
+    public boolean delete(int id) throws SQLException {
 
-        PreparedStatement pre = cnx.prepareStatement("DELETE FROM post WHERE id ='" + dd + "' ;");
+        PreparedStatement pre = cnx.prepareStatement("DELETE FROM post WHERE id ='" + id + "' ;");
         pre.executeUpdate();
         JOptionPane.showMessageDialog(null, "post supprimé avec succées");
         return true;

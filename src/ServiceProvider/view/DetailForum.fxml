@@ -16,7 +16,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="1270.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ServiceProvider.controllers.DetailForumController">
+<AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="1270.0" style="-fx-background-color: linear-gradient(to bottom left, #A868A0, #2D75E8);" stylesheets="@stylesheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ServiceProvider.controllers.DetailForumController">
    <children>
       <Label fx:id="restTitleForum" layoutX="105.0" layoutY="54.0" prefHeight="56.0" prefWidth="407.0" underline="true">
          <font>
@@ -35,10 +35,10 @@
       <Label layoutX="728.0" layoutY="184.0" text="Title :" />
       <Label layoutX="725.0" layoutY="319.0" text="Description :" />
       <TextField fx:id="tfTitlePost" layoutX="801.0" layoutY="180.0" />
-      <Button fx:id="btnAdd" layoutX="822.0" layoutY="455.0" mnemonicParsing="false" onAction="#ajouter" prefHeight="30.0" prefWidth="67.0" styleClass="buttonCRUD" stylesheets="@stylesheet.css" text="Add" textFill="WHITE" />
-      <Button fx:id="btnmodif" layoutX="896.0" layoutY="455.0" mnemonicParsing="false" onAction="#update" prefHeight="30.0" prefWidth="74.0" styleClass="buttonCRUD" stylesheets="@stylesheet.css" text="Update" textFill="WHITE" />
-      <Button fx:id="btnDelete" layoutX="977.0" layoutY="455.0" mnemonicParsing="false" onAction="#delete" prefHeight="30.0" prefWidth="74.0" styleClass="buttonCRUD" stylesheets="@stylesheet.css" text="Delete" textFill="WHITE" />
-      <Button fx:id="btnDetailsPost" layoutX="1137.0" layoutY="453.0" mnemonicParsing="false" onAction="#DetailsPost" prefHeight="34.0" prefWidth="67.0" styleClass="buttonCRUD" stylesheets="@stylesheet.css" text="Details" textFill="WHITE" />
+      <Button fx:id="btnAdd" layoutX="803.0" layoutY="455.0" mnemonicParsing="false" onAction="#ajouter" prefHeight="30.0" prefWidth="67.0" styleClass="button5" stylesheets="@stylesheet.css" text="Add" textFill="WHITE" />
+      <Button fx:id="btnmodif" layoutX="891.0" layoutY="455.0" mnemonicParsing="false" onAction="#update" prefHeight="30.0" prefWidth="74.0" styleClass="button5" stylesheets="@stylesheet.css" text="Update" textFill="WHITE" />
+      <Button fx:id="btnDelete" layoutX="981.0" layoutY="455.0" mnemonicParsing="false" onAction="#delete" prefHeight="30.0" prefWidth="74.0" styleClass="button5" stylesheets="@stylesheet.css" text="Delete" textFill="WHITE" />
+      <Button fx:id="btnDetailsPost" layoutX="1164.0" layoutY="453.0" mnemonicParsing="false" onAction="#DetailsPost" prefHeight="34.0" prefWidth="67.0" styleClass="button5" stylesheets="@stylesheet.css" text="Details" textFill="WHITE" />
       <Label fx:id="idP" layoutX="513.0" layoutY="33.0" prefHeight="41.0" prefWidth="128.0" />
       <VBox layoutY="-4.0" prefHeight="708.0" prefWidth="74.0" style="-fx-background-radius: 15 0 0 15;" styleClass="dashboard" stylesheets="@stylesheet.css">
          <children>
@@ -162,7 +162,7 @@
             <Font size="15.0" />
          </font>
       </Label>
-      <Button fx:id="btnClear" layoutX="1056.0" layoutY="453.0" mnemonicParsing="false" onAction="#Clear" prefHeight="34.0" prefWidth="74.0" styleClass="buttonCRUD" stylesheets="@stylesheet.css" text="Clear All" textFill="WHITE" />
+      <Button fx:id="btnClear" layoutX="1071.0" layoutY="453.0" mnemonicParsing="false" onAction="#Clear" prefHeight="34.0" prefWidth="74.0" styleClass="button5" stylesheets="@stylesheet.css" text="Clear All" textFill="WHITE" />
       <TextArea fx:id="tfDescriptionPost" layoutX="801.0" layoutY="227.0" prefHeight="200.0" prefWidth="437.0" />
    </children>
 </AnchorPane>

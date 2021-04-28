@@ -7,7 +7,7 @@ package Entities;
 
 /**
  *
- * @author ASUS
+ * @author Mohamed Aziz Mhadhbi
  */
 public class Post {
 
@@ -18,40 +18,24 @@ public class Post {
     private int noc;
     private String date;
     private int idF;
-    private Forum forum;
+    private int usr_id;
 
     public Post() {
     }
 
-    public Post(int id, String title, String description, int views, int noc, String date, int idF) {
-        this.id = id;
+    public Post(String title, String description, int idF, int usr_id) {
         this.title = title;
-        this.description = description;
-        this.views = views;
-        this.noc = noc;
-        this.date = date;
+        this.description = description; 
         this.idF = idF;
+        this.usr_id = usr_id;
     }
 
-    public Post(int id, String title, String description) {
-        this.id = id;
-        this.title = title;
-        this.description = description;
-    }
-
-    public Post(int id, String title, String description, int noc) {
+    public Post(int id, String title, String description, int noc, int views) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.noc = noc;
-    }
-
-    public Post(int id, String title, String description, int views, int noc) {
-        this.id = id;
-        this.title = title;
-        this.description = description;
         this.views = views;
-        this.noc = noc;
     }
 
     public Post(int id, String title, String description, int views, int noc, String date) {
@@ -63,13 +47,9 @@ public class Post {
         this.date = date;
     }
 
-    public Post(String title, String description, int views, int noc, String date) {
-        this.title = title;
-        this.description = description;
-        this.views = views;
-        this.noc = noc;
-        this.date = date;
-    }
+    
+
+   
 
     public int getIdF() {
         return idF;
@@ -127,20 +107,17 @@ public class Post {
         this.date = date;
     }
 
-    public Forum getForum() {
-        return forum;
+    public int getUsr_id() {
+        return usr_id;
     }
 
-    public void setForum(Forum forum) {
-        this.forum = forum;
+    public void setUsr_id(int usr_id) {
+        this.usr_id = usr_id;
     }
-    
 
     @Override
     public String toString() {
-        return "Post{" + "id=" + id + ", title=" + title + ", description=" + description + ", views=" + views + ", noc=" + noc + ", date=" + date + '}';
+        return "Post{" + "id=" + id + ", title=" + title + ", description=" + description + ", views=" + views + ", noc=" + noc + ", date=" + date + ", idF=" + idF + ", usr_id=" + usr_id + '}';
     }
-    
-  
 
 }

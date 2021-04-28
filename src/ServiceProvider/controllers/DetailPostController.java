@@ -45,7 +45,7 @@ import org.controlsfx.control.Rating;
 /**
  * FXML Controller class
  *
- * @author ASUS
+ * @author Mohamed Aziz Mhadhbi
  */
 public class DetailPostController implements Initializable {
 

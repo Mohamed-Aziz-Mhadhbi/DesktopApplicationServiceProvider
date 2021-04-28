@@ -48,7 +48,7 @@ import javafx.scene.control.TextArea;
 /**
  * FXML Controller class
  *
- * @author ASUS
+ * @author Mohamed Aziz Mhadhbi
  */
 public class DetailForumController implements Initializable {
 
@@ -124,7 +124,6 @@ public class DetailForumController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
         idF.setVisible(false);
         idP.setVisible(false);
     }
@@ -138,7 +137,6 @@ public class DetailForumController implements Initializable {
         idP.setText("");
         tfTitlePost.setText("");
         tfDescriptionPost.setText("");
-
     }
 
     public void setTfTitlePost(String tfTitlePost) {
@@ -209,12 +207,13 @@ public class DetailForumController implements Initializable {
             String tDescription = CurseFilterService.cleanText(tfDescriptionPost.getText());
             p.setTitle(tTitle);
             p.setDescription(tDescription);
-            Integer i = Integer.valueOf(idF.getText());
-            p.setIdF(i);
-            pc.addPost(p, i);
+            p.setIdF(Integer.valueOf(idF.getText()));
+            p.setUsr_id(user.getId());
+           
+            pc.addPost(p);
 
             clearAll();
-            initTable(i);
+            initTable(Integer.valueOf(idF.getText()));
             System.out.println(p.getDate());
 
             Image img = new Image("/ServiceProvider/view/image/ok.png");
