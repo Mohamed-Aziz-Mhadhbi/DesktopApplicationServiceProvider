@@ -24,8 +24,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Pagination;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -41,8 +43,7 @@ public class ServiceShowController implements Initializable {
 
     @FXML
     private TableView<Service> tableau;
-    @FXML
-    private TableColumn<Service, Integer> idcol;
+   // private TableColumn<Service, Integer> idcol;
     @FXML
     private TableColumn<Service, String> titlecol;
     @FXML
@@ -67,6 +68,9 @@ public class ServiceShowController implements Initializable {
     private ObservableList<Service>data;
     @FXML
     private Button btn11;
+    @FXML
+    private Pagination pagination;
+    private final static int rowsPerPage=3;
 
     /**
      * Initializes the controller class.
@@ -154,7 +158,7 @@ public class ServiceShowController implements Initializable {
         
            }
         
-        idcol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        //idcol.setCellValueFactory(new PropertyValueFactory<>("id"));
         
         titlecol.setCellValueFactory(new PropertyValueFactory<>("title"));
         decrcol.setCellValueFactory(new PropertyValueFactory<>("description"));
@@ -206,6 +210,7 @@ public class ServiceShowController implements Initializable {
 		
 		// 5. Add sorted (and filtered) data to the table.
 		tableau.setItems(sortedData);
+                pagination.setPageFactory(this::createPage);
     }
 
     @FXML
@@ -219,6 +224,12 @@ public class ServiceShowController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(ServicesDetailBackController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    private Node createPage(int PageIndex){
+    int fromIndex=PageIndex * rowsPerPage;
+    int toIndex=Math.min(fromIndex +rowsPerPage, data.size()) ;
+    tableau.setItems(FXCollections.observableArrayList(data.subList(fromIndex, toIndex)));
+    return tableau;
     }
     
 }

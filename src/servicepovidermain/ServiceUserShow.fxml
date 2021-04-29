@@ -25,6 +25,7 @@
       <Button fx:id="brecherche" layoutX="343.0" layoutY="36.0" mnemonicParsing="false" onAction="#rechercheserviceruser" text="Recherche" />
       <Button fx:id="btnback" layoutX="1168.0" layoutY="36.0" mnemonicParsing="false" onAction="#backuser" text="back" />
       <Button fx:id="btnorder" layoutX="1163.0" layoutY="599.0" mnemonicParsing="false" onAction="#oerderService" text="Order" />
+      <Button fx:id="btn13" layoutX="1162.0" layoutY="542.0" mnemonicParsing="false" onAction="#ViewService" text="View" />
    </children>
     
 </AnchorPane>

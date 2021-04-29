@@ -57,6 +57,10 @@ public class ServicesDetailBackController implements Initializable {
     private Label lbidser;
     @FXML
     private Label lbservtet;
+    @FXML
+    private Button btnshow;
+    @FXML
+    private Button bntstat;
 
 
     /**
@@ -66,7 +70,7 @@ public class ServicesDetailBackController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         dc = new dbConnection();
-        afficherorder();
+        
     }    
 
     @FXML
@@ -92,9 +96,10 @@ public class ServicesDetailBackController implements Initializable {
             Connection conn =dc.getConnection();
             data=FXCollections.observableArrayList();
             ResultSet rs=conn.createStatement().executeQuery("Select * From order");
+           
             
             while (rs.next()){
-            data.add(new Order (rs.getInt(1), rs.getInt(2),rs.getInt(6) , rs.getString(4), rs.getDate(5)));
+            data.add(new Order (rs.getInt(1),rs.getInt(2) , rs.getString(4), rs.getDate(5), rs.getInt(6)));
             } 
             
         } catch (SQLException ex) {
@@ -107,14 +112,32 @@ public class ServicesDetailBackController implements Initializable {
         idservicecol.setCellValueFactory(new PropertyValueFactory<>("service_id"));
         messagecol.setCellValueFactory(new PropertyValueFactory<>("message"));
         datecol.setCellValueFactory(new PropertyValueFactory<>("creat_at"));
-         satcol.setCellValueFactory(new PropertyValueFactory<>("status"));
-
+         
+        satcol.setCellValueFactory(new PropertyValueFactory<>("status"));
         
         
        
         tableau.setItems(null);
          
         tableau.setItems(data);
+    }
+
+    @FXML
+    private void showAction(ActionEvent event) {
+        afficherorder();
+    }
+
+    @FXML
+    private void satbutt(ActionEvent event) {
+        try {
+            FXMLLoader loader
+                    = new FXMLLoader(getClass().getResource("/servicepovidermain/ServiceStat.fxml"));
+            Parent root = loader.load();
+            ServiceStatController irc = loader.getController();
+            btn0.getScene().setRoot(root);
+        } catch (IOException ex) {
+            Logger.getLogger(ServiceStatController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
 }

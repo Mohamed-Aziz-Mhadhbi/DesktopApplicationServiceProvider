@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package Entities;
-import java.util.Date;
+import java.sql.Date;
 
 /**
  *
@@ -14,6 +14,7 @@ public class Order {
     private int id,idU,idS;
     private String message;
     private Date D;
+    int st;
 
     public Order(int id, int idU, int idS, String message, Date D) {
         this.id = id;
@@ -23,6 +24,34 @@ public class Order {
         this.D = D;
     }
 
+    
+     public Order(int id, int idS, String message, Date D,int st) {
+        this.id = id;
+        this.idS = idS;
+        this.message = message;
+        this.D = D;
+        this.st = st;
+    }
+
+    public Date getD() {
+        return D;
+    }
+
+    public void setD(Date D) {
+        this.D = D;
+    }
+
+    public int getSt() {
+        return st;
+    }
+
+    public void setSt(int st) {
+        this.st = st;
+    }
+
+    
+    
+    
     public int getId() {
         return id;
     }

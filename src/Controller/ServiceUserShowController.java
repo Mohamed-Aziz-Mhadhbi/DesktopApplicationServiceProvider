@@ -12,7 +12,7 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
+import java.sql.Date;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -61,6 +61,8 @@ public class ServiceUserShowController implements Initializable {
     private Button btnorder;
     private dbConnection dc;
     private ObservableList<Service>data;
+    @FXML
+    private Button btn13;
 
     /**
      * Initializes the controller class.
@@ -175,6 +177,28 @@ public class ServiceUserShowController implements Initializable {
 		
 		// 5. Add sorted (and filtered) data to the table.
 		tableau.setItems(sortedData);
+    }
+
+    @FXML
+    private void ViewService(ActionEvent event) {
+        try {
+            FXMLLoader loader
+                    = new FXMLLoader(getClass().getResource("/servicepovidermain/ServiceView.fxml"));
+            Parent root = loader.load();
+            ServiceViewController irc = loader.getController();
+           Service Selected= tableau.getSelectionModel().getSelectedItem();
+           if (Selected == null) {
+            JOptionPane.showMessageDialog(null, "There is nothing selected !");
+        } else { 
+            irc.setPriceV(String.valueOf(Selected.getPrix()));
+            irc.setTitleV(Selected.getTitle());
+            irc.setDescV(Selected.getDescription());
+            irc.setDateV(Selected.getCreat_at());
+            btn13.getScene().setRoot(root);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(ServiceMainController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
 }
