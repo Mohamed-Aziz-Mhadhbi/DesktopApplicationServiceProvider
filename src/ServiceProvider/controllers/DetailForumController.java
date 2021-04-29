@@ -120,7 +120,6 @@ public class DetailForumController implements Initializable {
     private Label noc;
     @FXML
     private Label views;
-    @FXML
     private Label likes;
     @FXML
     private WebView webviewdescPost;
@@ -384,8 +383,5 @@ public class DetailForumController implements Initializable {
         }
     }
 
-    @FXML
-    private void likes(MouseEvent event) {
-    }
 
 }

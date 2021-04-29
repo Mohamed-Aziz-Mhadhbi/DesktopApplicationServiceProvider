@@ -114,7 +114,7 @@ public class ForumController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         speak("welcome to service provider forum");
-        loadwebview("welcome to Service Provider");
+        loadwebview("welcome to Service Provider Forum");
         initTable();
         tfIdForum.setVisible(false);
         affForm();
@@ -252,6 +252,7 @@ public class ForumController implements Initializable {
             pc.addForum(f);
             clearAll();
             initTable();
+           // send(UserNameSession.getText()+" created forum called : " + tfTitleForum.getText());
             speak("Forum added by "+UserNameSession.getText());
             Image img = new Image("/ServiceProvider/view/image/ok.png");
             Notifications notifAdd = Notifications.create()
@@ -462,7 +463,7 @@ public class ForumController implements Initializable {
         String ACCOUNT_SID
                 = "ACeae56ad9a208156cf50516b60c09a996";
         String AUTH_TOKEN
-                = "1b707de90e9eedaafd54b905904e5c5d";
+                = "56b5c6fdb7a642094fcc9586f065b058";
         Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
 
         Message message = Message.creator(new PhoneNumber("+21690521296"),

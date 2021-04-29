@@ -358,6 +358,9 @@ public class DetailPostController implements Initializable {
             dc.setRestDescriptionFourm(descriptionFourm.getText());
             dc.setTforum(titleForum.getText());
             dc.settPost(">" + TitleP.getText());
+            engine = dc.descriptionForum.getEngine();
+            engine.loadContent(descriptionFourm.getText());
+            
             dc.setUser(this.user);
             try {
                 dc.initTable((ObservableList<Post>) pc.readAllpost2(Integer.parseInt(idForum.getText())));
