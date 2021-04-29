@@ -16,7 +16,7 @@ public class ServiceProvider extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         
-        Parent root = FXMLLoader.load(getClass().getResource("view/login.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("view/projectFront.fxml"));
         //Parent root = FXMLLoader.load(getClass().getResource("view/SiteWeb.fxml"));
         primaryStage.setTitle("Service Provider");
         primaryStage.setScene(new Scene(root, 900, 550));
