@@ -112,7 +112,7 @@ public class DetailForumController implements Initializable {
     private ImageView returnBack;
     @FXML
     private Label UserNameSession;
-    private static final String VOICENAME="kevin16";
+    private static final String VOICENAME = "kevin16";
     private WebEngine engine;
     @FXML
     public WebView descriptionForum;
@@ -120,7 +120,6 @@ public class DetailForumController implements Initializable {
     private Label noc;
     @FXML
     private Label views;
-    private Label likes;
     @FXML
     private WebView webviewdescPost;
     @FXML
@@ -144,20 +143,26 @@ public class DetailForumController implements Initializable {
         UserNameSession.setText(cc.userName(user.getId()));
     }
 
-    private void speak(String ch)
-    {
+    private boolean verifToUse(int id) {
+        if (user.getId() == id) {
+            return true;
+        }
+        return false;
+    }
+
+    private void speak(String ch) {
         Voice voice;
-        VoiceManager vm=VoiceManager.getInstance();
-        voice =vm.getVoice(VOICENAME);
+        VoiceManager vm = VoiceManager.getInstance();
+        voice = vm.getVoice(VOICENAME);
         voice.allocate();
         voice.speak(ch);
     }
-    
+
     private void loadwebviewDescriptionPost(String ch) {
         engine = webviewdescPost.getEngine();
         engine.loadContent(ch);
     }
-    
+
     private void clearAll() {
         idP.setText("");
         tfTitlePost.setText("");
@@ -165,7 +170,6 @@ public class DetailForumController implements Initializable {
         loadwebviewDescriptionPost("");
         views.setText("0");
         noc.setText("0");
-        likes.setText("0");
         userName.setText("");
     }
 
@@ -184,7 +188,7 @@ public class DetailForumController implements Initializable {
     public void setRestDescriptionFourm(String restDescriptionFourm) {
         this.restDescriptionFourm.setText(restDescriptionFourm);
     }
-    
+
     public void setTforum(String Tforum) {
         this.Tforum.setText(Tforum);
     }
@@ -194,7 +198,7 @@ public class DetailForumController implements Initializable {
     }
 
     public void setRestTitleForum(String restTitleForum) {
-        
+
         this.restTitleForum.setText(restTitleForum);
     }
 
@@ -233,16 +237,16 @@ public class DetailForumController implements Initializable {
             p.setDescription(tDescription);
             p.setIdF(Integer.valueOf(idF.getText()));
             p.setUsr_id(user.getId());
-           
+
             pc.addPost(p);
 
             clearAll();
             initTable(Integer.valueOf(idF.getText()));
-            speak("post added by "+UserNameSession.getText());
+            speak("post added by " + UserNameSession.getText());
             Image img = new Image("/ServiceProvider/view/image/ok.png");
             Notifications notifAdd = Notifications.create()
                     .title("Action")
-                    .text("Post added by :"+ UserNameSession.getText())
+                    .text("Post added by :" + UserNameSession.getText())
                     .graphic(new ImageView(img))
                     .hideAfter(Duration.seconds(5))
                     .position(Pos.TOP_RIGHT);
@@ -265,6 +269,15 @@ public class DetailForumController implements Initializable {
         //likes.setText(String.valueOf(P.getLikes()));
         noc.setText(String.valueOf(P.getNoc()));
         userName.setText(pc.userName(pc.user_idPost(P.getId())));
+        if (!verifToUse(pc.user_idPost(P.getId()))) {
+            btnAdd.setDisable(true);
+            btnDelete.setDisable(true);
+            btnmodif.setDisable(true);
+        } else {
+            btnAdd.setDisable(false);
+            btnDelete.setDisable(false);
+            btnmodif.setDisable(false);
+        }
     }
 
     @FXML
@@ -275,11 +288,11 @@ public class DetailForumController implements Initializable {
             pc.delete(dis.getId());
             initTable(i);
             clearAll();
-            speak("post deleted by " +UserNameSession.getText());
-             Image img = new Image("/ServiceProvider/view/image/annuler.png");
+            speak("post deleted by " + UserNameSession.getText());
+            Image img = new Image("/ServiceProvider/view/image/annuler.png");
             Notifications notifAdd = Notifications.create()
                     .title("Action")
-                    .text("Post deleted by :"+ UserNameSession.getText())
+                    .text("Post deleted by :" + UserNameSession.getText())
                     .graphic(new ImageView(img))
                     .hideAfter(Duration.seconds(5))
                     .position(Pos.TOP_RIGHT);
@@ -299,11 +312,11 @@ public class DetailForumController implements Initializable {
             pc.update(P.getId(), CurseFilterService.cleanText(tfTitlePost.getText()), CurseFilterService.cleanText(tfDescriptionPost.getText()));
             initTable(i);
             clearAll();
-            speak("post updated by "+UserNameSession.getText());
+            speak("post updated by " + UserNameSession.getText());
             Image img = new Image("/ServiceProvider/view/image/update.png");
             Notifications notifAdd = Notifications.create()
                     .title("Action")
-                    .text("Post updated by :"+ UserNameSession.getText())
+                    .text("Post updated by :" + UserNameSession.getText())
                     .graphic(new ImageView(img))
                     .hideAfter(Duration.seconds(5))
                     .position(Pos.TOP_RIGHT);
@@ -317,30 +330,31 @@ public class DetailForumController implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ServiceProvider/view/DetailPost.fxml"));
             Parent root = loader.load();
-            if ("".equals(tfTitlePost.getText())){
-                 JOptionPane.showMessageDialog(null, "There is nothing selected !");
-             }else{
-            String v = idP.getText();
-            int idPclicked = Integer.valueOf(v);
-            DetailPostController dp = loader.getController();
-            dp.setDescriptionP(tfDescriptionPost.getText());
-            dp.setTitleP(tfTitlePost.getText());
-            dp.setIdPc(idP.getText());
-            dp.setIdForum(idF.getText());
-            dp.setTitleForum(restTitleForum.getText());
-            dp.setDescriptionFourm(restDescriptionFourm.getText());
-            dp.setTF(restTitleForum.getText());
-            dp.setTP(">" + tfTitlePost.getText());
-            dp.setUser(this.user);
-            pc.updatePostview(idPclicked);
-            initTable(idPclicked);
-            try {
-                dp.initTable((ObservableList<Comment>) cc.readAllcomment2(Integer.parseInt(idP.getText())));
+            if ("".equals(tfTitlePost.getText())) {
+                JOptionPane.showMessageDialog(null, "There is nothing selected !");
+            } else {
+                String v = idP.getText();
+                int idPclicked = Integer.valueOf(v);
+                DetailPostController dp = loader.getController();
+                dp.setDescriptionP(tfDescriptionPost.getText());
+                dp.setTitleP(tfTitlePost.getText());
+                dp.setIdPc(idP.getText());
+                dp.setIdForum(idF.getText());
+                dp.setTitleForum(restTitleForum.getText());
+                dp.setDescriptionFourm(restDescriptionFourm.getText());
+                dp.setTF(restTitleForum.getText());
+                dp.setTP(">" + tfTitlePost.getText());
+                dp.setUser(this.user);
+                pc.updatePostview(idPclicked);
+                initTable(idPclicked);
+                try {
+                    dp.initTable((ObservableList<Comment>) cc.readAllcomment2(Integer.parseInt(idP.getText())));
 
-            } catch (SQLException ex) {
-                Logger.getLogger(ForumController.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(ForumController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                tfTitlePost.getScene().setRoot(root);
             }
-            tfTitlePost.getScene().setRoot(root);}
         } catch (IOException ex) {
             Logger.getLogger(DetailPostController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -360,8 +374,11 @@ public class DetailForumController implements Initializable {
         loadwebviewDescriptionPost("");
         views.setText("0");
         noc.setText("0");
-        likes.setText("0");
         userName.setText("");
+
+        btnAdd.setDisable(false);
+        btnDelete.setDisable(false);
+        btnmodif.setDisable(false);
     }
 
     @FXML
@@ -382,6 +399,5 @@ public class DetailForumController implements Initializable {
             Logger.getLogger(ForumController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
 
 }

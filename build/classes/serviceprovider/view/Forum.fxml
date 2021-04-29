@@ -22,14 +22,14 @@
       <Label layoutX="737.0" layoutY="191.0" text="Title :" textFill="WHITE" />
       <Label layoutX="737.0" layoutY="299.0" text="Description :" textFill="WHITE" />
       <TextField fx:id="tfTitleForum" layoutX="829.0" layoutY="187.0" prefHeight="25.0" prefWidth="189.0" promptText="Forum Title" />
-      <Button layoutX="744.0" layoutY="453.0" mnemonicParsing="false" onAction="#ajouter" prefHeight="34.0" prefWidth="85.0" styleClass="button5" stylesheets="@stylesheet.css" text="Add" textFill="WHITE" />
+      <Button fx:id="btn_addForum" layoutX="744.0" layoutY="453.0" mnemonicParsing="false" onAction="#ajouter" prefHeight="34.0" prefWidth="85.0" styleClass="button5" stylesheets="@stylesheet.css" text="Add" textFill="WHITE" />
       <TableView fx:id="tableFourm" layoutX="90.0" layoutY="164.0" onMouseClicked="#handleAction" prefHeight="308.0" prefWidth="207.0" stylesheets="@stylesheet.css">
         <columns>
           <TableColumn fx:id="col_title" prefWidth="272.0" text="Title" />
         </columns>
       </TableView>
       <Button fx:id="btnDeleteForum" layoutX="958.0" layoutY="453.0" mnemonicParsing="false" onAction="#delete" prefHeight="34.0" prefWidth="85.0" styleClass="button5" stylesheets="@stylesheet.css" text="Delete" textFill="WHITE" />
-      <Button layoutX="850.0" layoutY="453.0" mnemonicParsing="false" onAction="#update" prefHeight="34.0" prefWidth="85.0" styleClass="button5" stylesheets="@stylesheet.css" text="Update" textFill="WHITE" />
+      <Button fx:id="btn_updateForum" layoutX="850.0" layoutY="453.0" mnemonicParsing="false" onAction="#update" prefHeight="34.0" prefWidth="85.0" styleClass="button5" stylesheets="@stylesheet.css" text="Update" textFill="WHITE" />
       <TextField fx:id="cherche" layoutX="504.0" layoutY="18.0" promptText="Search" />
       <Label fx:id="controleTitle" layoutX="893.0" layoutY="94.0" prefHeight="34.0" prefWidth="268.0" textFill="RED" />
       <Label fx:id="controleDescription" layoutX="957.0" layoutY="408.0" prefHeight="34.0" prefWidth="278.0" textFill="RED" />

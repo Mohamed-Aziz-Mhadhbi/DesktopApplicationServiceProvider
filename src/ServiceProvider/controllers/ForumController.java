@@ -107,6 +107,10 @@ public class ForumController implements Initializable {
     @FXML private Button home;
     @FXML private ImageView returnBack;
     @FXML private Label UserNameSession;
+    @FXML
+    private Button btn_addForum;
+    @FXML
+    private Button btn_updateForum;
 
     /**
      * Initializes the controller class.
@@ -138,6 +142,15 @@ public class ForumController implements Initializable {
     public void setUser(User u) throws SQLException {
         this.user = u;
         UserNameSession.setText(fc.userName(user.getId()));
+    }
+    
+    private boolean verifToUse(int id)
+    {
+        if (user.getId() == id)
+        {
+            return true;
+        }
+        return false;
     }
 
     private void loadwebview(String ch) {
@@ -186,7 +199,6 @@ public class ForumController implements Initializable {
         tfTitleForum.setText("");
         tfDescriptionForum.setText("");
         tfIdForum.setText("");
-
     }
 
     private void initTable() {
@@ -322,6 +334,17 @@ public class ForumController implements Initializable {
         engine = webviewforum.getEngine();
         engine.loadContent(F.getDescription());
         User_name_creater.setText(fc.userName(F.getId_user()));
+        if (!verifToUse(F.getId_user()))
+        {
+            btn_addForum.setDisable(true);
+            btn_updateForum.setDisable(true);
+            btnDeleteForum.setDisable(true);
+        }else{
+            btn_addForum.setDisable(false);
+            btn_updateForum.setDisable(false);
+            btnDeleteForum.setDisable(false);
+        }
+           
     }
 
     @FXML
@@ -430,6 +453,9 @@ public class ForumController implements Initializable {
         tfTitleForum.setText("");
         tfDescriptionForum.setText("");
         tfIdForum.setText("");
+        btn_addForum.setDisable(false);
+        btn_updateForum.setDisable(false);
+        btnDeleteForum.setDisable(false);
     }
 
     @FXML

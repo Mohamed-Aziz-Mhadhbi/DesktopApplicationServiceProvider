@@ -139,7 +139,16 @@ public class DetailPostController implements Initializable {
         this.user = u;
         UserNameSession.setText(pc.userName(user.getId()));
     }
- private void speak(String ch)
+    private boolean verifToUse(int id)
+    {
+        if (user.getId() == id)
+        {
+            return true;
+        }
+        return false;
+    }
+    
+    private void speak(String ch)
     {
         Voice voice;
         VoiceManager vm=VoiceManager.getInstance();
@@ -272,6 +281,16 @@ public class DetailPostController implements Initializable {
         Integer id = C.getId();
         idC.setText(id.toString());
         userName.setText(cc.userName(cc.user_idComment(C.getId())));
+        if(!verifToUse(cc.user_idComment(C.getId())))
+        {
+            btnajouter.setDisable(true);
+            btnDelete.setDisable(true);
+            btnupdate.setDisable(true);
+        }else{
+            btnajouter.setDisable(false);
+            btnDelete.setDisable(false);
+            btnupdate.setDisable(false);
+        }
     }
 
     @FXML
@@ -333,6 +352,9 @@ public class DetailPostController implements Initializable {
         idC.setText("");
         contentC.setText("");
         rating.setText("");
+        btnajouter.setDisable(false);
+        btnDelete.setDisable(false);
+        btnupdate.setDisable(false);
     }
 
     private boolean check(String text) {
