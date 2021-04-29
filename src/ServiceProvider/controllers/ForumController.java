@@ -312,10 +312,11 @@ public class ForumController implements Initializable {
     @FXML
     private void detailsForum(ActionEvent event) throws SQLException {
         try {
-
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ServiceProvider/view/DetailForum.fxml"));
             Parent root = loader.load();
-
+             if ("".equals(tfTitleForum.getText())){
+                 JOptionPane.showMessageDialog(null, "There is nothing selected !");
+             }else{
             DetailForumController dc = loader.getController();
             dc.setRestDescriptionFourm(tfDescriptionForum.getText());
             dc.setRestTitleForum(tfTitleForum.getText());
@@ -323,12 +324,11 @@ public class ForumController implements Initializable {
             dc.setTforum(tfTitleForum.getText());
             dc.setUser(this.user);
             try {
-
                 dc.initTable((ObservableList<Post>) pc.readAllpost2(Integer.parseInt(tfIdForum.getText())));
             } catch (SQLException ex) {
                 Logger.getLogger(ForumController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            tfTitleForum.getScene().setRoot(root);
+            tfTitleForum.getScene().setRoot(root);}
 
         } catch (IOException ex) {
             Logger.getLogger(ForumController.class.getName()).log(Level.SEVERE, null, ex);

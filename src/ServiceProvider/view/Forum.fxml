@@ -19,9 +19,9 @@
 
 <AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="1270.0" style="-fx-background-color: linear-gradient(to bottom left, #A868A0, #2D75E8);" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ServiceProvider.controllers.ForumController">
    <children>
-      <Label layoutX="737.0" layoutY="191.0" text="Title :" />
-      <Label layoutX="737.0" layoutY="299.0" text="Description :" />
-      <TextField fx:id="tfTitleForum" layoutX="829.0" layoutY="187.0" prefHeight="25.0" prefWidth="189.0" />
+      <Label layoutX="737.0" layoutY="191.0" text="Title :" textFill="WHITE" />
+      <Label layoutX="737.0" layoutY="299.0" text="Description :" textFill="WHITE" />
+      <TextField fx:id="tfTitleForum" layoutX="829.0" layoutY="187.0" prefHeight="25.0" prefWidth="189.0" promptText="Forum Title" />
       <Button layoutX="744.0" layoutY="453.0" mnemonicParsing="false" onAction="#ajouter" prefHeight="34.0" prefWidth="85.0" styleClass="button5" stylesheets="@stylesheet.css" text="Add" textFill="WHITE" />
       <TableView fx:id="tableFourm" layoutX="90.0" layoutY="164.0" onMouseClicked="#handleAction" prefHeight="308.0" prefWidth="207.0" stylesheets="@stylesheet.css">
         <columns>
@@ -30,12 +30,12 @@
       </TableView>
       <Button fx:id="btnDeleteForum" layoutX="958.0" layoutY="453.0" mnemonicParsing="false" onAction="#delete" prefHeight="34.0" prefWidth="85.0" styleClass="button5" stylesheets="@stylesheet.css" text="Delete" textFill="WHITE" />
       <Button layoutX="850.0" layoutY="453.0" mnemonicParsing="false" onAction="#update" prefHeight="34.0" prefWidth="85.0" styleClass="button5" stylesheets="@stylesheet.css" text="Update" textFill="WHITE" />
-      <TextField fx:id="cherche" layoutX="452.0" layoutY="64.0" />
-      <Label fx:id="controleTitle" layoutX="888.0" layoutY="165.0" prefHeight="34.0" prefWidth="268.0" textFill="RED" />
+      <TextField fx:id="cherche" layoutX="504.0" layoutY="18.0" promptText="Search" />
+      <Label fx:id="controleTitle" layoutX="893.0" layoutY="94.0" prefHeight="34.0" prefWidth="268.0" textFill="RED" />
       <Label fx:id="controleDescription" layoutX="957.0" layoutY="408.0" prefHeight="34.0" prefWidth="278.0" textFill="RED" />
       <Button fx:id="btnDetails" layoutX="1166.0" layoutY="453.0" minWidth="33.0" mnemonicParsing="false" onAction="#detailsForum" prefHeight="34.0" prefWidth="85.0" styleClass="button5" stylesheets="@stylesheet.css" text="Details" textFill="WHITE" />
       <Label fx:id="tfIdForum" layoutX="90.0" layoutY="39.0" prefHeight="27.0" prefWidth="38.0" />
-      <VBox layoutY="-2.0" prefHeight="700.0" prefWidth="74.0" style="-fx-background-radius: 15 0 0 15;" styleClass="dashboard" stylesheets="@stylesheet.css">
+      <VBox layoutY="-2.0" prefHeight="700.0" prefWidth="74.0" style="-fx-background-radius: 15 0 0 15;" styleClass="dashboard" stylesheets="@stylesheet.css" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Pane prefHeight="79.0" prefWidth="74.0" style="-fx-background-radius: 15 0 15 15;">
                <children>
@@ -94,7 +94,7 @@
                <graphic>
                   <ImageView fitHeight="25.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@image/news-01.png" />
+                        <Image url="@image/dashboard.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -153,13 +153,13 @@
       </Label>
       <Button fx:id="btnClear" layoutX="1067.0" layoutY="453.0" mnemonicParsing="false" onAction="#Clear" prefHeight="34.0" prefWidth="74.0" styleClass="button5" stylesheets="@stylesheet.css" text="Clear All" textFill="WHITE" />
       <WebView fx:id="webviewforum" layoutX="305.0" layoutY="162.0" prefHeight="308.0" prefWidth="369.0" />
-      <TextArea fx:id="tfDescriptionForum" layoutX="829.0" layoutY="216.0" prefHeight="200.0" prefWidth="335.0" />
+      <TextArea fx:id="tfDescriptionForum" layoutX="829.0" layoutY="216.0" prefHeight="200.0" prefWidth="335.0" promptText="Forum Description" />
       <Label fx:id="User_name_creater" layoutX="90.0" layoutY="125.0" prefHeight="17.0" prefWidth="207.0">
          <font>
             <Font name="Corbel Bold" size="24.0" />
          </font>
       </Label>
-      <Label layoutX="95.0" layoutY="102.0" prefHeight="17.0" prefWidth="164.0" text="Created By :">
+      <Label layoutX="95.0" layoutY="102.0" prefHeight="17.0" prefWidth="164.0" text="Created By :" textFill="WHITE">
          <font>
             <Font name="Ebrima" size="13.0" />
          </font>

@@ -287,6 +287,9 @@ public class DetailForumController implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ServiceProvider/view/DetailPost.fxml"));
             Parent root = loader.load();
+            if ("".equals(tfTitlePost.getText())){
+                 JOptionPane.showMessageDialog(null, "There is nothing selected !");
+             }else{
             String v = idP.getText();
             int idPclicked = Integer.valueOf(v);
             DetailPostController dp = loader.getController();
@@ -307,7 +310,7 @@ public class DetailForumController implements Initializable {
             } catch (SQLException ex) {
                 Logger.getLogger(ForumController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            tfTitlePost.getScene().setRoot(root);
+            tfTitlePost.getScene().setRoot(root);}
         } catch (IOException ex) {
             Logger.getLogger(DetailPostController.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -28,19 +28,17 @@ import javafx.collections.ObservableList;
  * @author user16
  */
 public class ServiceOffre implements IservicesOffre {
-  
-Connection cnx = dbConnection.getInstance().getConnection();
-private  ResultSet rst;
-private Statement stn;
- 
-    
+
+    Connection cnx = dbConnection.getInstance().getConnection();
+    private ResultSet rst;
+    private Statement stn;
+
     /**
      *
      * @param O
      */
-    
     public void AjouterOffre(Offre O) {
-       
+
         try {
             String requete = "INSERT INTO `offre`(`id`, `domain_offer_id`, `title`, `description`, `creat_at`)  VALUES (?,?,?,?,sysdate())";
             PreparedStatement pst = cnx.prepareStatement(requete);
@@ -55,7 +53,7 @@ private Statement stn;
         } catch (SQLException ex) {
             System.err.println(ex.getMessage());
         }
-    
+
     }
 
     @Override
@@ -63,44 +61,41 @@ private Statement stn;
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-  public void delete(Offre O) {
+    public void delete(Offre O) {
         String req = "delete from offre where id=" + O.getId();
         //if (c != null) {
-            try {
+        try {
             PreparedStatement st1 = cnx.prepareStatement(req);
-             //String value1 = tf_instru.getText();
+            //String value1 = tf_instru.getText();
             st1.executeUpdate();
 
-            } catch (SQLException ex) {
-                Logger.getLogger(ServiceOffre.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ServiceOffre.class.getName()).log(Level.SEVERE, null, ex);
+        }
         /*} else {
             System.out.println("Service n'existe pas");
         }*/
 
     }
-  
-      
-   
-@Override
- public void modifierOffre(Offre o) {
-String req ="UPDATE Offre SET title='"+o.getTitle()+"',description='"+o.getDescription()+"',domain_offer_id='"+o.getDomainOffre()+"' WHERE id="+o.getId() ;
-    try {
-        
-             PreparedStatement st1 = cnx.prepareStatement(req);
-             //String value1 = tf_instru.getText();
-             st1.executeUpdate();
+
+    @Override
+    public void modifierOffre(Offre o) {
+        String req = "UPDATE Offre SET title='" + o.getTitle() + "',description='" + o.getDescription() + "',domain_offer_id='" + o.getDomainOffre() + "' WHERE id=" + o.getId();
+        try {
+
+            PreparedStatement st1 = cnx.prepareStatement(req);
+            //String value1 = tf_instru.getText();
+            st1.executeUpdate();
             System.out.println("offre modifié");
-            
+
         } catch (SQLException ex) {
             System.out.println("Probléme");
             System.out.println(ex.getMessage());
-            
-        }    }
- 
- 
- 
-     public ObservableList<Offre> readAlldiscc() throws SQLException {
+
+        }
+    }
+
+    public ObservableList<Offre> readAlldiscc() throws SQLException {
         ObservableList oblistdisc = FXCollections.observableArrayList();
 
         Statement st = cnx.createStatement();
@@ -112,14 +107,14 @@ String req ="UPDATE Offre SET title='"+o.getTitle()+"',description='"+o.getDescr
             int DomainOffre = rs.getInt("DomainOffre");
             Date CreatAt = rs.getDate("CreatAt");
 
-            Offre d = new Offre(id, title, description,DomainOffre,CreatAt);
+            Offre d = new Offre(id, title, description, DomainOffre, CreatAt);
             oblistdisc.add(d);
 
         }
         return oblistdisc;
     }
-     
-     public String userName(int id) throws SQLException {
+
+    public String userName(int id) throws SQLException {
         String name = "";
         ResultSet rs = cnx.createStatement().executeQuery("select * from  user where id='" + id + "';");
         while (rs.next()) {
@@ -128,11 +123,37 @@ String req ="UPDATE Offre SET title='"+o.getTitle()+"',description='"+o.getDescr
         }
         return name;
     }
-  }
-   
 
-        
-       
-       
-    
+    public void Rating(Offre e) {
+        try {
+            System.out.println(e.getRating());
 
+            //  String requete = "update user set username=? ,last_name=?, email=?, adresse=?, age=? , telephone=?,image=?,password=?  WHERE id=?";
+            String requete = "update offre set rating=?  WHERE id=?";
+            PreparedStatement st = cnx.prepareStatement(requete);
+
+            st.setInt(2, e.getId());
+            System.out.println(st);
+            st.setDouble(1, e.getRating());
+
+            st.executeUpdate();
+            System.out.println("rating ajouter ");
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+    }
+
+    public Double getRatingFromId(int id) throws SQLException {
+
+        Double nb = 0.0;
+        Statement st = cnx.createStatement();
+        ResultSet rs = st.executeQuery("SELECT * FROM offre WHERE id='" + id + "';");
+        while (rs.next()) {
+            nb = rs.getDouble("rating");
+            return nb;
+        }
+        return nb;
+    }
+}

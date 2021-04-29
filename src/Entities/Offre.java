@@ -12,16 +12,28 @@ import java.sql.Date;
  * @author user16
  */
 public class Offre {
-   // private int user_id;
+    // private int user_id;
 
-  
-    private int id ;
+    private int id;
     private String Title;
     private String Description;
     private int DomainOffre;
-    private Date CreatAt ;
+    private Date CreatAt;
+    private Double rating;
 
-   /* public Offre(int i,int user_id, String Title, String Description, int DomainOffre) {
+    public Offre(int id, Double rating) {
+        this.id = id;
+        this.rating = rating;
+    }
+
+    public Offre(int id,String Title, String Description, int DomainOffre) {
+        this.id = id;
+        this.Title = Title;
+        this.Description = Description;
+        this.DomainOffre = DomainOffre;
+    }
+
+    /* public Offre(int i,int user_id, String Title, String Description, int DomainOffre) {
         this.id = id;
          this.user_id = user_id;
         this.Title = Title;
@@ -36,8 +48,14 @@ public class Offre {
         this.Description = Description;
         this.DomainOffre = DomainOffre;
     }*/
-    
-    
+    public Double getRating() {
+        return rating;
+    }
+
+    public void setRating(Double rating) {
+        this.rating = rating;
+    }
+
     /*  public int getUser_id() {
         return user_id;
     }
@@ -45,8 +63,6 @@ public class Offre {
     public void setUser_id(int user_id) {
         this.user_id = user_id;
     }*/
-      
-
     public void setCreatAt(Date CreatAt) {
         this.CreatAt = CreatAt;
     }
@@ -102,13 +118,9 @@ public class Offre {
         this.CreatAt = CreatAt;
     }
 
-   
-
     @Override
     public String toString() {
-        return "Offre{" + "id=" + id + ", Title=" + Title + ", Description=" + Description + ", DomainOffre=" + DomainOffre + "}\n";
+        return "Offre{" + "id=" + id + ", Title=" + Title + ", Description=" + Description + ", DomainOffre=" + DomainOffre + ", CreatAt=" + CreatAt + ", rating=" + rating + '}';
     }
-    
-    
-    
+
 }

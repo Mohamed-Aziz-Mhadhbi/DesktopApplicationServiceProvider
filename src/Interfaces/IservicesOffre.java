@@ -13,10 +13,14 @@ import java.util.List;
  * @author user16
  */
 public interface IservicesOffre {
-   public void AjouterOffre(Offre O);
-   public List<Offre> AfficherOffre();
-   public void delete(Offre O);
-   public void modifierOffre(Offre o);
-   
-   
+
+    public void AjouterOffre(Offre O);
+
+    public List<Offre> AfficherOffre();
+
+    public void delete(Offre O);
+
+    public void modifierOffre(Offre o);
+
+    public void Rating(Offre e);
 }

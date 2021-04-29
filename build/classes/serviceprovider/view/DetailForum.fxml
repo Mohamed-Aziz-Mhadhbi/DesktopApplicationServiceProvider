@@ -32,15 +32,15 @@
         </columns>
       </TableView>
       <Label fx:id="idF" layoutX="566.0" layoutY="16.0" prefHeight="17.0" prefWidth="149.0" />
-      <Label layoutX="728.0" layoutY="184.0" text="Title :" />
-      <Label layoutX="725.0" layoutY="319.0" text="Description :" />
-      <TextField fx:id="tfTitlePost" layoutX="801.0" layoutY="180.0" />
+      <Label layoutX="728.0" layoutY="184.0" text="Title :" textFill="WHITE" />
+      <Label layoutX="725.0" layoutY="319.0" text="Description :" textFill="WHITE" />
+      <TextField fx:id="tfTitlePost" layoutX="801.0" layoutY="180.0" promptText="Post Title" />
       <Button fx:id="btnAdd" layoutX="803.0" layoutY="455.0" mnemonicParsing="false" onAction="#ajouter" prefHeight="30.0" prefWidth="67.0" styleClass="button5" stylesheets="@stylesheet.css" text="Add" textFill="WHITE" />
       <Button fx:id="btnmodif" layoutX="891.0" layoutY="455.0" mnemonicParsing="false" onAction="#update" prefHeight="30.0" prefWidth="74.0" styleClass="button5" stylesheets="@stylesheet.css" text="Update" textFill="WHITE" />
       <Button fx:id="btnDelete" layoutX="981.0" layoutY="455.0" mnemonicParsing="false" onAction="#delete" prefHeight="30.0" prefWidth="74.0" styleClass="button5" stylesheets="@stylesheet.css" text="Delete" textFill="WHITE" />
       <Button fx:id="btnDetailsPost" layoutX="1164.0" layoutY="453.0" mnemonicParsing="false" onAction="#DetailsPost" prefHeight="34.0" prefWidth="67.0" styleClass="button5" stylesheets="@stylesheet.css" text="Details" textFill="WHITE" />
       <Label fx:id="idP" layoutX="513.0" layoutY="33.0" prefHeight="41.0" prefWidth="128.0" />
-      <VBox layoutY="-4.0" prefHeight="708.0" prefWidth="74.0" style="-fx-background-radius: 15 0 0 15;" styleClass="dashboard" stylesheets="@stylesheet.css">
+      <VBox layoutY="-4.0" prefHeight="708.0" prefWidth="74.0" style="-fx-background-radius: 15 0 0 15;" styleClass="dashboard" stylesheets="@stylesheet.css" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Pane prefHeight="79.0" prefWidth="74.0" style="-fx-background-radius: 15 0 15 15;">
                <children>
@@ -82,15 +82,6 @@
                   <ImageView fitHeight="25.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@image/home-01.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button contentDisplay="TOP" layoutX="10.0" layoutY="142.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="74.0" styleClass="button3" stylesheets="@stylesheet.css" text="Events" textFill="WHITE">
-               <graphic>
-                  <ImageView fitHeight="25.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@image/event-01.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -163,6 +154,6 @@
          </font>
       </Label>
       <Button fx:id="btnClear" layoutX="1071.0" layoutY="453.0" mnemonicParsing="false" onAction="#Clear" prefHeight="34.0" prefWidth="74.0" styleClass="button5" stylesheets="@stylesheet.css" text="Clear All" textFill="WHITE" />
-      <TextArea fx:id="tfDescriptionPost" layoutX="801.0" layoutY="227.0" prefHeight="200.0" prefWidth="437.0" />
+      <TextArea fx:id="tfDescriptionPost" layoutX="801.0" layoutY="227.0" prefHeight="200.0" prefWidth="437.0" promptText="Post Description" />
    </children>
 </AnchorPane>

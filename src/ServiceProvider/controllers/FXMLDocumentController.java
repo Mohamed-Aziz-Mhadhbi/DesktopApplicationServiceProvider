@@ -41,6 +41,8 @@ import javafx.scene.layout.AnchorPane;
 import Services.ServiceOffre;
 import Services.ServicePostulation;
 import static Utils.print.printNode;
+import com.sun.speech.freetts.Voice;
+import com.sun.speech.freetts.VoiceManager;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import javafx.collections.transformation.FilteredList;
@@ -54,6 +56,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
+import org.controlsfx.control.Rating;
 
 /**
  * FXML Controller class
@@ -123,6 +126,13 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private Label UserNameSession;
     Stage stage;
+    @FXML
+    private Label label_rating;
+    @FXML
+    private Rating rating_etoile;
+    @FXML
+    private Button btn_forum_speak;
+    private static final String VOICENAME="kevin16";
 
     /**
      * Initializes the controller class.
@@ -141,11 +151,13 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void AjouterOffre(ActionEvent event) {
+         Offre offre = tv_offre.getSelectionModel().getSelectedItem();
+         if (offre != null){
         String Title = tfTitle.getText();
         String Description = tfDescription.getText();
         //int user_id = Integer.parseInt(tduser_id.getText());
         int DomainOffre = Integer.parseInt(tfDomaine.getText());
-        Date CreatAt = java.sql.Date.valueOf(tfCreateAt.getValue());
+       //Date CreatAt = java.sql.Date.valueOf(tfCreateAt.getValue());
 
         if ((Title.isEmpty()) && (Description.isEmpty())) {
             JOptionPane.showMessageDialog(null, "il faut remplir tous les champs  ");
@@ -157,25 +169,26 @@ public class FXMLDocumentController implements Initializable {
             JOptionPane.showMessageDialog(null, "il faut remplir tous les champs  ");
         } else {
 
-            Offre O = new Offre(0, Title, Description, DomainOffre, CreatAt);
+            Offre O = new Offre(user.getId(), Title, Description, DomainOffre);
             ServiceOffre sc = new ServiceOffre();
             sc.AjouterOffre(O);
             loadTable();
-
-        }
+        }}
 
     }
 
     @FXML
-    private void handleMouseButton(MouseEvent event) {
+    private void handleMouseButton(MouseEvent event) throws SQLException {
         Offre O = tv_offre.getSelectionModel().getSelectedItem();
-
+        
         tfId.setText(String.valueOf(O.getId()));
         tfTitle.setText(O.getTitle());
         tfDescription.setText(O.getDescription());
         tfDomaine.setText(O.getDomainOffre() + "");
+        label_rating.setText(String.valueOf(fc.getRatingFromId(O.getId())));
+        rating_etoile.setRating(fc.getRatingFromId(O.getId()));
         //tfCreateAt.setDate(O.getCreatAt());
-
+       
     }
 
     public void loadTable() {
@@ -259,12 +272,12 @@ public class FXMLDocumentController implements Initializable {
         int id = cl.getId();
         String Title = tfTitle.getText();
         String Description = tfDescription.getText();
-        Date CreatAt = java.sql.Date.valueOf(tfCreateAt.getValue());
+        //Date CreatAt = java.sql.Date.valueOf(tfCreateAt.getValue());
 
         int DomainOffre = Integer.parseInt(tfDomaine.getText());
 
         ServiceOffre sc = new ServiceOffre();
-        Offre o = new Offre(id, Title, Description, DomainOffre, CreatAt);
+        Offre o = new Offre(id, Title, Description, DomainOffre);
         //Cours cc = new Cours(id, instru , niveau, vid);
         sc.modifierOffre(o);
 
@@ -296,7 +309,7 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void Postuler(ActionEvent event) throws SQLException {
-        
+
         try {
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ServiceProvider/view/postulationFXML.fxml"));
@@ -370,6 +383,38 @@ public class FXMLDocumentController implements Initializable {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
         stage.show();
+    }
+
+    @FXML
+    private void addRating(ActionEvent event) {
+        Offre e = tv_offre.getSelectionModel().getSelectedItem();
+
+        System.out.println(rating_etoile.getRating());
+        ServiceOffre sc = new ServiceOffre();
+        Offre o1 = new Offre(e.getId(), rating_etoile.getRating());
+        sc.Rating(o1);   
+        label_rating.setText(String.valueOf(rating_etoile.getRating()));
+    }
+
+    @FXML
+    private void jButtonSpeak(ActionEvent event) {
+                Voice voice;
+        VoiceManager vm=VoiceManager.getInstance();
+        voice =vm.getVoice(VOICENAME);
+        
+        voice.allocate();
+        try{
+           
+            //voice.speak(tf_name.getText());
+              // voice.speak(tf_nombre.getText());
+     
+             //voice.speak(tf_lieu.getText());
+             voice.speak(tfTitle.getText());
+             voice.speak(tfDescription.getText());
+           
+        }catch(Exception e){ 
+            
+        }
     }
 
 }
