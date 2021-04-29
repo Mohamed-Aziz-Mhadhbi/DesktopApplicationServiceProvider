@@ -11,6 +11,8 @@ import Entities.User;
 import Services.CommentCRUD;
 import Services.CurseFilterService;
 import Services.PostCRUD;
+import com.sun.speech.freetts.Voice;
+import com.sun.speech.freetts.VoiceManager;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -38,6 +40,8 @@ import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 import javafx.geometry.Pos;
 import javafx.scene.control.TextArea;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
 import org.controlsfx.control.Rating;
@@ -111,36 +115,59 @@ public class DetailPostController implements Initializable {
     private ImageView returnBack;
     @FXML
     private Label UserNameSession;
-
+    private static final String VOICENAME="kevin16";
+    private WebEngine engine;
+    @FXML
+    private WebView descriptionForum;
+    @FXML
+    private WebView descripPost;
+    @FXML
+    private Label userName;
+    
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
         check(rating.getText());
         idC.setVisible(false);
         idPc.setVisible(false);
         idForum.setVisible(false);
-        // initTable();
     }
 
     public void setUser(User u) throws SQLException {
         this.user = u;
         UserNameSession.setText(pc.userName(user.getId()));
     }
-
+ private void speak(String ch)
+    {
+        Voice voice;
+        VoiceManager vm=VoiceManager.getInstance();
+        voice =vm.getVoice(VOICENAME);
+        voice.allocate();
+        voice.speak(ch);
+    }
     private void clearAll() {
         idC.setText("");
         contentC.setText("");
         rating.setText("");
-        RatingCommet.setRating(0);
+        RatingCommet.setRating(0); 
+        userName.setText("");
     }
 
     private void rating() throws SQLException {
         RatingPost.setRating(pc.getAvgRating(Integer.parseInt(idPc.getText())));
     }
 
+    private void loadwebviewDescriptionPost(String ch) {
+        engine = descripPost.getEngine();
+        engine.loadContent(ch);
+    }
+    
+    private void loadwebviewDescriptionForum(String ch) {
+        engine = descriptionForum.getEngine();
+        engine.loadContent(ch);
+    }
     /**
      * ******forum***********
      */
@@ -154,10 +181,12 @@ public class DetailPostController implements Initializable {
 
     public void setDescriptionFourm(String descriptionFourm) {
         this.descriptionFourm.setText(descriptionFourm);
+        
     }
 
     public void setTF(String TF) {
         this.TF.setText(TF);
+        loadwebviewDescriptionForum(descriptionFourm.getText());
     }
 
     /**
@@ -165,6 +194,8 @@ public class DetailPostController implements Initializable {
      */
     public void setDescriptionP(String DescriptionP) {
         this.DescriptionP.setText(DescriptionP);
+        loadwebviewDescriptionPost(this.DescriptionP.getText());
+        
     }
 
     public void setTitleP(String TitleP) {
@@ -175,8 +206,9 @@ public class DetailPostController implements Initializable {
         this.idPc.setText(idPc);
     }
 
-    public void setTP(String TP) {
+    public void setTP(String TP) throws SQLException {
         this.TP.setText(TP);
+        rating();
     }
 
     public void initTable(ObservableList<Comment> comments) {
@@ -211,16 +243,17 @@ public class DetailPostController implements Initializable {
             c.setRating((int) RatingCommet.getRating());
             Integer i = Integer.valueOf(idPc.getText());
             c.setIdP(i);
+            c.setUsr_id(user.getId());
             cc.updatePost(i);
             cc.addComment(c, i);
             System.out.println(RatingCommet.getRating());
             clearAll();
             initTable(i);
             rating();
-
+            speak("comment added by "+UserNameSession.getText());
             Image img = new Image("/ServiceProvider/view/image/ok.png");
             Notifications notifAdd = Notifications.create()
-                    .title("add complet")
+                    .title("Action")
                     .text("Comment added by :" + UserNameSession.getText())
                     .graphic(new ImageView(img))
                     .hideAfter(Duration.seconds(5))
@@ -230,7 +263,7 @@ public class DetailPostController implements Initializable {
     }
 
     @FXML
-    private void select(MouseEvent event) {
+    private void select(MouseEvent event) throws SQLException {
         Comment C = tableComment.getSelectionModel().getSelectedItem();
         contentC.setText(C.getContent());
         Integer r = C.getRating();
@@ -238,6 +271,7 @@ public class DetailPostController implements Initializable {
         rating.setText(r.toString());
         Integer id = C.getId();
         idC.setText(id.toString());
+        userName.setText(cc.userName(cc.user_idComment(C.getId())));
     }
 
     @FXML
@@ -253,9 +287,10 @@ public class DetailPostController implements Initializable {
             initTable(i);
             clearAll();
             rating();
+            speak("comment updated by "+UserNameSession.getText());
             Image img = new Image("/ServiceProvider/view/image/update.png");
             Notifications notifAdd = Notifications.create()
-                    .title("add complet")
+                    .title("Action")
                     .text("Comment updated by :" + UserNameSession.getText())
                     .graphic(new ImageView(img))
                     .hideAfter(Duration.seconds(5))
@@ -274,9 +309,10 @@ public class DetailPostController implements Initializable {
             initTable(i);
             clearAll();
             rating();
+            speak("comment deleted by "+UserNameSession.getText());
             Image img = new Image("/ServiceProvider/view/image/annuler.png");
             Notifications notifAdd = Notifications.create()
-                    .title("add complet")
+                    .title("Action")
                     .text("Comment deleted by :" + UserNameSession.getText())
                     .graphic(new ImageView(img))
                     .hideAfter(Duration.seconds(5))

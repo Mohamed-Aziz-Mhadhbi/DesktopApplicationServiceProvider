@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="1270.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ServiceProvider.controllers.BackForumController">
+<AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="1270.0" style="-fx-background-color: linear-gradient(to bottom left, #A868A0, #2D75E8);" stylesheets="@stylesheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ServiceProvider.controllers.BackForumController">
    <children>
       <TableView fx:id="tableFourm" layoutX="159.0" layoutY="48.0" onMouseClicked="#handleAction" prefHeight="200.0" prefWidth="633.0" stylesheets="@stylesheet.css">
          <columns>
@@ -125,7 +125,7 @@
          </padding>
       </VBox>
       <Label fx:id="Forum" layoutX="406.0" layoutY="14.0" prefHeight="30.0" prefWidth="148.0" />
-      <Button fx:id="PDF" layoutX="589.0" layoutY="499.0" mnemonicParsing="false" onAction="#PDF" text="PDF" />
+      <Button fx:id="PDF" layoutX="589.0" layoutY="499.0" mnemonicParsing="false" onAction="#PDF" styleClass="button5" stylesheets="@stylesheet.css" text="PDF" />
       <ImageView fx:id="exit" fitHeight="56.0" fitWidth="74.0" layoutX="973.0" layoutY="31.0" onMousePressed="#exit" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <image>
             <Image url="@image/exit.png" />

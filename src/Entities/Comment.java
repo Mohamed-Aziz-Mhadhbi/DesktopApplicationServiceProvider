@@ -17,9 +17,11 @@ public class Comment {
     private Date date ;
     private int rating ;
     private int idP ; 
+    private int usr_id;
 
     public Comment() {
     }
+
 
     public Comment(int id, String content, int rating) {
         this.id = id;
@@ -33,6 +35,14 @@ public class Comment {
         this.date = date;
         this.rating = rating;
         this.idP = idP;
+    }
+    
+    public int getUsr_id() {
+        return usr_id;
+    }
+
+    public void setUsr_id(int usr_id) {
+        this.usr_id = usr_id;
     }
 
     public int getId() {

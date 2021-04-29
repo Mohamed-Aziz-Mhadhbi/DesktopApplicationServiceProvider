@@ -15,20 +15,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.web.WebView?>
 
 <AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="1270.0" style="-fx-background-color: linear-gradient(to bottom left, #A868A0, #2D75E8);" stylesheets="@stylesheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ServiceProvider.controllers.DetailForumController">
    <children>
-      <Label fx:id="restTitleForum" layoutX="105.0" layoutY="54.0" prefHeight="56.0" prefWidth="407.0" underline="true">
-         <font>
-            <Font size="18.0" />
-         </font></Label>
-      <Label fx:id="restDescriptionFourm" layoutX="139.0" layoutY="118.0" prefHeight="66.0" prefWidth="476.0" />
-      <TableView fx:id="tablePost" layoutX="118.0" layoutY="204.0" onMouseClicked="#select" prefHeight="200.0" prefWidth="476.0" stylesheets="@stylesheet.css">
+      <TableView fx:id="tablePost" layoutX="97.0" layoutY="255.0" onMouseClicked="#select" prefHeight="339.0" prefWidth="189.0" stylesheets="@stylesheet.css">
         <columns>
           <TableColumn fx:id="col_title" prefWidth="139.0" text="title" />
-            <TableColumn fx:id="col_description" prefWidth="246.0" text="Description" />
-            <TableColumn fx:id="col_views" prefWidth="50.0" text="views" />
-            <TableColumn fx:id="col_noc" prefWidth="38.0" text="noc" />
         </columns>
       </TableView>
       <Label fx:id="idF" layoutX="566.0" layoutY="16.0" prefHeight="17.0" prefWidth="149.0" />
@@ -155,5 +148,40 @@
       </Label>
       <Button fx:id="btnClear" layoutX="1071.0" layoutY="453.0" mnemonicParsing="false" onAction="#Clear" prefHeight="34.0" prefWidth="74.0" styleClass="button5" stylesheets="@stylesheet.css" text="Clear All" textFill="WHITE" />
       <TextArea fx:id="tfDescriptionPost" layoutX="801.0" layoutY="227.0" prefHeight="200.0" prefWidth="437.0" promptText="Post Description" />
+      <WebView fx:id="descriptionForum" layoutX="95.0" layoutY="100.0" prefHeight="139.0" prefWidth="603.0" />
+      <Label fx:id="restDescriptionFourm" layoutX="503.0" layoutY="9.0" text="d" visible="false" />
+      <Label fx:id="restTitleForum" layoutX="96.0" layoutY="59.0" prefHeight="35.0" prefWidth="603.0" text="t" underline="true">
+         <font>
+            <Font size="24.0" />
+         </font></Label>
+      <ImageView fitHeight="35.0" fitWidth="45.0" layoutX="657.0" layoutY="602.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@image/comment.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="35.0" fitWidth="45.0" layoutX="566.0" layoutY="602.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@image/views.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="noc" layoutX="626.0" layoutY="611.0" text="0" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font></Label>
+      <Label fx:id="views" layoutX="531.0" layoutY="611.0" text="0" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font></Label>
+      <WebView fx:id="webviewdescPost" layoutX="293.0" layoutY="279.0" prefHeight="314.0" prefWidth="406.0" />
+      <Label layoutX="293.0" layoutY="255.0" text="This is Post Created by  :" textFill="#fffbfb">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <Label fx:id="userName" layoutX="436.0" layoutY="256.0" prefHeight="17.0" prefWidth="262.0">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

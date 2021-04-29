@@ -38,6 +38,16 @@ public class Post {
         this.views = views;
     }
 
+    public Post(int usr_id, int id, String title, String description, int views, int noc, int idF) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.views = views;
+        this.noc = noc;
+        this.idF = idF;
+        this.usr_id = usr_id;
+    }
+    
     public Post(int id, String title, String description, int views, int noc, String date) {
         this.id = id;
         this.title = title;

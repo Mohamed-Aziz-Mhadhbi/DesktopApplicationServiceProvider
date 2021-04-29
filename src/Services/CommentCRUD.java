@@ -50,15 +50,15 @@ public class CommentCRUD {
         return oblistpost;
     }
 
-    public void addComment(Comment c, int i) {
+    public void addComment(Comment c,int i) {
         try {
             String requete = "INSERT INTO comment (usr_id,pst_id,content,rating,creat_at,likes,status_like)"
-                    + "VALUES (1,?,?,?,sysdate(),0,1)";
+                    + "VALUES (?,?,?,?,sysdate(),0,1)";
             PreparedStatement pst = cnx.prepareStatement(requete);
-
-            pst.setInt(1, i);
-            pst.setString(2, c.getContent());
-            pst.setInt(3, c.getRating());
+            pst.setInt(1, c.getUsr_id());
+            pst.setInt(2, i);
+            pst.setString(3, c.getContent());
+            pst.setInt(4, c.getRating());
 
             pst.executeUpdate();
             System.out.println("Comment added!");
@@ -106,6 +106,16 @@ public class CommentCRUD {
             return name;
         }
         return name;
+    }
+    
+     public int user_idComment(int id) throws SQLException {
+        int nb = 0;
+        ResultSet rs = cnx.createStatement().executeQuery("select * from  comment where id='" + id + "';");
+        while (rs.next()) {
+            nb = rs.getInt("usr_id");
+            return nb;
+        }
+        return nb;
     }
 
 }

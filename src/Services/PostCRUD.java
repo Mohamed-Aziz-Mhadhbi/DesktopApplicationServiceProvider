@@ -45,6 +45,7 @@ public class PostCRUD {
             int views = rs.getInt("views");
             int noc = rs.getInt("noc");
             String creat_at = rs.getString("creat_at");
+            
 
             Post d = new Post(id, title, description, views, noc, creat_at);
             oblistpost.add(d);
@@ -137,6 +138,16 @@ public class PostCRUD {
         return 0.0;
     }
 
+    public int user_idPost(int id) throws SQLException {
+        int nb = 0;
+        ResultSet rs = cnx.createStatement().executeQuery("select * from  post where id='" + id + "';");
+        while (rs.next()) {
+            nb = rs.getInt("usr_id");
+            return nb;
+        }
+        return nb;
+    }
+    
     public String userName(int id) throws SQLException {
         String name = "";
         ResultSet rs = cnx.createStatement().executeQuery("select * from  user where id='" + id + "';");

@@ -168,7 +168,6 @@ public class FXMLDocumentController implements Initializable {
         } else if ((Title.equals("")) && (Description.equals(""))) {
             JOptionPane.showMessageDialog(null, "il faut remplir tous les champs  ");
         } else {
-
             Offre O = new Offre(user.getId(), Title, Description, DomainOffre);
             ServiceOffre sc = new ServiceOffre();
             sc.AjouterOffre(O);

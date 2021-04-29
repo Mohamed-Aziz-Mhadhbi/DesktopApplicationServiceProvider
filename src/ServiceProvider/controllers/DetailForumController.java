@@ -43,7 +43,11 @@ import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
 import Utils.dbConnection;
+import com.sun.speech.freetts.Voice;
+import com.sun.speech.freetts.VoiceManager;
 import javafx.scene.control.TextArea;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 
 /**
  * FXML Controller class
@@ -60,12 +64,6 @@ public class DetailForumController implements Initializable {
     public TableView<Post> tablePost;
     @FXML
     private TableColumn<Post, String> col_title;
-    @FXML
-    private TableColumn<Post, String> col_description;
-    @FXML
-    private TableColumn<Post, Integer> col_views;
-    @FXML
-    private TableColumn<Post, Integer> col_noc;
 
     ObservableList<Post> oblistpost = FXCollections.observableArrayList();
     ForumCRUD pf = new ForumCRUD();
@@ -114,6 +112,20 @@ public class DetailForumController implements Initializable {
     private ImageView returnBack;
     @FXML
     private Label UserNameSession;
+    private static final String VOICENAME="kevin16";
+    private WebEngine engine;
+    @FXML
+    public WebView descriptionForum;
+    @FXML
+    private Label noc;
+    @FXML
+    private Label views;
+    @FXML
+    private Label likes;
+    @FXML
+    private WebView webviewdescPost;
+    @FXML
+    private Label userName;
 
     /**
      * Initializes the controller class.
@@ -133,10 +145,29 @@ public class DetailForumController implements Initializable {
         UserNameSession.setText(cc.userName(user.getId()));
     }
 
+    private void speak(String ch)
+    {
+        Voice voice;
+        VoiceManager vm=VoiceManager.getInstance();
+        voice =vm.getVoice(VOICENAME);
+        voice.allocate();
+        voice.speak(ch);
+    }
+    
+    private void loadwebviewDescriptionPost(String ch) {
+        engine = webviewdescPost.getEngine();
+        engine.loadContent(ch);
+    }
+    
     private void clearAll() {
         idP.setText("");
         tfTitlePost.setText("");
         tfDescriptionPost.setText("");
+        loadwebviewDescriptionPost("");
+        views.setText("0");
+        noc.setText("0");
+        likes.setText("0");
+        userName.setText("");
     }
 
     public void setTfTitlePost(String tfTitlePost) {
@@ -154,7 +185,7 @@ public class DetailForumController implements Initializable {
     public void setRestDescriptionFourm(String restDescriptionFourm) {
         this.restDescriptionFourm.setText(restDescriptionFourm);
     }
-
+    
     public void setTforum(String Tforum) {
         this.Tforum.setText(Tforum);
     }
@@ -164,6 +195,7 @@ public class DetailForumController implements Initializable {
     }
 
     public void setRestTitleForum(String restTitleForum) {
+        
         this.restTitleForum.setText(restTitleForum);
     }
 
@@ -175,9 +207,6 @@ public class DetailForumController implements Initializable {
         try {
             oblistpost = (ObservableList<Post>) pc.readAllpost2(id);
             col_title.setCellValueFactory(new PropertyValueFactory<>("title"));
-            col_description.setCellValueFactory(new PropertyValueFactory<>("description"));
-            col_noc.setCellValueFactory(new PropertyValueFactory<>("noc"));
-            col_views.setCellValueFactory(new PropertyValueFactory<>("views"));
 
             tablePost.setItems(oblistpost);
         } catch (SQLException ex) {
@@ -188,10 +217,6 @@ public class DetailForumController implements Initializable {
 
     public void initTable(ObservableList<Post> posts) {
         col_title.setCellValueFactory(new PropertyValueFactory<>("title"));
-        col_description.setCellValueFactory(new PropertyValueFactory<>("description"));
-        col_noc.setCellValueFactory(new PropertyValueFactory<>("noc"));
-
-        col_views.setCellValueFactory(new PropertyValueFactory<>("views"));
         tablePost.setItems(posts);
 
     }
@@ -214,10 +239,10 @@ public class DetailForumController implements Initializable {
 
             clearAll();
             initTable(Integer.valueOf(idF.getText()));
-
+            speak("post added by "+UserNameSession.getText());
             Image img = new Image("/ServiceProvider/view/image/ok.png");
             Notifications notifAdd = Notifications.create()
-                    .title("add complet")
+                    .title("Action")
                     .text("Post added by :"+ UserNameSession.getText())
                     .graphic(new ImageView(img))
                     .hideAfter(Duration.seconds(5))
@@ -227,7 +252,7 @@ public class DetailForumController implements Initializable {
     }
 
     @FXML
-    private void select(MouseEvent event) {
+    private void select(MouseEvent event) throws SQLException {
         Post P = tablePost.getSelectionModel().getSelectedItem();
         tfTitlePost.setText(P.getTitle());
         tfDescriptionPost.setText(P.getDescription());
@@ -236,6 +261,11 @@ public class DetailForumController implements Initializable {
         String id = Integer.toString(P.getId());
         String tpost = tfTitlePost.getText();
         tPost.setText(">" + tpost);
+        loadwebviewDescriptionPost(P.getDescription());
+        views.setText(String.valueOf(P.getViews()));
+        //likes.setText(String.valueOf(P.getLikes()));
+        noc.setText(String.valueOf(P.getNoc()));
+        userName.setText(pc.userName(pc.user_idPost(P.getId())));
     }
 
     @FXML
@@ -246,10 +276,10 @@ public class DetailForumController implements Initializable {
             pc.delete(dis.getId());
             initTable(i);
             clearAll();
-            
+            speak("post deleted by " +UserNameSession.getText());
              Image img = new Image("/ServiceProvider/view/image/annuler.png");
             Notifications notifAdd = Notifications.create()
-                    .title("add complet")
+                    .title("Action")
                     .text("Post deleted by :"+ UserNameSession.getText())
                     .graphic(new ImageView(img))
                     .hideAfter(Duration.seconds(5))
@@ -270,9 +300,10 @@ public class DetailForumController implements Initializable {
             pc.update(P.getId(), CurseFilterService.cleanText(tfTitlePost.getText()), CurseFilterService.cleanText(tfDescriptionPost.getText()));
             initTable(i);
             clearAll();
+            speak("post updated by "+UserNameSession.getText());
             Image img = new Image("/ServiceProvider/view/image/update.png");
             Notifications notifAdd = Notifications.create()
-                    .title("add complet")
+                    .title("Action")
                     .text("Post updated by :"+ UserNameSession.getText())
                     .graphic(new ImageView(img))
                     .hideAfter(Duration.seconds(5))
@@ -327,6 +358,11 @@ public class DetailForumController implements Initializable {
         idP.setText("");
         tfTitlePost.setText("");
         tfDescriptionPost.setText("");
+        loadwebviewDescriptionPost("");
+        views.setText("0");
+        noc.setText("0");
+        likes.setText("0");
+        userName.setText("");
     }
 
     @FXML
@@ -346,6 +382,10 @@ public class DetailForumController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(ForumController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    @FXML
+    private void likes(MouseEvent event) {
     }
 
 }

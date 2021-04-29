@@ -11,6 +11,8 @@ import Entities.User;
 import Services.CurseFilterService;
 import Services.ForumCRUD;
 import Services.PostCRUD;
+import com.sun.speech.freetts.Voice;
+import com.sun.speech.freetts.VoiceManager;
 import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
@@ -92,6 +94,7 @@ public class ForumController implements Initializable {
     @FXML private Button btnClear;
     @FXML private WebView webviewforum;
     private WebEngine engine;
+    private static final String VOICENAME="kevin16";
 
     Set<String> possibleWordSet = new HashSet<>();
 
@@ -110,8 +113,8 @@ public class ForumController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
-        loadwebview();
+        speak("welcome to service provider forum");
+        loadwebview("welcome to Service Provider");
         initTable();
         tfIdForum.setVisible(false);
         affForm();
@@ -137,9 +140,9 @@ public class ForumController implements Initializable {
         UserNameSession.setText(fc.userName(user.getId()));
     }
 
-    private void loadwebview() {
+    private void loadwebview(String ch) {
         engine = webviewforum.getEngine();
-        engine.loadContent("<p>dfqdsfqsdffff</p>");
+        engine.loadContent(ch);
     }
 
     private void learnWord(String text) {
@@ -150,6 +153,15 @@ public class ForumController implements Initializable {
         autoCompletionBinding = TextFields.bindAutoCompletion(cherche, possibleWordSet);
     }
 
+    private void speak(String ch)
+    {
+        Voice voice;
+        VoiceManager vm=VoiceManager.getInstance();
+        voice =vm.getVoice(VOICENAME);
+        voice.allocate();
+        voice.speak(ch);
+    }
+    
     public void setTfTitleForum(String tfTitleForum) {
         this.tfTitleForum.setText(tfTitleForum);
     }
@@ -240,11 +252,11 @@ public class ForumController implements Initializable {
             pc.addForum(f);
             clearAll();
             initTable();
-
+            speak("Forum added by "+UserNameSession.getText());
             Image img = new Image("/ServiceProvider/view/image/ok.png");
             Notifications notifAdd = Notifications.create()
-                    .title("add complet")
-                    .text("Forum added by :"+ UserNameSession.getText())
+                    .title("Action")
+                    .text("Forum added by : "+ UserNameSession.getText())
                     .graphic(new ImageView(img))
                     .hideAfter(Duration.seconds(5))
                     .position(Pos.TOP_RIGHT);
@@ -260,9 +272,10 @@ public class ForumController implements Initializable {
             fc.delete(dis.getId());
             initTable();
             clearAll();
+            speak("forum deleted by "+UserNameSession.getText());
             Image img = new Image("/ServiceProvider/view/image/annuler.png");
             Notifications notifAdd = Notifications.create()
-                    .title("add complet")
+                    .title("Action")
                     .text("Forum deleted by :"+ UserNameSession.getText())
                     .graphic(new ImageView(img))
                     .hideAfter(Duration.seconds(5))
@@ -285,9 +298,10 @@ public class ForumController implements Initializable {
             fc.update(F.getId(), CurseFilterService.cleanText(tfTitleForum.getText()), CurseFilterService.cleanText(tfDescriptionForum.getText()));
             initTable();
             clearAll();
+            speak("forum updated by "+UserNameSession.getText());
             Image img = new Image("/ServiceProvider/view/image/update.png");
             Notifications notifAdd = Notifications.create()
-                    .title("add complet")
+                    .title("Action")
                     .text("Forum updated by :"+ UserNameSession.getText())
                     .graphic(new ImageView(img))
                     .hideAfter(Duration.seconds(5))
@@ -323,6 +337,8 @@ public class ForumController implements Initializable {
             dc.setRestIdFourm(tfIdForum.getText());
             dc.setTforum(tfTitleForum.getText());
             dc.setUser(this.user);
+            engine = dc.descriptionForum.getEngine();
+            engine.loadContent(tfDescriptionForum.getText());
             try {
                 dc.initTable((ObservableList<Post>) pc.readAllpost2(Integer.parseInt(tfIdForum.getText())));
             } catch (SQLException ex) {
