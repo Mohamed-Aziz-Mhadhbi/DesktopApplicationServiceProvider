@@ -1,2 +1,2 @@
-# ServiceProvider-Service-Provider
+# Service Provider
 PiDev ServiceProvider
